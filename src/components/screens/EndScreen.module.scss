@@ -191,3 +191,18 @@ $black-glow-alt: (
   display: inline-block;
   width: 4em;
 }
+
+.campaignadvance {
+  @apply absolute left-1/2 w-10/12 -translate-x-1/2 rounded-lg border border-yellow-300 bg-black bg-opacity-70 px-4 py-3 text-center text-white;
+
+  bottom: 9%;
+
+  span,
+  small {
+    @apply block text-sm font-bold uppercase text-yellow-200;
+  }
+
+  strong {
+    @apply block text-xl text-white;
+  }
+}

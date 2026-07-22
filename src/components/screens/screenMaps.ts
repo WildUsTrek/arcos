@@ -1,7 +1,5 @@
-import cl from 'clarr'
 import {
   SCREEN_PREF,
-  SCREEN_LANG_PREF,
   SCREEN_VOLUME_PREF,
   SCREEN_HELP,
   SCREEN_LANDSCAPE,
@@ -11,7 +9,6 @@ import styles from './Window.module.scss'
 
 export const screenClassMap = {
   [SCREEN_PREF]: styles.screenpref,
-  [SCREEN_LANG_PREF]: cl(styles.screenlangpref, 'screenlangpref'),
   [SCREEN_VOLUME_PREF]: styles.screenvolumepref,
   [SCREEN_HELP]: styles.screenhelp,
   [SCREEN_LANDSCAPE]: '',
@@ -19,8 +16,7 @@ export const screenClassMap = {
 }
 
 export const screenTitleMap = {
-  [SCREEN_PREF]: 'Preferences',
-  [SCREEN_LANG_PREF]: 'Language',
+  [SCREEN_PREF]: 'Campaign',
   [SCREEN_VOLUME_PREF]: 'Sound & Graphics',
   [SCREEN_HELP]: 'Help',
   [SCREEN_LANDSCAPE]: 'Please rotate your device to landscape mode',

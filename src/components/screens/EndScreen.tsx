@@ -1,5 +1,9 @@
 import cl from 'clarr'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
+import {
+  campaignLevelCount,
+  resolveCampaignLevel,
+} from '@/campaign/levels'
 import { CLOSE_SCREEN_END_INIT } from '@/constants/ActionTypes'
 import { endScreenExitableDelay } from '@/constants/visuals'
 import { I18nContext } from '@/i18n/I18nContext'
@@ -7,7 +11,7 @@ import { EndScreenNoCloseStateType } from '@/types/state'
 import { reasonTranslate } from '@/utils/checkVictory'
 import { GameSizeContext } from '@/utils/contexts/GameSizeContext'
 import useKeyDown from '@/utils/hooks/gamecontrols/useKeyDown'
-import { useAppDispatch } from '@/utils/hooks/useAppDispatch'
+import { useAppDispatch, useAppSelector } from '@/utils/hooks/useAppDispatch'
 import styles from './EndScreen.module.scss'
 import EndScreenReviewCardsBtn from './EndScreenReviewCardsBtn'
 
@@ -17,6 +21,11 @@ const erathianTextMap = { lose: 'you lose', tie: 'tie game', win: 'you win' }
 const EndScreen = (endScreenState: EndScreenNoCloseStateType) => {
   const dispatch = useAppDispatch()
   const _ = useContext(I18nContext)
+  const lastCompletedLevel = useAppSelector(
+    (state) => state.campaign.lastCompletedLevel,
+  )
+  const unlockedLevel = useAppSelector((state) => state.campaign.unlockedLevel)
+  const challengeSeed = useAppSelector((state) => state.campaign.challengeSeed)
 
   const { type, surrender, reasons } = endScreenState
 
@@ -25,6 +34,14 @@ const EndScreen = (endScreenState: EndScreenNoCloseStateType) => {
   const text = _.i18n(textMap[type])
 
   const erathianTextArr = erathianTextMap[type].split(' ')
+  const completedCampaignLevel =
+    type === 'win' && lastCompletedLevel !== null
+      ? resolveCampaignLevel(lastCompletedLevel, challengeSeed)
+      : null
+  const nextLevelUnlocked =
+    completedCampaignLevel !== null && lastCompletedLevel < campaignLevelCount
+      ? unlockedLevel
+      : null
 
   const erathianTextContainer = (
     <>
@@ -124,6 +141,19 @@ const EndScreen = (endScreenState: EndScreenNoCloseStateType) => {
         <div className={cl(styles.erathiantext, 'erathian-normal')}>
           {erathianTextContainer}
         </div>
+        {completedCampaignLevel !== null && (
+          <div className={styles.campaignadvance}>
+            <span>
+              {_.i18n('Level completed')} {completedCampaignLevel.id}
+            </span>
+            <strong>{completedCampaignLevel.reward}</strong>
+            <small>
+              {nextLevelUnlocked !== null
+                ? `${_.i18n('Next level unlocked')}: ${nextLevelUnlocked}`
+                : _.i18n('Campaign completed')}
+            </small>
+          </div>
+        )}
         {(type === 'win' || type === 'tie') && (
           <>
             <div className={cl(styles.firework, styles.firework1)}></div>

@@ -181,7 +181,6 @@ $hotspots = @(
   "src\reducers",
   "src\components\screens",
   "src\i18n",
-  "src\webrtc",
   "src\utils\localstorage.ts",
   "vite.config.ts",
   "package.json"

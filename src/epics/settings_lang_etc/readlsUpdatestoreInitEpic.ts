@@ -14,21 +14,17 @@ import {
   UPDATE_NOANIM_MAIN,
   UPDATE_PIXELATION_MAIN,
   UPDATE_VISUALVALUES_MAIN,
-  UPDATE_AILEVEL_MAIN,
+  UPDATE_CAMPAIGN_PROGRESS_MAIN,
 } from '@/constants/ActionTypes'
-import {
-  defaultOpponentNameList,
-  defaultPlayerNameList,
-} from '@/constants/defaultSettings'
-import { AvailableLangType } from '@/i18n/types'
+import { defaultLang } from '@/i18n/langs'
 import { RootActionType } from '@/types/actionObj'
 import {
   RootStateType,
+  CampaignStateType,
   SettingsStateType,
   VisualValuesType,
 } from '@/types/state'
-import { lsGet, lsVersion } from '@/utils/localstorage'
-import { sample } from '@/utils/random'
+import { lsGet, lsSet, lsVersion } from '@/utils/localstorage'
 
 export default (
   action$: Observable<RootActionType>,
@@ -38,7 +34,13 @@ export default (
     ofType(READLS_UPDATESTORE_INIT),
     mergeMap((_action) => {
       lsVersion()
-      const lang = lsGet<AvailableLangType>(['lang', 'code'])
+      lsSet((draft) => {
+        draft.lang = {
+          code: defaultLang,
+          boldfont: lsGet<boolean>(['lang', 'boldfont']) ?? false,
+          erathian: lsGet<boolean>(['lang', 'erathian']) ?? false,
+        }
+      })
       const boldfont = lsGet<boolean>(['lang', 'boldfont'])
       const erathian = lsGet<boolean>(['lang', 'erathian'])
       const settings = lsGet<Partial<SettingsStateType>>(['settings'])
@@ -50,27 +52,21 @@ export default (
         'visual',
         'visualvalues',
       ])
-      const aiLevel = lsGet<number>(['ai', 'aiLevel'])
+      const campaign = lsGet<Partial<CampaignStateType>>(['campaign'])
+      const playerName = settings?.playerName ?? 'Avventuriero'
 
       return concat(
-        settings !== null
-          ? of<RootActionType>({
-              type: UPDATE_SETTINGS_MAIN,
-              payload: settings,
-            })
-          : of<RootActionType>({
-              type: UPDATE_SETTINGS_MAIN,
-              payload: {
-                playerName: sample(defaultPlayerNameList),
-                opponentName: sample(defaultOpponentNameList),
-              },
-            }),
-        lang !== null
-          ? of<RootActionType>({
-              type: UPDATE_LANG_MAIN,
-              lang,
-            })
-          : EMPTY,
+        of<RootActionType>({
+          type: UPDATE_SETTINGS_MAIN,
+          payload: {
+            playerName,
+            opponentName: 'Sfidante',
+          },
+        }),
+        of<RootActionType>({
+          type: UPDATE_LANG_MAIN,
+          lang: defaultLang,
+        }),
         boldfont !== null
           ? of<RootActionType>({
               type: UPDATE_BOLDFONT_MAIN,
@@ -113,10 +109,10 @@ export default (
               payload: visualvalues,
             })
           : EMPTY,
-        aiLevel !== null
+        campaign !== null
           ? of<RootActionType>({
-              type: UPDATE_AILEVEL_MAIN,
-              aiLevel,
+              type: UPDATE_CAMPAIGN_PROGRESS_MAIN,
+              payload: campaign,
             })
           : EMPTY,
         of<RootActionType>({

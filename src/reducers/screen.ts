@@ -4,7 +4,6 @@ import {
   SCREEN_HELP,
   SCREEN_LANDSCAPE,
   SCREEN_DISCONNECT_NOTICE,
-  SCREEN_LANG_PREF,
   SCREEN_PREF,
   SCREEN_VOLUME_PREF,
 } from '@/constants/ActionTypes'
@@ -13,7 +12,6 @@ import { ScreenStateType } from '@/types/state'
 
 const defaultScreen: ScreenStateType = {
   pref: false,
-  langPref: false,
   sgPref: false,
   help: false,
   landscape: false,
@@ -25,10 +23,6 @@ export default produce((draft: ScreenStateType, action: RootActionType) => {
   switch (action.type) {
     case SCREEN_PREF: {
       draft.pref = action.show
-      break
-    }
-    case SCREEN_LANG_PREF: {
-      draft.langPref = action.show
       break
     }
     case SCREEN_VOLUME_PREF: {

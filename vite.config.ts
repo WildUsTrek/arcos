@@ -14,11 +14,27 @@ import path from 'path'
 
 const isDev = process.env.NODE_ENV === 'development'
 
-const commitTimeDateObj = new Date(
-  parseInt(
-    execSync('git log -1 --date=unix --format="%ad"').toString().trim(),
-  ) * 1000,
-)
+const getCommitTimeDate = () => {
+  try {
+    const timestamp = parseInt(
+      execSync('git log -1 --date=unix --format="%ad"', {
+        stdio: ['ignore', 'pipe', 'ignore'],
+      })
+        .toString()
+        .trim(),
+    )
+
+    if (!Number.isNaN(timestamp)) {
+      return new Date(timestamp * 1000)
+    }
+  } catch {
+    // Build environments without Git should still produce a usable app.
+  }
+
+  return new Date()
+}
+
+const commitTimeDateObj = getCommitTimeDate()
 const commitTime = commitTimeDateObj.toUTCString()
 const commitTime2 = commitTimeDateObj.toISOString().replace(/\.\d+Z$/, '+00:00')
 
@@ -222,14 +238,6 @@ export default defineConfig({
         manualChunks(id) {
           if (id.includes('node_modules')) {
             const vendor = id.split('node_modules/')[1].split('/')[0]
-            if (
-              vendor === 'peerjs' ||
-              vendor === 'peerjs-js-binarypack' ||
-              vendor === 'webrtc-adapter' ||
-              vendor === 'sdp'
-            ) {
-              return
-            }
             if (vendor === 'react-dom' || vendor === 'react') {
               return vendor
             }

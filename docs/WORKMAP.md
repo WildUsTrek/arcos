@@ -10,18 +10,19 @@ Transform the current configurable single-player game into a curated Italian-fir
 - Core game loop: `src/epics/game_general`, `src/epics/cards`, `src/reducers`, `src/utils/checkVictory.ts`.
 - Battle settings: `src/constants/defaultSettings.ts`, `src/data/preSettings.ts`, `src/components/screens/Pref.tsx`.
 - AI: `src/ai/main.ts`, `src/ai/getMaxScore.ts`, `src/ai/coefs.ts`, invoked by `src/epics/cards/aiPlayCardEpic.ts`.
-- Language: `src/i18n/langs.ts`, `src/i18n/I18nProvider.tsx`, `src/components/screens/LangPref.tsx`, `src/epics/settings_lang_etc`.
+- Language: `src/i18n/langs.ts`, `src/i18n/I18nProvider.tsx`, `src/epics/settings_lang_etc`.
 - Offline/PWA: `vite.config.ts` uses `vite-plugin-pwa` and caches JS, CSS, HTML, images, audio and fonts.
-- Legacy multiplayer: `src/webrtc` and `src/epics/multiplayer`; kept inactive until a dedicated physical cleanup pass.
+- Online multiplayer: UI and root epics removed; WebRTC/PeerJS source and dependency removed.
 
 ## Local/Offline Assessment
 
 Single-player can be made fully local/offline after dependencies are installed and the app is built or served locally. The repo contains the game source, cards, images, sound effects, fonts and translations.
 
-Current blockers on this machine:
+Current local notes:
 
-- `node`, `npm`, `bun` and `git` are not available in PATH.
-- `vite.config.ts` currently calls `git log -1`, so build needs either Git available or a fallback for missing Git.
+- Node, pnpm and Git are available through the Codex runtime helper.
+- `node_modules/` is not currently installed, so Vite/typecheck/build cannot run yet.
+- `vite.config.ts` has a Git metadata fallback so a missing Git binary does not break production build.
 - Existing PWA offline mode works after first successful load/install, not by opening raw source files directly.
 - Online multiplayer is out of scope and must not be exposed in the UI.
 
@@ -30,27 +31,27 @@ Current blockers on this machine:
 | ID | Requirement | Current state | Target |
 | --- | --- | --- | --- |
 | R1 | Persistent project mapping tool | Missing | `tools/project-map.ps1` generates JSON/Markdown maps. |
-| R2 | Italian mandatory language | Missing | Default and locked language `it`; remove language selector or make it non-interactive. |
-| R3 | Progressive campaign | Missing | Numbered battles with locked/unlocked progression. |
-| R4 | Visible rewards | Missing | Each battle shows reward before starting and records earned rewards. |
-| R5 | Increasing difficulty | Partial | Battle config must scale conditions, AI depth, and challenge modifiers. |
-| R6 | Stronger AI | Partial/weak | Replace single-turn heuristic with opponent-aware, multi-turn or simulation-based decisioning. |
-| R7 | Random rotating challenge modes | Missing | Controlled random mode per battle, persisted in campaign run state. |
+| R2 | Italian mandatory language | Done for active UI | Default language forced to `it`, stored language ignored, language selector removed from active UI. |
+| R3 | Progressive campaign | In progress | 12 numbered battles with locked/unlocked progression now exist as the first campaign contract. |
+| R4 | Visible rewards | In progress | Campaign screen highlights the reward before battle; win screen shows level completion, reward and next unlock. |
+| R5 | Increasing difficulty | In progress | Campaign levels now scale base settings, AI level, and challenge-mode modifiers. |
+| R6 | Stronger AI | In progress | AI now uses player-hand reply checks, immediate threat avoidance, reply penalty, discard quality scoring, and campaign opponent profiles; deeper search/simulation still pending. |
+| R7 | Random rotating challenge modes | In progress | Seed-backed challenge rotation is persisted through campaign progress and every defined mode is represented in campaign pools. |
 | R8 | Named opponents | Partial names only | Curated Italian opponent roster per battle/difficulty. |
 | R9 | Tavern identity | Existing tavern data | Show Italian tavern name/location as battle frame, not as settings preset selector. |
-| R10 | Restrict settings menu | Missing | Remove/lock gameplay-affecting controls in campaign mode. |
+| R10 | Restrict settings menu | Done for active campaign screen | Gameplay-affecting controls removed from the active `Pref` screen; level config and challenge mode now control battle setup and visible victory conditions. |
 | R11 | Local/offline validation | Partial | Build, preview, PWA smoke test, and no-network single-player test. |
-| R12 | Remove online multiplayer challenges | In progress | UI removed and root online epics disabled; legacy files pending physical cleanup. |
+| R12 | Remove online multiplayer challenges | Done for online runtime | UI, root epics, WebRTC source, PeerJS dependency, queue epics, multiplayer reducer and utility source files removed. |
 
 ## Why The Current AI Is Too Easy
 
 - It evaluates only the immediate effect of the current card, not multi-turn consequences.
-- It has no lookahead for the player response.
+- It originally had no lookahead for the player response; the current implementation now checks immediate winning replies from the real player hand and penalizes strong replies.
 - It does not model deck probabilities beyond the current hand.
 - It scores generic resource/tower/wall deltas with fixed coefficients.
-- It treats discard as a simple inverse score, so hand quality and future draw tempo are weakly represented.
-- `aiLevel = 0` only means deterministic best immediate score; it is not a strategic search.
-- It does not adapt to battle mode, tavern rules, player style, or imminent threats except direct win/loss checks.
+- It no longer treats discard as a simple inverse score; dead cards and high-value cards now receive separate discard scoring.
+- `aiLevel = 0` is now deterministic best score plus immediate threat avoidance, but it is still not a full strategic search.
+- It now adapts to campaign profile and challenge mode, but it still does not model hidden deck probabilities or long rollouts.
 
 ## Proposed Campaign Model
 
@@ -77,8 +78,8 @@ UI integration:
 
 AI upgrade path:
 
-- Phase 1: calibrated heuristic with threat detection, card synergy, resource starvation, discard quality, and victory race awareness.
-- Phase 2: one-ply lookahead over likely player hand outcomes.
+- Phase 1: calibrated heuristic with threat detection, discard quality, and victory race awareness. Current status: implemented baseline.
+- Phase 2: one-ply lookahead over likely player hand outcomes. Current status: immediate and best visible player reply penalty plus opponent profiles implemented; probabilistic hidden-hand modelling pending.
 - Phase 3: Monte Carlo rollouts or bounded minimax for high-level opponents, budgeted to avoid mobile jank.
 - Phase 4: battle-specific AI personalities that weight tower rush, resource win, denial, defense, or tempo.
 
@@ -108,5 +109,4 @@ Every implementation slice must pass:
 
 - Number of campaign levels for first release.
 - Whether rewards are cosmetic, gameplay modifiers, unlocks, or score/rank badges.
-- Whether legacy multiplayer files should be deleted immediately or after campaign tests cover the single-player flow.
 - Whether existing tavern presets are reused exactly or rebalanced for campaign progression.

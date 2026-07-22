@@ -16,21 +16,6 @@ const ZoneStatus = () => {
   const opponentName = useAppSelector((state) => state.settings.opponentName)
   const winTower = useAppSelector((state) => state.settings.winTower)
 
-  const isMultiplayer = useAppSelector((state) => state.multiplayer.on)
-  const multiplayerStatus = useAppSelector((state) => state.multiplayer.status)
-
-  const isIdConnected =
-    isMultiplayer &&
-    (multiplayerStatus === 'connected_by_id' ||
-      multiplayerStatus === 'connected_to_id')
-
-  const tempPlayerName = useAppSelector(
-    (state) => state.multiplayer.tempPlayerName,
-  )
-  const tempOpponentName = useAppSelector(
-    (state) => state.multiplayer.tempOpponentName,
-  )
-
   const size = useContext(GameSizeContext)
 
   return (
@@ -38,14 +23,11 @@ const ZoneStatus = () => {
       <div className={cl(styles.mainbg, 'pixelated')}></div>
 
       <div className={styles.side}>
-        <Status playerName={isIdConnected ? tempPlayerName : playerName} />
+        <Status playerName={playerName} />
         <Tower goal={winTower} />
         <Wall />
 
-        <Status
-          playerName={isIdConnected ? tempOpponentName : opponentName}
-          isOpponent
-        />
+        <Status playerName={opponentName} isOpponent />
         <Tower isOpponent goal={winTower} />
         <Wall isOpponent />
         <Birds />

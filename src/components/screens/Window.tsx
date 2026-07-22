@@ -8,7 +8,6 @@ import React, {
 } from 'react'
 import {
   SCREEN_PREF,
-  SCREEN_LANG_PREF,
   SCREEN_VOLUME_PREF,
   SCREEN_HELP,
   SCREEN_LANDSCAPE,
@@ -26,7 +25,6 @@ import styles from './Window.module.scss'
 type PropType = {
   screenActionType:
     | typeof SCREEN_PREF
-    | typeof SCREEN_LANG_PREF
     | typeof SCREEN_VOLUME_PREF
     | typeof SCREEN_HELP
     | typeof SCREEN_LANDSCAPE

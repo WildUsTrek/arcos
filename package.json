@@ -32,7 +32,6 @@
     "tool:genimgimports": "bun ./tools/genimgimports/index.ts",
     "tool:datapc": "bun ./tools/data-processing/docards",
     "tool:taverns": "bun ./tools/data-processing/taverns",
-    "tool:geticelist": "bun ./tools/geticelist",
     "tool:ocr:pre": "bun ./tools/ocr/crop && bun ./tools/ocr/composite",
     "tool:ocr": "bun ./tools/ocr/ocr",
     "tool:i18ncheck:card": "bun ./tools/i18ncheck/card",
@@ -61,8 +60,7 @@
     "hd",
     "remake",
     "remaster",
-    "react game",
-    "webrtc"
+    "react game"
   ],
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -70,7 +68,6 @@
     "@reduxjs/toolkit": "^2.10.1",
     "clarr": "^1.0.1",
     "immer": "^10.2.0",
-    "peerjs": "^1.5.5",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-helmet-async": "^2.0.5",

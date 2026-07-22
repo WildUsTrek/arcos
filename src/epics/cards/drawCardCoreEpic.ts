@@ -7,7 +7,6 @@ import {
   DRAW_CARD_MAIN,
   CHECK_UNUSABLE,
   AI_PLAY_CARD,
-  PLAY_CARD_FROM_QUEUE,
   ABORT_ALL,
   CHECK_SURRENDER,
   SWITCH_LOCK,
@@ -21,7 +20,6 @@ import {
   drawCardPre,
   cardTransitionDuration,
   aiDelay,
-  humanDelay,
 } from '@/constants/visuals'
 import { RootActionType } from '@/types/actionObj'
 import { RootStateType } from '@/types/state'
@@ -39,7 +37,6 @@ export default (
     mergeMap(([action, state]) => {
       const { n } = action
       const owner = state.game.playersTurn ? 'player' : 'opponent'
-      const multiGameNumber = state.multiplayer.gameNumber
       play(
         'deal',
         null,
@@ -68,7 +65,7 @@ export default (
           on: false,
           locknumber: 1,
         }).pipe(delay(0)),
-        owner === 'opponent' && shouldUseAi && multiGameNumber === -1
+        owner === 'opponent' && shouldUseAi
           ? of<RootActionType>({
               type: AI_PLAY_CARD,
             }).pipe(
@@ -78,11 +75,6 @@ export default (
                   (noAiExtraDelay ? 0 : aiExtraDelay),
               ),
             )
-          : EMPTY,
-        owner === 'opponent' && multiGameNumber > 0
-          ? of<RootActionType>({
-              type: PLAY_CARD_FROM_QUEUE,
-            }).pipe(delay(cardTransitionDuration + humanDelay))
           : EMPTY,
         owner === 'player'
           ? of<RootActionType>({

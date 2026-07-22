@@ -17,6 +17,10 @@ import {
   UPDATE_VISUALVALUES_MAIN,
   UPDATE_AILEVEL,
   UPDATE_AILEVEL_MAIN,
+  CAMPAIGN_START_LEVEL_MAIN,
+  CAMPAIGN_COMPLETE_LEVEL,
+  CAMPAIGN_COMPLETE_LEVEL_MAIN,
+  UPDATE_CAMPAIGN_PROGRESS_MAIN,
   UPDATE_STATUS,
   UPDATE_STATUS_MAIN,
   EXEC_CARD,
@@ -62,7 +66,6 @@ import {
   SET_UNUSABLE,
   SWITCH_NEW_TURN,
   SCREEN_PREF,
-  SCREEN_LANG_PREF,
   SCREEN_VOLUME_PREF,
   SCREEN_END,
   SCREEN_END_MAIN,
@@ -98,9 +101,11 @@ import {
   RECEIVE,
 } from '@/constants/ActionTypes'
 import { AvailableLangType } from '@/i18n/types'
+import type { CampaignChallengeMode } from '@/campaign/levels'
 import {
   CardListItemAllType,
   CardStateType,
+  CampaignStateType,
   EndScreenStateType,
   MultiplayerStatusType,
   ownerType2,
@@ -200,6 +205,28 @@ export type UpdateAiLevelActionType = {
 export type UpdateAiLevelMainActionType = {
   type: typeof UPDATE_AILEVEL_MAIN
   aiLevel: number
+}
+
+export type CampaignStartLevelMainActionType = {
+  type: typeof CAMPAIGN_START_LEVEL_MAIN
+  levelId: number
+  challengeMode: CampaignChallengeMode
+}
+
+export type CampaignCompleteLevelActionType = {
+  type: typeof CAMPAIGN_COMPLETE_LEVEL
+  levelId: number
+}
+
+export type CampaignCompleteLevelMainActionType = {
+  type: typeof CAMPAIGN_COMPLETE_LEVEL_MAIN
+  levelId: number
+  challengeSeed: number
+}
+
+export type UpdateCampaignProgressMainActionType = {
+  type: typeof UPDATE_CAMPAIGN_PROGRESS_MAIN
+  payload: Partial<CampaignStateType>
 }
 
 export type UpdateStatusActionTypeSingle = {
@@ -471,11 +498,6 @@ export type ScreenPrefActionType = {
   show: boolean
 }
 
-export type ScreenLangPrefActionType = {
-  type: typeof SCREEN_LANG_PREF
-  show: boolean
-}
-
 export type ScreenSgPrefActionType = {
   type: typeof SCREEN_VOLUME_PREF
   show: boolean
@@ -645,6 +667,10 @@ export type RootActionType =
   | UpdateVisualvaluesMainActionType
   | UpdateAiLevelActionType
   | UpdateAiLevelMainActionType
+  | CampaignStartLevelMainActionType
+  | CampaignCompleteLevelActionType
+  | CampaignCompleteLevelMainActionType
+  | UpdateCampaignProgressMainActionType
   | UpdateStatusActionType
   | UpdateStatusMainActionType
   | ExecCardActionType
@@ -691,7 +717,6 @@ export type RootActionType =
   | SwitchNewTurnActionType
   | CheckVictoryActionType
   | ScreenPrefActionType
-  | ScreenLangPrefActionType
   | ScreenSgPrefActionType
   | ScreenHelpActionType
   | ScreenLandscapeActionType

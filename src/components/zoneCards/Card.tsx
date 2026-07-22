@@ -46,9 +46,6 @@ const Card = ({
     state.game.locked.some((l) => l === true),
   )
   const discardMode = useAppSelector((state) => state.game.discardMode)
-  const multiGameNumber = useAppSelector(
-    (state) => state.multiplayer.gameNumber,
-  )
   const totalObj: Readonly<CardTotalType> = useAppSelector(
     (state) => state.cards.total,
   ) // player: 4 | 5 | 6 | 7 | 8, opponent:...
@@ -121,7 +118,7 @@ const Card = ({
     if (
       owner !== 'common' &&
       !locked &&
-      !(shouldUseAi && multiGameNumber === -1 && owner === 'opponent')
+      !(shouldUseAi && owner === 'opponent')
     ) {
       if (discardMode) {
         if (canDiscardUndiscardableWhenDDP || !special?.undiscardable) {
@@ -148,7 +145,7 @@ const Card = ({
       !locked &&
       (!special?.undiscardable ||
         (discardMode && canDiscardUndiscardableWhenDDP)) &&
-      !(shouldUseAi && multiGameNumber === -1 && owner === 'opponent')
+      !(shouldUseAi && owner === 'opponent')
     ) {
       buttonDisabled = false
       let timer: ReturnType<typeof setTimeout> | undefined

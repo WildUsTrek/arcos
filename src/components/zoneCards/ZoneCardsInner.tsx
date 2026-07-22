@@ -1,8 +1,6 @@
 import cl from 'clarr'
 import React, { useContext } from 'react'
 import DiscardModeNotice from '@/components/special/DiscardModeNotice'
-import { canDiscardUndiscardableWhenDDP } from '@/constants/devSettings'
-import dataCards from '@/data/cards'
 import { I18nContext } from '@/i18n/I18nContext'
 import { CardListItemAllType } from '@/types/state'
 import { GameSizeContext } from '@/utils/contexts/GameSizeContext'
@@ -32,29 +30,6 @@ const ZoneCardsInner = () => {
     playerCards.length > 0 &&
     playerCards.every((card) => card && card.unusable === true)
 
-  const isMultiplayer = useAppSelector((state) => state.multiplayer.on)
-
-  // only for multiplayer, surrender is automatic in single player (AI) mode, done in checkSurrenderEpic.ts
-  const shouldSurrender =
-    isMultiplayer &&
-    playerCards.length > 0 &&
-    playerCards.every(
-      (card) =>
-        card &&
-        card.unusable === true &&
-        dataCards[card.n].special?.undiscardable === true &&
-        !(discardMode && canDiscardUndiscardableWhenDDP),
-    )
-
-  const shouldSurrenderTooltip =
-    shouldSurrender && playersTurn && !locked
-      ? _.i18n(
-          'With no usable or discardable card, you must surrender. Open the "%s1" window and click "%s2" (or ask your opponent to do so)',
-        )
-          .replace('%s1', _.i18n('Preferences'))
-          .replace('%s2', _.i18n('Apply & New Game'))
-      : ''
-
   const allUnusableTooltip =
     allUnusable && playersTurn && !locked && !discardMode
       ? _.i18n('allUnusableTip')
@@ -63,7 +38,7 @@ const ZoneCardsInner = () => {
   return (
     <div
       className={cl(styles.main, size.narrowMobile ? 'h-1/2' : 'h-1/3')}
-      {...tooltipAttrs(shouldSurrenderTooltip || allUnusableTooltip)}
+      {...tooltipAttrs(allUnusableTooltip)}
     >
       <Card n={-1} position={-1} unusable />
       {cards.map((card, i) =>

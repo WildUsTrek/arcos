@@ -12,6 +12,7 @@ import {
   SoundStateType,
   VisualStateType,
   AiStateType,
+  CampaignStateType,
 } from '@/types/state'
 
 type LocalstorageType = {
@@ -20,6 +21,7 @@ type LocalstorageType = {
   sound?: SoundStateType
   visual?: VisualStateType
   ai?: AiStateType
+  campaign?: Partial<CampaignStateType>
 }
 
 export const lsVersion = (): void => {

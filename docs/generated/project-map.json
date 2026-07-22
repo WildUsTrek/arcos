@@ -1,12 +1,12 @@
 ﻿{
-    "generatedAt":  "2026-07-22T21:25:17",
-    "snapshotName":  "20260722-212516-after-github-pages-workflow",
+    "generatedAt":  "2026-07-22T22:21:31",
+    "snapshotName":  "20260722-222131-after-premium-campaign-ai-pass",
     "root":  "C:\\Users\\ASUS\\Documents\\testing mobile github\\arcomage-hd-main",
     "totals":  {
-                   "sourceFiles":  264,
+                   "sourceFiles":  239,
                    "assetFiles":  151,
                    "testFiles":  28,
-                   "imports":  947
+                   "imports":  767
                },
     "sourceByArea":  [
                          {
@@ -24,11 +24,18 @@
                              "scss":  0
                          },
                          {
-                             "area":  "components",
-                             "files":  72,
+                             "area":  "campaign",
+                             "files":  1,
                              "ts":  1,
-                             "tsx":  47,
-                             "scss":  24
+                             "tsx":  0,
+                             "scss":  0
+                         },
+                         {
+                             "area":  "components",
+                             "files":  69,
+                             "ts":  1,
+                             "tsx":  45,
+                             "scss":  23
                          },
                          {
                              "area":  "constants",
@@ -53,8 +60,8 @@
                          },
                          {
                              "area":  "epics",
-                             "files":  52,
-                             "ts":  52,
+                             "files":  35,
+                             "ts":  35,
                              "tsx":  0,
                              "scss":  0
                          },
@@ -102,16 +109,9 @@
                          },
                          {
                              "area":  "utils",
-                             "files":  41,
-                             "ts":  39,
+                             "files":  37,
+                             "ts":  35,
                              "tsx":  2,
-                             "scss":  0
-                         },
-                         {
-                             "area":  "webrtc",
-                             "files":  2,
-                             "ts":  2,
-                             "tsx":  0,
                              "scss":  0
                          }
                      ],
@@ -160,10 +160,11 @@
     "importsByKind":  [
                           {
                               "kind":  "@/",
-                              "count":  476,
+                              "count":  367,
                               "values":  [
                                              "@/ai",
                                              "@/ai/checkCardUseDiscard",
+                                             "@/campaign/levels",
                                              "@/components/effects/AnimatedNumber",
                                              "@/components/effects/NumberChangeVisual",
                                              "@/components/effects/NumberDiff",
@@ -173,7 +174,6 @@
                                              "@/components/special/CheckBox",
                                              "@/components/special/DiscardModeNotice",
                                              "@/components/special/MultilineText",
-                                             "@/components/special/NumberInput",
                                              "@/constants/ActionTypes",
                                              "@/constants/connDataKind",
                                              "@/constants/defaultSettings",
@@ -182,7 +182,6 @@
                                              "@/constants/resourceNames",
                                              "@/constants/visuals",
                                              "@/data/cards",
-                                             "@/data/preSettings",
                                              "@/data/visualvalues",
                                              "@/i18n/cards/en",
                                              "@/i18n/I18nContext",
@@ -193,7 +192,6 @@
                                              "@/store",
                                              "@/types/actionObj",
                                              "@/types/ai",
-                                             "@/types/connData",
                                              "@/types/dataCard",
                                              "@/types/formFields",
                                              "@/types/state",
@@ -213,14 +211,9 @@
                                              "@/utils/hooks/useAppDispatch",
                                              "@/utils/hooks/useBeforeWindowUnloadWarning",
                                              "@/utils/hooks/useWindowLoad",
-                                             "@/utils/isEmoji",
                                              "@/utils/isScreenState",
                                              "@/utils/isTouch",
                                              "@/utils/localstorage",
-                                             "@/utils/multiplayer/Queue",
-                                             "@/utils/multiplayer/queues",
-                                             "@/utils/multiplayer/reverseState",
-                                             "@/utils/multiplayer/seq",
                                              "@/utils/random",
                                              "@/utils/randomWithProbs",
                                              "@/utils/shallowCompare",
@@ -231,8 +224,7 @@
                                              "@/utils/textediting/simulateArrowKey",
                                              "@/utils/tooltip",
                                              "@/utils/typeHelpers",
-                                             "@/utils/upper1st",
-                                             "@/utils/variousLengthChunk"
+                                             "@/utils/upper1st"
                                          ]
                           },
                           {
@@ -257,12 +249,11 @@
                           },
                           {
                               "kind":  "package",
-                              "count":  270,
+                              "count":  211,
                               "values":  [
                                              "@reduxjs/toolkit",
                                              "clarr",
                                              "immer",
-                                             "peerjs",
                                              "react",
                                              "react-dom/client",
                                              "react-helmet-async",
@@ -276,7 +267,7 @@
                           },
                           {
                               "kind":  "relative",
-                              "count":  187,
+                              "count":  175,
                               "values":  [
                                              "../devLog",
                                              "../effects/Birds",
@@ -293,13 +284,13 @@
                                              "./ButtonGithub.module.scss",
                                              "./ButtonHelp",
                                              "./ButtonHelp.module.scss",
-                                             "./ButtonLangPref",
-                                             "./ButtonLangPref.module.scss",
                                              "./ButtonPref",
                                              "./ButtonPref.module.scss",
                                              "./buttons/ButtonBar",
                                              "./ButtonSgPref",
                                              "./ButtonSgPref.module.scss",
+                                             "./campaign",
+                                             "./campaign/progressEpic",
                                              "./Card",
                                              "./Card.module.scss",
                                              "./CardBack",
@@ -318,15 +309,9 @@
                                              "./cards/discardCardEpic",
                                              "./cards/drawCardCoreEpic",
                                              "./cards/drawCardEpic",
-                                             "./cards/drawCardFromQueueEpic",
-                                             "./cards/drawCardToQueueEpic",
                                              "./cards/execCardEpic",
-                                             "./cards/initFromQueueEpic",
-                                             "./cards/initToQueueEpic",
                                              "./cards/moveCardToTopEpic",
                                              "./cards/playCardCoreGuardedEpic",
-                                             "./cards/playCardFromQueueEpic",
-                                             "./cards/playCardToQueueEpic",
                                              "./cards/useCardCoreEpic",
                                              "./cards/useCardEpic",
                                              "./changeFormElValue",
@@ -350,19 +335,16 @@
                                              "./GameWindowList",
                                              "./getMaxScore",
                                              "./I18nContext",
-                                             "./icelist",
                                              "./isEditable",
                                              "./LandscapeNotice.module.scss",
                                              "./lang",
                                              "./langs",
                                              "./main",
                                              "./main/en",
-                                             "./multiplayer",
                                              "./Name",
                                              "./Name.module.scss",
                                              "./NumberChangeVisual.module.scss",
                                              "./NumberDiff.module.scss",
-                                             "./Queue",
                                              "./reducers",
                                              "./Resource",
                                              "./Resource.module.scss",
@@ -376,7 +358,6 @@
                                              "./screens/EndScreen",
                                              "./screens/Help",
                                              "./screens/LandscapeNotice",
-                                             "./screens/LangPref",
                                              "./screens/Pref",
                                              "./screens/SgPref",
                                              "./settings",
@@ -394,7 +375,7 @@
                                              "./settings_lang_etc/updateVolumeEpic",
                                              "./sound",
                                              "./state",
-                                             "./status",
+                                             "./Status",
                                              "./Status.module.scss",
                                              "./status/resourceProdEpic",
                                              "./status/updateStatusEpic",
@@ -421,7 +402,6 @@
                                                     "@reduxjs/toolkit",
                                                     "clarr",
                                                     "immer",
-                                                    "peerjs",
                                                     "react",
                                                     "react-dom",
                                                     "react-helmet-async",
@@ -456,11 +436,6 @@
                                                           "name":  "immer",
                                                           "section":  "dependencies",
                                                           "version":  "^10.2.0"
-                                                      },
-                                                      {
-                                                          "name":  "peerjs",
-                                                          "section":  "dependencies",
-                                                          "version":  "^1.5.5"
                                                       },
                                                       {
                                                           "name":  "react",
@@ -857,10 +832,6 @@
                          "exists":  true
                      },
                      {
-                         "path":  "src\\webrtc",
-                         "exists":  true
-                     },
-                     {
                          "path":  "src\\utils\\localstorage.ts",
                          "exists":  true
                      },
@@ -908,6 +879,10 @@
                     },
                     {
                         "file":  "src\\ai\\index.ts",
+                        "import":  "@/campaign/levels"
+                    },
+                    {
+                        "file":  "src\\ai\\index.ts",
                         "import":  "@/types/ai"
                     },
                     {
@@ -925,6 +900,10 @@
                     {
                         "file":  "src\\ai\\main.ts",
                         "import":  "./getMaxScore"
+                    },
+                    {
+                        "file":  "src\\ai\\main.ts",
+                        "import":  "@/campaign/levels"
                     },
                     {
                         "file":  "src\\ai\\main.ts",
@@ -1011,6 +990,10 @@
                         "import":  "react"
                     },
                     {
+                        "file":  "src\\campaign\\levels.ts",
+                        "import":  "@/types/state"
+                    },
+                    {
                         "file":  "src\\components\\buttons\\ButtonBar.tsx",
                         "import":  "./ButtonFullscreen"
                     },
@@ -1021,10 +1004,6 @@
                     {
                         "file":  "src\\components\\buttons\\ButtonBar.tsx",
                         "import":  "./ButtonHelp"
-                    },
-                    {
-                        "file":  "src\\components\\buttons\\ButtonBar.tsx",
-                        "import":  "./ButtonLangPref"
                     },
                     {
                         "file":  "src\\components\\buttons\\ButtonBar.tsx",
@@ -1132,38 +1111,6 @@
                     },
                     {
                         "file":  "src\\components\\buttons\\ButtonHelp.tsx",
-                        "import":  "react"
-                    },
-                    {
-                        "file":  "src\\components\\buttons\\ButtonLangPref.tsx",
-                        "import":  "./ButtonLangPref.module.scss"
-                    },
-                    {
-                        "file":  "src\\components\\buttons\\ButtonLangPref.tsx",
-                        "import":  "@/constants/ActionTypes"
-                    },
-                    {
-                        "file":  "src\\components\\buttons\\ButtonLangPref.tsx",
-                        "import":  "@/i18n/I18nContext"
-                    },
-                    {
-                        "file":  "src\\components\\buttons\\ButtonLangPref.tsx",
-                        "import":  "@/utils/hooks/useAppDispatch"
-                    },
-                    {
-                        "file":  "src\\components\\buttons\\ButtonLangPref.tsx",
-                        "import":  "@/utils/isScreenState"
-                    },
-                    {
-                        "file":  "src\\components\\buttons\\ButtonLangPref.tsx",
-                        "import":  "@/utils/tooltip"
-                    },
-                    {
-                        "file":  "src\\components\\buttons\\ButtonLangPref.tsx",
-                        "import":  "clarr"
-                    },
-                    {
-                        "file":  "src\\components\\buttons\\ButtonLangPref.tsx",
                         "import":  "react"
                     },
                     {
@@ -1353,10 +1300,6 @@
                     {
                         "file":  "src\\components\\GameWindowList.tsx",
                         "import":  "./screens/LandscapeNotice"
-                    },
-                    {
-                        "file":  "src\\components\\GameWindowList.tsx",
-                        "import":  "./screens/LangPref"
                     },
                     {
                         "file":  "src\\components\\GameWindowList.tsx",
@@ -1551,120 +1494,32 @@
                         "import":  "react"
                     },
                     {
-                        "file":  "src\\components\\screens\\LangPref.tsx",
+                        "file":  "src\\components\\screens\\Pref.tsx",
                         "import":  "./Window"
                     },
                     {
-                        "file":  "src\\components\\screens\\LangPref.tsx",
+                        "file":  "src\\components\\screens\\Pref.tsx",
                         "import":  "./Window.module.scss"
                     },
                     {
-                        "file":  "src\\components\\screens\\LangPref.tsx",
-                        "import":  "@/components/special/CheckBox"
-                    },
-                    {
-                        "file":  "src\\components\\screens\\LangPref.tsx",
+                        "file":  "src\\components\\screens\\Pref.tsx",
                         "import":  "@/i18n/I18nContext"
                     },
                     {
-                        "file":  "src\\components\\screens\\LangPref.tsx",
-                        "import":  "@/i18n/langs"
-                    },
-                    {
-                        "file":  "src\\components\\screens\\LangPref.tsx",
-                        "import":  "@/i18n/types"
-                    },
-                    {
-                        "file":  "src\\components\\screens\\LangPref.tsx",
+                        "file":  "src\\components\\screens\\Pref.tsx",
                         "import":  "@/utils/hooks/useAppDispatch"
                     },
                     {
-                        "file":  "src\\components\\screens\\LangPref.tsx",
-                        "import":  "@/utils/tooltip"
-                    },
-                    {
-                        "file":  "src\\components\\screens\\LangPref.tsx",
+                        "file":  "src\\components\\screens\\Pref.tsx",
                         "import":  "clarr"
                     },
                     {
-                        "file":  "src\\components\\screens\\LangPref.tsx",
+                        "file":  "src\\components\\screens\\Pref.tsx",
                         "import":  "react"
                     },
                     {
-                        "file":  "src\\components\\screens\\Pref.tsx",
-                        "import":  "./Window"
-                    },
-                    {
-                        "file":  "src\\components\\screens\\Pref.tsx",
-                        "import":  "./Window.module.scss"
-                    },
-                    {
-                        "file":  "src\\components\\screens\\Pref.tsx",
-                        "import":  "@/components/special/NumberInput"
-                    },
-                    {
-                        "file":  "src\\components\\screens\\Pref.tsx",
-                        "import":  "@/constants/ranges"
-                    },
-                    {
-                        "file":  "src\\components\\screens\\Pref.tsx",
-                        "import":  "@/data/preSettings"
-                    },
-                    {
-                        "file":  "src\\components\\screens\\Pref.tsx",
-                        "import":  "@/i18n/I18nContext"
-                    },
-                    {
-                        "file":  "src\\components\\screens\\Pref.tsx",
-                        "import":  "@/types/formFields"
-                    },
-                    {
-                        "file":  "src\\components\\screens\\Pref.tsx",
-                        "import":  "@/utils/hooks/useAppDispatch"
-                    },
-                    {
-                        "file":  "src\\components\\screens\\Pref.tsx",
-                        "import":  "@/utils/isEmoji"
-                    },
-                    {
-                        "file":  "src\\components\\screens\\Pref.tsx",
-                        "import":  "@/utils/random"
-                    },
-                    {
-                        "file":  "src\\components\\screens\\Pref.tsx",
-                        "import":  "@/utils/startWinState"
-                    },
-                    {
-                        "file":  "src\\components\\screens\\Pref.tsx",
-                        "import":  "@/utils/tooltip"
-                    },
-                    {
-                        "file":  "src\\components\\screens\\Pref.tsx",
-                        "import":  "@/utils/typeHelpers"
-                    },
-                    {
-                        "file":  "src\\components\\screens\\Pref.tsx",
-                        "import":  "@/utils/upper1st"
-                    },
-                    {
-                        "file":  "src\\components\\screens\\Pref.tsx",
-                        "import":  "@/utils/variousLengthChunk"
-                    },
-                    {
-                        "file":  "src\\components\\screens\\Pref.tsx",
-                        "import":  "clarr"
-                    },
-                    {
-                        "file":  "src\\components\\screens\\Pref.tsx",
-                        "import":  "immer"
-                    },
-                    {
                         "file":  "src\\components\\screens\\screenMaps.ts",
                         "import":  "./Window.module.scss"
-                    },
-                    {
-                        "file":  "src\\components\\screens\\screenMaps.ts",
-                        "import":  "clarr"
                     },
                     {
                         "file":  "src\\components\\screens\\SgPref.tsx",
@@ -2076,14 +1931,6 @@
                     },
                     {
                         "file":  "src\\components\\zoneCards\\ZoneCardsInner.tsx",
-                        "import":  "@/constants/devSettings"
-                    },
-                    {
-                        "file":  "src\\components\\zoneCards\\ZoneCardsInner.tsx",
-                        "import":  "@/data/cards"
-                    },
-                    {
-                        "file":  "src\\components\\zoneCards\\ZoneCardsInner.tsx",
                         "import":  "@/i18n/I18nContext"
                     },
                     {
@@ -2311,6 +2158,34 @@
                         "import":  "@/types/state"
                     },
                     {
+                        "file":  "src\\epics\\campaign\\progressEpic.ts",
+                        "import":  "@/campaign/levels"
+                    },
+                    {
+                        "file":  "src\\epics\\campaign\\progressEpic.ts",
+                        "import":  "@/types/actionObj"
+                    },
+                    {
+                        "file":  "src\\epics\\campaign\\progressEpic.ts",
+                        "import":  "@/types/state"
+                    },
+                    {
+                        "file":  "src\\epics\\campaign\\progressEpic.ts",
+                        "import":  "@/utils/localstorage"
+                    },
+                    {
+                        "file":  "src\\epics\\campaign\\progressEpic.ts",
+                        "import":  "redux-observable"
+                    },
+                    {
+                        "file":  "src\\epics\\campaign\\progressEpic.ts",
+                        "import":  "rxjs"
+                    },
+                    {
+                        "file":  "src\\epics\\campaign\\progressEpic.ts",
+                        "import":  "rxjs/operators"
+                    },
+                    {
                         "file":  "src\\epics\\cards\\aiPlayCardEpic.ts",
                         "import":  "@/ai"
                     },
@@ -2424,19 +2299,11 @@
                     },
                     {
                         "file":  "src\\epics\\cards\\discardCardEpic.ts",
-                        "import":  "@/constants/connDataKind"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\discardCardEpic.ts",
                         "import":  "@/types/actionObj"
                     },
                     {
                         "file":  "src\\epics\\cards\\discardCardEpic.ts",
                         "import":  "@/types/state"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\discardCardEpic.ts",
-                        "import":  "@/utils/multiplayer/reverseState"
                     },
                     {
                         "file":  "src\\epics\\cards\\discardCardEpic.ts",
@@ -2484,10 +2351,6 @@
                     },
                     {
                         "file":  "src\\epics\\cards\\drawCardEpic.ts",
-                        "import":  "@/constants/connDataKind"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\drawCardEpic.ts",
                         "import":  "@/types/actionObj"
                     },
                     {
@@ -2508,74 +2371,6 @@
                     },
                     {
                         "file":  "src\\epics\\cards\\drawCardEpic.ts",
-                        "import":  "rxjs/operators"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\drawCardFromQueueEpic.ts",
-                        "import":  "@/types/actionObj"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\drawCardFromQueueEpic.ts",
-                        "import":  "@/types/state"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\drawCardFromQueueEpic.ts",
-                        "import":  "@/utils/devLog"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\drawCardFromQueueEpic.ts",
-                        "import":  "@/utils/multiplayer/Queue"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\drawCardFromQueueEpic.ts",
-                        "import":  "@/utils/multiplayer/queues"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\drawCardFromQueueEpic.ts",
-                        "import":  "redux-observable"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\drawCardFromQueueEpic.ts",
-                        "import":  "rxjs"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\drawCardFromQueueEpic.ts",
-                        "import":  "rxjs/operators"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\drawCardToQueueEpic.ts",
-                        "import":  "@/constants/ActionTypes"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\drawCardToQueueEpic.ts",
-                        "import":  "@/types/actionObj"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\drawCardToQueueEpic.ts",
-                        "import":  "@/types/state"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\drawCardToQueueEpic.ts",
-                        "import":  "@/utils/devLog"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\drawCardToQueueEpic.ts",
-                        "import":  "@/utils/multiplayer/Queue"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\drawCardToQueueEpic.ts",
-                        "import":  "@/utils/multiplayer/queues"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\drawCardToQueueEpic.ts",
-                        "import":  "redux-observable"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\drawCardToQueueEpic.ts",
-                        "import":  "rxjs"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\drawCardToQueueEpic.ts",
                         "import":  "rxjs/operators"
                     },
                     {
@@ -2615,74 +2410,6 @@
                         "import":  "rxjs/operators"
                     },
                     {
-                        "file":  "src\\epics\\cards\\initFromQueueEpic.ts",
-                        "import":  "@/types/actionObj"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\initFromQueueEpic.ts",
-                        "import":  "@/types/state"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\initFromQueueEpic.ts",
-                        "import":  "@/utils/devLog"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\initFromQueueEpic.ts",
-                        "import":  "@/utils/multiplayer/Queue"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\initFromQueueEpic.ts",
-                        "import":  "@/utils/multiplayer/queues"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\initFromQueueEpic.ts",
-                        "import":  "redux-observable"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\initFromQueueEpic.ts",
-                        "import":  "rxjs"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\initFromQueueEpic.ts",
-                        "import":  "rxjs/operators"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\initToQueueEpic.ts",
-                        "import":  "@/constants/ActionTypes"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\initToQueueEpic.ts",
-                        "import":  "@/types/actionObj"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\initToQueueEpic.ts",
-                        "import":  "@/types/state"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\initToQueueEpic.ts",
-                        "import":  "@/utils/devLog"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\initToQueueEpic.ts",
-                        "import":  "@/utils/multiplayer/Queue"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\initToQueueEpic.ts",
-                        "import":  "@/utils/multiplayer/queues"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\initToQueueEpic.ts",
-                        "import":  "redux-observable"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\initToQueueEpic.ts",
-                        "import":  "rxjs"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\initToQueueEpic.ts",
-                        "import":  "rxjs/operators"
-                    },
-                    {
                         "file":  "src\\epics\\cards\\moveCardToTopEpic.ts",
                         "import":  "@/types/actionObj"
                     },
@@ -2721,66 +2448,6 @@
                     {
                         "file":  "src\\epics\\cards\\playCardCoreGuardedEpic.ts",
                         "import":  "rxjs"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\playCardFromQueueEpic.ts",
-                        "import":  "@/types/state"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\playCardFromQueueEpic.ts",
-                        "import":  "@/utils/devLog"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\playCardFromQueueEpic.ts",
-                        "import":  "@/utils/multiplayer/Queue"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\playCardFromQueueEpic.ts",
-                        "import":  "@/utils/multiplayer/queues"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\playCardFromQueueEpic.ts",
-                        "import":  "redux-observable"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\playCardFromQueueEpic.ts",
-                        "import":  "rxjs"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\playCardFromQueueEpic.ts",
-                        "import":  "rxjs/operators"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\playCardToQueueEpic.ts",
-                        "import":  "@/constants/ActionTypes"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\playCardToQueueEpic.ts",
-                        "import":  "@/types/state"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\playCardToQueueEpic.ts",
-                        "import":  "@/utils/devLog"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\playCardToQueueEpic.ts",
-                        "import":  "@/utils/multiplayer/Queue"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\playCardToQueueEpic.ts",
-                        "import":  "@/utils/multiplayer/queues"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\playCardToQueueEpic.ts",
-                        "import":  "redux-observable"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\playCardToQueueEpic.ts",
-                        "import":  "rxjs"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\playCardToQueueEpic.ts",
-                        "import":  "rxjs/operators"
                     },
                     {
                         "file":  "src\\epics\\cards\\useCardCoreEpic.ts",
@@ -2820,19 +2487,11 @@
                     },
                     {
                         "file":  "src\\epics\\cards\\useCardEpic.ts",
-                        "import":  "@/constants/connDataKind"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\useCardEpic.ts",
                         "import":  "@/types/actionObj"
                     },
                     {
                         "file":  "src\\epics\\cards\\useCardEpic.ts",
                         "import":  "@/types/state"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\useCardEpic.ts",
-                        "import":  "@/utils/multiplayer/reverseState"
                     },
                     {
                         "file":  "src\\epics\\cards\\useCardEpic.ts",
@@ -2940,19 +2599,11 @@
                     },
                     {
                         "file":  "src\\epics\\game_general\\initEpic.ts",
-                        "import":  "@/constants/connDataKind"
-                    },
-                    {
-                        "file":  "src\\epics\\game_general\\initEpic.ts",
                         "import":  "@/types/actionObj"
                     },
                     {
                         "file":  "src\\epics\\game_general\\initEpic.ts",
                         "import":  "@/types/state"
-                    },
-                    {
-                        "file":  "src\\epics\\game_general\\initEpic.ts",
-                        "import":  "@/utils/multiplayer/reverseState"
                     },
                     {
                         "file":  "src\\epics\\game_general\\initEpic.ts",
@@ -2992,6 +2643,10 @@
                     },
                     {
                         "file":  "src\\epics\\index.ts",
+                        "import":  "./campaign/progressEpic"
+                    },
+                    {
+                        "file":  "src\\epics\\index.ts",
                         "import":  "./cards/aiPlayCardEpic"
                     },
                     {
@@ -3020,23 +2675,7 @@
                     },
                     {
                         "file":  "src\\epics\\index.ts",
-                        "import":  "./cards/drawCardFromQueueEpic"
-                    },
-                    {
-                        "file":  "src\\epics\\index.ts",
-                        "import":  "./cards/drawCardToQueueEpic"
-                    },
-                    {
-                        "file":  "src\\epics\\index.ts",
                         "import":  "./cards/execCardEpic"
-                    },
-                    {
-                        "file":  "src\\epics\\index.ts",
-                        "import":  "./cards/initFromQueueEpic"
-                    },
-                    {
-                        "file":  "src\\epics\\index.ts",
-                        "import":  "./cards/initToQueueEpic"
                     },
                     {
                         "file":  "src\\epics\\index.ts",
@@ -3045,14 +2684,6 @@
                     {
                         "file":  "src\\epics\\index.ts",
                         "import":  "./cards/playCardCoreGuardedEpic"
-                    },
-                    {
-                        "file":  "src\\epics\\index.ts",
-                        "import":  "./cards/playCardFromQueueEpic"
-                    },
-                    {
-                        "file":  "src\\epics\\index.ts",
-                        "import":  "./cards/playCardToQueueEpic"
                     },
                     {
                         "file":  "src\\epics\\index.ts",
@@ -3159,354 +2790,6 @@
                         "import":  "redux-observable"
                     },
                     {
-                        "file":  "src\\epics\\multiplayer\\connectionListenEpic.ts",
-                        "import":  "@/constants/devSettings"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\connectionListenEpic.ts",
-                        "import":  "@/types/actionObj"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\connectionListenEpic.ts",
-                        "import":  "@/types/state"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\connectionListenEpic.ts",
-                        "import":  "@/utils/devLog"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\connectionListenEpic.ts",
-                        "import":  "@/utils/multiplayer/seq"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\connectionListenEpic.ts",
-                        "import":  "redux-observable"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\connectionListenEpic.ts",
-                        "import":  "rxjs"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\connectionListenEpic.ts",
-                        "import":  "rxjs/operators"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\connectToIdEpic.ts",
-                        "import":  "@/constants/visuals"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\connectToIdEpic.ts",
-                        "import":  "@/types/actionObj"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\connectToIdEpic.ts",
-                        "import":  "@/types/state"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\connectToIdEpic.ts",
-                        "import":  "@/utils/devLog"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\connectToIdEpic.ts",
-                        "import":  "@/utils/multiplayer/seq"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\connectToIdEpic.ts",
-                        "import":  "peerjs"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\connectToIdEpic.ts",
-                        "import":  "redux-observable"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\connectToIdEpic.ts",
-                        "import":  "rxjs"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\connectToIdEpic.ts",
-                        "import":  "rxjs/operators"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\connectToNetworkEpic.ts",
-                        "import":  "@/types/actionObj"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\connectToNetworkEpic.ts",
-                        "import":  "@/types/state"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\connectToNetworkEpic.ts",
-                        "import":  "@/utils/devLog"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\connectToNetworkEpic.ts",
-                        "import":  "redux-observable"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\connectToNetworkEpic.ts",
-                        "import":  "rxjs"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\connectToNetworkEpic.ts",
-                        "import":  "rxjs/operators"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\disconnectEpic.ts",
-                        "import":  "@/types/actionObj"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\disconnectEpic.ts",
-                        "import":  "@/types/state"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\disconnectEpic.ts",
-                        "import":  "redux-observable"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\disconnectEpic.ts",
-                        "import":  "rxjs"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\disconnectEpic.ts",
-                        "import":  "rxjs/operators"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\peerListenEpic.ts",
-                        "import":  "@/types/actionObj"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\peerListenEpic.ts",
-                        "import":  "@/types/state"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\peerListenEpic.ts",
-                        "import":  "@/utils/devLog"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\peerListenEpic.ts",
-                        "import":  "peerjs"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\peerListenEpic.ts",
-                        "import":  "redux-observable"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\peerListenEpic.ts",
-                        "import":  "rxjs"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\peerListenEpic.ts",
-                        "import":  "rxjs/operators"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\receiveEpic.ts",
-                        "import":  "@/constants/ActionTypes"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\receiveEpic.ts",
-                        "import":  "@/constants/connDataKind"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\receiveEpic.ts",
-                        "import":  "@/types/actionObj"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\receiveEpic.ts",
-                        "import":  "@/types/state"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\receiveEpic.ts",
-                        "import":  "@/utils/devLog"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\receiveEpic.ts",
-                        "import":  "@/utils/multiplayer/seq"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\receiveEpic.ts",
-                        "import":  "redux-observable"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\receiveEpic.ts",
-                        "import":  "rxjs"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\receiveEpic.ts",
-                        "import":  "rxjs/operators"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\receiveWithLatencyEpic.ts",
-                        "import":  "@/constants/ActionTypes"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\receiveWithLatencyEpic.ts",
-                        "import":  "@/constants/devSettings"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\receiveWithLatencyEpic.ts",
-                        "import":  "@/types/actionObj"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\receiveWithLatencyEpic.ts",
-                        "import":  "@/types/state"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\receiveWithLatencyEpic.ts",
-                        "import":  "@/utils/devLog"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\receiveWithLatencyEpic.ts",
-                        "import":  "@/utils/random"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\receiveWithLatencyEpic.ts",
-                        "import":  "redux-observable"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\receiveWithLatencyEpic.ts",
-                        "import":  "rxjs"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\receiveWithLatencyEpic.ts",
-                        "import":  "rxjs/operators"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\sendEpic.ts",
-                        "import":  "@/constants/ActionTypes"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\sendEpic.ts",
-                        "import":  "@/types/actionObj"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\sendEpic.ts",
-                        "import":  "@/types/connData"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\sendEpic.ts",
-                        "import":  "@/types/state"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\sendEpic.ts",
-                        "import":  "@/utils/devLog"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\sendEpic.ts",
-                        "import":  "@/utils/multiplayer/seq"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\sendEpic.ts",
-                        "import":  "redux-observable"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\sendEpic.ts",
-                        "import":  "rxjs"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\sendEpic.ts",
-                        "import":  "rxjs/operators"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\sendNameEpic.ts",
-                        "import":  "@/constants/connDataKind"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\sendNameEpic.ts",
-                        "import":  "@/constants/visuals"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\sendNameEpic.ts",
-                        "import":  "@/types/actionObj"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\sendNameEpic.ts",
-                        "import":  "@/types/state"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\sendNameEpic.ts",
-                        "import":  "redux-observable"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\sendNameEpic.ts",
-                        "import":  "rxjs"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\sendNameEpic.ts",
-                        "import":  "rxjs/operators"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\sendSettingsEpic.ts",
-                        "import":  "@/constants/connDataKind"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\sendSettingsEpic.ts",
-                        "import":  "@/types/actionObj"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\sendSettingsEpic.ts",
-                        "import":  "@/types/state"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\sendSettingsEpic.ts",
-                        "import":  "redux-observable"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\sendSettingsEpic.ts",
-                        "import":  "rxjs"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\sendSettingsEpic.ts",
-                        "import":  "rxjs/operators"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\sendTempSettingsEpic.ts",
-                        "import":  "@/constants/connDataKind"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\sendTempSettingsEpic.ts",
-                        "import":  "@/constants/visuals"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\sendTempSettingsEpic.ts",
-                        "import":  "@/types/actionObj"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\sendTempSettingsEpic.ts",
-                        "import":  "@/types/state"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\sendTempSettingsEpic.ts",
-                        "import":  "redux-observable"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\sendTempSettingsEpic.ts",
-                        "import":  "rxjs"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\sendTempSettingsEpic.ts",
-                        "import":  "rxjs/operators"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\switchMultiplayerModeEpic.ts",
-                        "import":  "@/types/actionObj"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\switchMultiplayerModeEpic.ts",
-                        "import":  "@/types/state"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\switchMultiplayerModeEpic.ts",
-                        "import":  "redux-observable"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\switchMultiplayerModeEpic.ts",
-                        "import":  "rxjs"
-                    },
-                    {
-                        "file":  "src\\epics\\multiplayer\\switchMultiplayerModeEpic.ts",
-                        "import":  "rxjs/operators"
-                    },
-                    {
                         "file":  "src\\epics\\screen\\closeScreenEndInitEpic.ts",
                         "import":  "@/types/actionObj"
                     },
@@ -3525,10 +2808,6 @@
                     {
                         "file":  "src\\epics\\screen\\closeScreenEndInitEpic.ts",
                         "import":  "rxjs/operators"
-                    },
-                    {
-                        "file":  "src\\epics\\screen\\screenEndEpic.ts",
-                        "import":  "@/constants/ActionTypes"
                     },
                     {
                         "file":  "src\\epics\\screen\\screenEndEpic.ts",
@@ -3556,7 +2835,7 @@
                     },
                     {
                         "file":  "src\\epics\\settings_lang_etc\\readlsUpdatestoreInitEpic.ts",
-                        "import":  "@/i18n/types"
+                        "import":  "@/i18n/langs"
                     },
                     {
                         "file":  "src\\epics\\settings_lang_etc\\readlsUpdatestoreInitEpic.ts",
@@ -3565,10 +2844,6 @@
                     {
                         "file":  "src\\epics\\settings_lang_etc\\readlsUpdatestoreInitEpic.ts",
                         "import":  "@/utils/localstorage"
-                    },
-                    {
-                        "file":  "src\\epics\\settings_lang_etc\\readlsUpdatestoreInitEpic.ts",
-                        "import":  "@/utils/random"
                     },
                     {
                         "file":  "src\\epics\\settings_lang_etc\\readlsUpdatestoreInitEpic.ts",
@@ -3673,6 +2948,10 @@
                     {
                         "file":  "src\\epics\\settings_lang_etc\\updateLangEpic.ts",
                         "import":  "@/constants/defaultSettings"
+                    },
+                    {
+                        "file":  "src\\epics\\settings_lang_etc\\updateLangEpic.ts",
+                        "import":  "@/i18n/langs"
                     },
                     {
                         "file":  "src\\epics\\settings_lang_etc\\updateLangEpic.ts",
@@ -4155,6 +3434,22 @@
                         "import":  "immer"
                     },
                     {
+                        "file":  "src\\reducers\\campaign.ts",
+                        "import":  "@/campaign/levels"
+                    },
+                    {
+                        "file":  "src\\reducers\\campaign.ts",
+                        "import":  "@/types/actionObj"
+                    },
+                    {
+                        "file":  "src\\reducers\\campaign.ts",
+                        "import":  "@/types/state"
+                    },
+                    {
+                        "file":  "src\\reducers\\campaign.ts",
+                        "import":  "immer"
+                    },
+                    {
                         "file":  "src\\reducers\\cards.ts",
                         "import":  "@/types/actionObj"
                     },
@@ -4184,6 +3479,10 @@
                     },
                     {
                         "file":  "src\\reducers\\index.ts",
+                        "import":  "./campaign"
+                    },
+                    {
+                        "file":  "src\\reducers\\index.ts",
                         "import":  "./cards"
                     },
                     {
@@ -4193,10 +3492,6 @@
                     {
                         "file":  "src\\reducers\\index.ts",
                         "import":  "./lang"
-                    },
-                    {
-                        "file":  "src\\reducers\\index.ts",
-                        "import":  "./multiplayer"
                     },
                     {
                         "file":  "src\\reducers\\index.ts",
@@ -4240,22 +3535,6 @@
                     },
                     {
                         "file":  "src\\reducers\\lang.ts",
-                        "import":  "immer"
-                    },
-                    {
-                        "file":  "src\\reducers\\multiplayer.ts",
-                        "import":  "@/constants/defaultSettings"
-                    },
-                    {
-                        "file":  "src\\reducers\\multiplayer.ts",
-                        "import":  "@/types/actionObj"
-                    },
-                    {
-                        "file":  "src\\reducers\\multiplayer.ts",
-                        "import":  "@/types/state"
-                    },
-                    {
-                        "file":  "src\\reducers\\multiplayer.ts",
                         "import":  "immer"
                     },
                     {
@@ -4372,6 +3651,10 @@
                     },
                     {
                         "file":  "src\\types\\actionObj.ts",
+                        "import":  "@/campaign/levels"
+                    },
+                    {
+                        "file":  "src\\types\\actionObj.ts",
                         "import":  "@/i18n/types"
                     },
                     {
@@ -4389,6 +3672,10 @@
                     {
                         "file":  "src\\types\\formFields.ts",
                         "import":  "./state"
+                    },
+                    {
+                        "file":  "src\\types\\state.ts",
+                        "import":  "@/campaign/levels"
                     },
                     {
                         "file":  "src\\types\\state.ts",
@@ -4523,30 +3810,6 @@
                         "import":  "semver-ts"
                     },
                     {
-                        "file":  "src\\utils\\multiplayer\\queues.ts",
-                        "import":  "./Queue"
-                    },
-                    {
-                        "file":  "src\\utils\\multiplayer\\queues.ts",
-                        "import":  "@/constants/devSettings"
-                    },
-                    {
-                        "file":  "src\\utils\\multiplayer\\reverseState.ts",
-                        "import":  "@/types/state"
-                    },
-                    {
-                        "file":  "src\\utils\\multiplayer\\seq.ts",
-                        "import":  "@/constants/devSettings"
-                    },
-                    {
-                        "file":  "src\\utils\\multiplayer\\seq.ts",
-                        "import":  "@/types/connData"
-                    },
-                    {
-                        "file":  "src\\utils\\multiplayer\\seq.ts",
-                        "import":  "@/utils/devLog"
-                    },
-                    {
                         "file":  "src\\utils\\randomWithProbs.ts",
                         "import":  "@/data/cards"
                     },
@@ -4649,18 +3912,6 @@
                     {
                         "file":  "src\\utils\\tooltip.ts",
                         "import":  "react"
-                    },
-                    {
-                        "file":  "src\\webrtc\\peer.ts",
-                        "import":  "./icelist"
-                    },
-                    {
-                        "file":  "src\\webrtc\\peer.ts",
-                        "import":  "@/constants/devSettings"
-                    },
-                    {
-                        "file":  "src\\webrtc\\peer.ts",
-                        "import":  "peerjs"
                     }
                 ]
 }

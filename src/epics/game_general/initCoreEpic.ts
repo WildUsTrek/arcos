@@ -9,7 +9,6 @@ import {
   DRAW_CARD,
   RESOURCE_PROD,
   ABORT_ALL,
-  SET_MULTI_GAME_NUMBER,
   SCREEN_END,
 } from '@/constants/ActionTypes'
 import { RootActionType } from '@/types/actionObj'
@@ -24,12 +23,7 @@ export default (
     ofType(INIT_CORE),
     withLatestFrom(state$),
     mergeMap(([action, state]) => {
-      // const isHost =
-      //   state.multiplayer.on && state.multiplayer.status === 'connected_to_id'
-      // const isGuest =
-      //   state.multiplayer.on && state.multiplayer.status === 'connected_by_id'
-
-      const { playersTurn, cardList, gameNumber } = action
+      const { playersTurn, cardList } = action
 
       const total = state.settings.cardsInHand
       const cardStates: CardStateType = {
@@ -57,10 +51,6 @@ export default (
         of<RootActionType>({
           type: INIT_STATUS,
           payload: getStartState(state.settings),
-        }),
-        of<RootActionType>({
-          type: SET_MULTI_GAME_NUMBER,
-          n: gameNumber,
         }),
         of<RootActionType>({
           type: RESOURCE_PROD,

@@ -1,4 +1,5 @@
 import { AvailableLangType } from '@/i18n/types'
+import type { CampaignChallengeMode } from '@/campaign/levels'
 
 export type PersonStatusType = {
   bricks: number
@@ -99,7 +100,6 @@ export const isEndScreenNoCloseState = (
 
 export type ScreenStateType = {
   pref: boolean
-  langPref: boolean
   sgPref: boolean
   help: boolean
   landscape: boolean
@@ -146,6 +146,15 @@ export type AiStateType = {
   aiLevel: number // 0 - 4
 }
 
+export type CampaignStateType = {
+  unlockedLevel: number
+  activeLevel: number | null
+  activeChallengeMode: CampaignChallengeMode | null
+  challengeSeed: number
+  completedLevels: number[]
+  lastCompletedLevel: number | null
+}
+
 export type MultiplayerStatusType =
   | 'disconnected'
   | 'connecting_net'
@@ -167,7 +176,6 @@ export type MultiplayerStateType = {
 }
 
 export type RootStateType = {
-  multiplayer: MultiplayerStateType
   lang: LangStateType
   status: StatusType
   cards: CardStateType
@@ -177,6 +185,7 @@ export type RootStateType = {
   sound: SoundStateType
   visual: VisualStateType
   ai: AiStateType
+  campaign: CampaignStateType
 }
 
 export type ExchangeStateType = {

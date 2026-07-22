@@ -20,6 +20,14 @@ export const UPDATE_VISUALVALUES_MAIN = 'UPDATE_VISUALVALUES_MAIN' as const
 export const UPDATE_AILEVEL = 'UPDATE_AILEVEL' as const
 export const UPDATE_AILEVEL_MAIN = 'UPDATE_AILEVEL_MAIN' as const
 
+export const CAMPAIGN_START_LEVEL_MAIN =
+  'CAMPAIGN_START_LEVEL_MAIN' as const
+export const CAMPAIGN_COMPLETE_LEVEL = 'CAMPAIGN_COMPLETE_LEVEL' as const
+export const CAMPAIGN_COMPLETE_LEVEL_MAIN =
+  'CAMPAIGN_COMPLETE_LEVEL_MAIN' as const
+export const UPDATE_CAMPAIGN_PROGRESS_MAIN =
+  'UPDATE_CAMPAIGN_PROGRESS_MAIN' as const
+
 export const UPDATE_STATUS = 'UPDATE_STATUS' as const
 export const UPDATE_STATUS_MAIN = 'UPDATE_STATUS_MAIN' as const
 
@@ -71,7 +79,6 @@ export const SWITCH_NEW_TURN = 'SWITCH_NEW_TURN' as const
 export const CHECK_VICTORY = 'CHECK_VICTORY' as const
 
 export const SCREEN_PREF = 'SCREEN_PREF' as const
-export const SCREEN_LANG_PREF = 'SCREEN_LANG_PREF' as const
 export const SCREEN_VOLUME_PREF = 'SCREEN_VOLUME_PREF' as const
 export const SCREEN_HELP = 'SCREEN_HELP' as const
 export const SCREEN_LANDSCAPE = 'SCREEN_LANDSCAPE' as const

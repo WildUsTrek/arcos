@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
 import ai from './ai'
+import campaign from './campaign'
 import cards from './cards'
 import game from './game'
 import lang from './lang'
-import multiplayer from './multiplayer'
 import screen from './screen'
 import settings from './settings'
 import sound from './sound'
@@ -20,7 +20,7 @@ const rootReducer = combineReducers({
   sound,
   visual,
   ai,
-  multiplayer,
+  campaign,
 })
 
 export default rootReducer
