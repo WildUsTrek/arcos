@@ -66,12 +66,28 @@ Add-Check "stored-ai-level-ignored" ($readLsEpicText -notmatch "UPDATE_AILEVEL_M
 
 $campaignLevelsFile = Join-Path $resolvedRoot "src\campaign\levels.ts"
 $campaignReducerFile = Join-Path $resolvedRoot "src\reducers\campaign.ts"
+$campaignIntroFile = Join-Path $resolvedRoot "src\components\screens\CampaignBattleIntro.tsx"
+$campaignIntroStylesFile = Join-Path $resolvedRoot "src\components\screens\CampaignBattleIntro.module.scss"
+$zoneStatusFile = Join-Path $resolvedRoot "src\components\zoneStatus\ZoneStatus.tsx"
+$localstorageFile = Join-Path $resolvedRoot "src\utils\localstorage.ts"
+$campaignProgressEpicFile = Join-Path $resolvedRoot "src\epics\campaign\progressEpic.ts"
+$screenEndEpicFile = Join-Path $resolvedRoot "src\epics\screen\screenEndEpic.ts"
 $campaignLevelsText = if (Test-Path $campaignLevelsFile) { Get-Content -LiteralPath $campaignLevelsFile -Raw } else { "" }
 $prefCampaignText = if (Test-Path $pref) { Get-Content -LiteralPath $pref -Raw } else { "" }
+$campaignIntroText = if (Test-Path $campaignIntroFile) { Get-Content -LiteralPath $campaignIntroFile -Raw } else { "" }
+$campaignIntroStylesText = if (Test-Path $campaignIntroStylesFile) { Get-Content -LiteralPath $campaignIntroStylesFile -Raw } else { "" }
+$zoneStatusText = if (Test-Path $zoneStatusFile) { Get-Content -LiteralPath $zoneStatusFile -Raw } else { "" }
+$localstorageText = if (Test-Path $localstorageFile) { Get-Content -LiteralPath $localstorageFile -Raw } else { "" }
+$campaignProgressEpicText = if (Test-Path $campaignProgressEpicFile) { Get-Content -LiteralPath $campaignProgressEpicFile -Raw } else { "" }
+$screenEndEpicText = if (Test-Path $screenEndEpicFile) { Get-Content -LiteralPath $screenEndEpicFile -Raw } else { "" }
 Add-Check "campaign-levels-present" (Test-Path $campaignLevelsFile) "Campaign level registry must exist"
 Add-Check "campaign-reducer-present" (Test-Path $campaignReducerFile) "Campaign reducer must exist"
 Add-Check "campaign-explicit-victory-conditions" ($campaignLevelsText -match "getVictoryConditions" -and $prefCampaignText -match "victoryConditions") "Campaign must expose exact victory conditions per level"
 Add-Check "campaign-persisted-seed" ($campaignLevelsText -match "nextCampaignSeed" -and $readLsEpicText -match "campaign") "Campaign challenge rotation must be seed-backed and persisted"
+Add-Check "campaign-battle-intro" ((Test-Path $campaignIntroFile) -and $windowListText -match "CampaignBattleIntro" -and $campaignIntroText -match "tavernName" -and $campaignIntroText -match "victoryConditions" -and $campaignIntroStylesText -match "\.tavern") "Campaign battle start must present tavern title, challenger, and victory conditions"
+Add-Check "campaign-opponent-name-in-battle" ($zoneStatusText -match "resolveCampaignLevel" -and $zoneStatusText -match "campaignOpponentName") "Battle status must show the resolved campaign opponent name"
+Add-Check "campaign-durable-cache" ($localstorageText -match "campaignCacheSet" -and $readLsEpicText -match "campaignCacheGet" -and $campaignProgressEpicText -match "campaignCacheSet") "Campaign progress must be stored in a dedicated durable cache"
+Add-Check "campaign-cache-reset-on-finish-or-loss" ($campaignProgressEpicText -match "campaignCompleted" -and $campaignProgressEpicText -match "campaignCacheClear" -and $screenEndEpicText -match "shouldResetCampaign" -and $screenEndEpicText -match "campaignCacheClear") "Campaign cache must clear only on campaign completion or campaign loss"
 foreach ($mode in @("training", "stone-race", "thin-wall", "rich-start", "short-hand", "tower-rush", "resource-race", "siege")) {
   Add-Check "campaign-mode:$mode" ($campaignLevelsText -match "'$mode'") "Campaign mode $mode must be represented"
 }

@@ -1,5 +1,6 @@
 import cl from 'clarr'
 import React, { useContext } from 'react'
+import { resolveCampaignLevel } from '@/campaign/levels'
 import { GameSizeContext } from '@/utils/contexts/GameSizeContext'
 import { useAppSelector } from '@/utils/hooks/useAppDispatch'
 import Birds from '../effects/Birds'
@@ -14,7 +15,13 @@ import styles from './ZoneStatus.module.scss'
 const ZoneStatus = () => {
   const playerName = useAppSelector((state) => state.settings.playerName)
   const opponentName = useAppSelector((state) => state.settings.opponentName)
+  const activeLevel = useAppSelector((state) => state.campaign.activeLevel)
+  const challengeSeed = useAppSelector((state) => state.campaign.challengeSeed)
   const winTower = useAppSelector((state) => state.settings.winTower)
+  const campaignOpponentName =
+    activeLevel !== null
+      ? resolveCampaignLevel(activeLevel, challengeSeed).opponentName
+      : null
 
   const size = useContext(GameSizeContext)
 
@@ -27,7 +34,7 @@ const ZoneStatus = () => {
         <Tower goal={winTower} />
         <Wall />
 
-        <Status playerName={opponentName} isOpponent />
+        <Status playerName={campaignOpponentName ?? opponentName} isOpponent />
         <Tower isOpponent goal={winTower} />
         <Wall isOpponent />
         <Birds />

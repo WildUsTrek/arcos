@@ -2,6 +2,7 @@ import { produce } from 'immer'
 import { lt } from 'semver-ts'
 import {
   appVersion,
+  campaignStorageName,
   localstorageMinVer,
   localstorageName,
   localstorageVersionName,
@@ -58,4 +59,19 @@ export const lsSet = (fn: (draft: LocalstorageType) => void): void => {
   const lsStore: LocalstorageType = v === null ? {} : JSON.parse(v)
   const retStore = produce(lsStore, fn)
   window.localStorage.setItem(localstorageName, JSON.stringify(retStore))
+}
+
+export const campaignCacheGet = (): Partial<CampaignStateType> | null => {
+  const v = window.localStorage.getItem(campaignStorageName)
+  return v === null ? null : (JSON.parse(v) as Partial<CampaignStateType>)
+}
+
+export const campaignCacheSet = (
+  campaign: Partial<CampaignStateType>,
+): void => {
+  window.localStorage.setItem(campaignStorageName, JSON.stringify(campaign))
+}
+
+export const campaignCacheClear = (): void => {
+  window.localStorage.removeItem(campaignStorageName)
 }

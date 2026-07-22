@@ -24,7 +24,7 @@ import {
   SettingsStateType,
   VisualValuesType,
 } from '@/types/state'
-import { lsGet, lsSet, lsVersion } from '@/utils/localstorage'
+import { campaignCacheGet, lsGet, lsSet, lsVersion } from '@/utils/localstorage'
 
 export default (
   action$: Observable<RootActionType>,
@@ -52,7 +52,8 @@ export default (
         'visual',
         'visualvalues',
       ])
-      const campaign = lsGet<Partial<CampaignStateType>>(['campaign'])
+      const campaign =
+        campaignCacheGet() ?? lsGet<Partial<CampaignStateType>>(['campaign'])
       const playerName = settings?.playerName ?? 'Avventuriero'
 
       return concat(

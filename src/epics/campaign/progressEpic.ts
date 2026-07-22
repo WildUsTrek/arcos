@@ -8,7 +8,11 @@ import {
 } from '@/constants/ActionTypes'
 import { RootActionType } from '@/types/actionObj'
 import { RootStateType } from '@/types/state'
-import { lsSet } from '@/utils/localstorage'
+import {
+  campaignCacheClear,
+  campaignCacheSet,
+  lsSet,
+} from '@/utils/localstorage'
 
 const uniqueSortedLevels = (levels: number[]) =>
   [...new Set(levels)]
@@ -34,16 +38,28 @@ export default (
         state$.value.campaign.challengeSeed,
         action.levelId,
       )
+      const campaignProgress = {
+        completedLevels,
+        unlockedLevel,
+        challengeSeed,
+        activeChallengeMode: null,
+        activeLevel: null,
+        lastCompletedLevel: action.levelId,
+      }
+      const campaignCompleted = completedLevels.length >= campaignLevelCount
 
       lsSet((draft) => {
-        draft.campaign = {
-          completedLevels,
-          unlockedLevel,
-          challengeSeed,
-          activeChallengeMode: null,
-          lastCompletedLevel: action.levelId,
+        if (campaignCompleted) {
+          delete draft.campaign
+        } else {
+          draft.campaign = campaignProgress
         }
       })
+      if (campaignCompleted) {
+        campaignCacheClear()
+      } else {
+        campaignCacheSet(campaignProgress)
+      }
 
       return of<RootActionType>({
         type: CAMPAIGN_COMPLETE_LEVEL_MAIN,

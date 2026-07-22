@@ -1,6 +1,7 @@
 import React from 'react'
 import { isEndScreenNoCloseState } from '@/types/state'
 import { useAppSelector } from '@/utils/hooks/useAppDispatch'
+import CampaignBattleIntro from './screens/CampaignBattleIntro'
 import DisconnectNotice from './screens/DisconnectNotice'
 import EndScreen from './screens/EndScreen'
 import Help from './screens/Help'
@@ -21,6 +22,7 @@ const GameWindowList = () => {
   // lazy loading is a bit slow for those frequently used settings only to save a few KBs, so we don't use it
   return (
     <>
+      <CampaignBattleIntro />
       {isEndScreenNoCloseState(end) && <EndScreen {...end} />}
       {pref && <Pref />}
       {sgPref && <SgPref />}

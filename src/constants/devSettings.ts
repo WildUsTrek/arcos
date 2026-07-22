@@ -35,5 +35,6 @@ export const tutorialImageUrl =
   'https://raw.githubusercontent.com/arcomage/arcomage-hd/main/misc/readme_images/manual.jpg'
 
 export const localstorageName = 'arcomagehdls'
+export const campaignStorageName = 'arcomagehd_campaign_progress'
 export const localstorageVersionName = 'arcomagehdls_ver'
 export const localstorageMinVer = '2.0.0'

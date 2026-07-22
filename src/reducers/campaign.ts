@@ -8,7 +8,7 @@ import {
 import { RootActionType } from '@/types/actionObj'
 import { CampaignStateType } from '@/types/state'
 
-const defaultCampaignState: CampaignStateType = {
+export const defaultCampaignState: CampaignStateType = {
   unlockedLevel: 1,
   activeLevel: null,
   activeChallengeMode: null,
