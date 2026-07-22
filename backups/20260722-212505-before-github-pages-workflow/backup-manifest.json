@@ -1,0 +1,16 @@
+﻿{
+    "createdAt":  "2026-07-22T21:25:05",
+    "root":  "C:\\Users\\ASUS\\Documents\\testing mobile github\\arcomage-hd-main",
+    "name":  "before-github-pages-workflow",
+    "backupDir":  "C:\\Users\\ASUS\\Documents\\testing mobile github\\arcomage-hd-main\\backups\\20260722-212505-before-github-pages-workflow",
+    "included":  [
+                     "src",
+                     "tools",
+                     "docs",
+                     "__test__",
+                     "package.json",
+                     "vite.config.ts",
+                     "tsconfig.json",
+                     "index.html"
+                 ]
+}

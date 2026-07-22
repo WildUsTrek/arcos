@@ -1,0 +1,16 @@
+﻿{
+    "createdAt":  "2026-07-22T21:21:35",
+    "root":  "C:\\Users\\ASUS\\Documents\\testing mobile github\\arcomage-hd-main",
+    "name":  "before-fix-online-placeholders",
+    "backupDir":  "C:\\Users\\ASUS\\Documents\\testing mobile github\\arcomage-hd-main\\backups\\20260722-212135-before-fix-online-placeholders",
+    "included":  [
+                     "src",
+                     "tools",
+                     "docs",
+                     "__test__",
+                     "package.json",
+                     "vite.config.ts",
+                     "tsconfig.json",
+                     "index.html"
+                 ]
+}
