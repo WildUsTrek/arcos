@@ -31,12 +31,13 @@ const EndScreen = (endScreenState: EndScreenNoCloseStateType) => {
   const text = _.i18n(textMap[type])
 
   const erathianTextArr = erathianTextMap[type].split(' ')
+  const completedLevelId = type === 'win' ? lastCompletedLevel : null
   const completedCampaignLevel =
-    type === 'win' && lastCompletedLevel !== null
-      ? resolveCampaignLevel(lastCompletedLevel, challengeSeed)
+    completedLevelId !== null
+      ? resolveCampaignLevel(completedLevelId, challengeSeed)
       : null
   const nextLevelUnlocked =
-    completedCampaignLevel !== null && lastCompletedLevel < campaignLevelCount
+    completedLevelId !== null && completedLevelId < campaignLevelCount
       ? unlockedLevel
       : null
 
