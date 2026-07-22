@@ -11,7 +11,12 @@ export type CampaignChallengeMode =
   | 'siege'
 
 export type CampaignAiProfile =
-  'balanced' | 'builder' | 'raider' | 'economist' | 'defender' | 'tempo'
+  | 'balanced'
+  | 'builder'
+  | 'raider'
+  | 'economist'
+  | 'defender'
+  | 'tempo'
 
 export type CampaignLevel = {
   id: number
