@@ -51,7 +51,12 @@ const App = () => {
   }, [])
   useKeyDown('o', onKeyDown, 0, true)
 
-  const _handleGamepadButtonDown = useCallback(handleGamepadButtonDown, [])
+  const _handleGamepadButtonDown = useCallback(
+    (button: Parameters<typeof handleGamepadButtonDown>[0]) => {
+      handleGamepadButtonDown(button)
+    },
+    [],
+  )
   useGamepad({
     onButtonDown: _handleGamepadButtonDown,
   })

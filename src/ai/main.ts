@@ -1,8 +1,8 @@
-import { allStatusNames, resNames } from '@/constants/resourceNames'
 import type {
   CampaignAiProfile,
   CampaignChallengeMode,
 } from '@/campaign/levels'
+import { allStatusNames, resNames } from '@/constants/resourceNames'
 import cards from '@/data/cards'
 import { AiCardListItemType, AiInstructionType, ScoreObjType } from '@/types/ai'
 import { PersonStatusType, StatusType, WinSettingsType } from '@/types/state'

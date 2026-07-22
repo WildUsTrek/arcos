@@ -95,6 +95,7 @@ const conf = tseslint.config(
       '.github/',
       '.vscode/',
       'assets/',
+      'backups/',
       'coverage/',
       'dist/',
       'dev-dist/',

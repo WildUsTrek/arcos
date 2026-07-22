@@ -76,6 +76,7 @@ const EndScreen = (endScreenState: EndScreenNoCloseStateType) => {
 
   const [exitable, setExitable] = useState(false)
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setExitable(false)
     const timer: ReturnType<typeof setTimeout> = setTimeout(() => {
       setExitable(true)

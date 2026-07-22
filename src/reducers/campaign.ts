@@ -1,10 +1,10 @@
 import { produce } from 'immer'
+import { campaignLevelCount, defaultCampaignSeed } from '@/campaign/levels'
 import {
   CAMPAIGN_COMPLETE_LEVEL_MAIN,
   CAMPAIGN_START_LEVEL_MAIN,
   UPDATE_CAMPAIGN_PROGRESS_MAIN,
 } from '@/constants/ActionTypes'
-import { campaignLevelCount, defaultCampaignSeed } from '@/campaign/levels'
 import { RootActionType } from '@/types/actionObj'
 import { CampaignStateType } from '@/types/state'
 

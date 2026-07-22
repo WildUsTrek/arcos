@@ -1,16 +1,16 @@
 import cl from 'clarr'
 import React, { useContext } from 'react'
 import {
+  campaignLevelCount,
+  getNextPlayableLevelId,
+  resolveCampaignLevel,
+} from '@/campaign/levels'
+import {
   CAMPAIGN_START_LEVEL_MAIN,
   SCREEN_PREF,
   UPDATE_AILEVEL,
   UPDATE_SETTINGS_INIT,
 } from '@/constants/ActionTypes'
-import {
-  campaignLevelCount,
-  getNextPlayableLevelId,
-  resolveCampaignLevel,
-} from '@/campaign/levels'
 import { I18nContext } from '@/i18n/I18nContext'
 import { useAppSelector, useAppDispatch } from '@/utils/hooks/useAppDispatch'
 import Window from './Window'

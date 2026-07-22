@@ -1,11 +1,11 @@
 import { ofType, StateObservable } from 'redux-observable'
 import { Observable, of } from 'rxjs'
 import { mergeMap } from 'rxjs/operators'
+import { campaignLevelCount, nextCampaignSeed } from '@/campaign/levels'
 import {
   CAMPAIGN_COMPLETE_LEVEL,
   CAMPAIGN_COMPLETE_LEVEL_MAIN,
 } from '@/constants/ActionTypes'
-import { campaignLevelCount, nextCampaignSeed } from '@/campaign/levels'
 import { RootActionType } from '@/types/actionObj'
 import { RootStateType } from '@/types/state'
 import { lsSet } from '@/utils/localstorage'

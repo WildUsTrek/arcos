@@ -1,3 +1,4 @@
+import type { CampaignChallengeMode } from '@/campaign/levels'
 import {
   UPDATE_LANG,
   UPDATE_LANG_MAIN,
@@ -101,7 +102,6 @@ import {
   RECEIVE,
 } from '@/constants/ActionTypes'
 import { AvailableLangType } from '@/i18n/types'
-import type { CampaignChallengeMode } from '@/campaign/levels'
 import {
   CardListItemAllType,
   CardStateType,
