@@ -1,9 +1,6 @@
 import cl from 'clarr'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import {
-  campaignLevelCount,
-  resolveCampaignLevel,
-} from '@/campaign/levels'
+import { campaignLevelCount, resolveCampaignLevel } from '@/campaign/levels'
 import { CLOSE_SCREEN_END_INIT } from '@/constants/ActionTypes'
 import { endScreenExitableDelay } from '@/constants/visuals'
 import { I18nContext } from '@/i18n/I18nContext'

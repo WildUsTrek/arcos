@@ -11,12 +11,7 @@ export type CampaignChallengeMode =
   | 'siege'
 
 export type CampaignAiProfile =
-  | 'balanced'
-  | 'builder'
-  | 'raider'
-  | 'economist'
-  | 'defender'
-  | 'tempo'
+  'balanced' | 'builder' | 'raider' | 'economist' | 'defender' | 'tempo'
 
 export type CampaignLevel = {
   id: number
@@ -95,7 +90,8 @@ export const challengeModeMeta: Record<
   },
   'rich-start': {
     label: 'Partenza ricca',
-    description: 'Molte risorse iniziali, quindi le carte forti arrivano prima.',
+    description:
+      'Molte risorse iniziali, quindi le carte forti arrivano prima.',
     apply: (settings, levelId) =>
       tune(settings, {
         bricks: clamp(settings.bricks + 6 + levelId, 1, 100),
@@ -124,7 +120,8 @@ export const challengeModeMeta: Record<
   },
   'resource-race': {
     label: 'Corsa alle risorse',
-    description: 'Le risorse vincono prima: produzione e denial contano di piu.',
+    description:
+      'Le risorse vincono prima: produzione e denial contano di piu.',
     apply: (settings) =>
       tune(settings, {
         winResource: clamp(settings.winResource * 0.82, 80, 700),
@@ -133,7 +130,8 @@ export const challengeModeMeta: Record<
   },
   siege: {
     label: 'Assedio controllato',
-    description: 'Mura e torri piu alte: servono pressione costante e gestione tempo.',
+    description:
+      'Mura e torri piu alte: servono pressione costante e gestione tempo.',
     apply: (settings, levelId) =>
       tune(settings, {
         tower: clamp(settings.tower + 4 + levelId, 15, 90),

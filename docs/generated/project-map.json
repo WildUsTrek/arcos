@@ -1,6 +1,6 @@
 ﻿{
-    "generatedAt":  "2026-07-22T22:21:31",
-    "snapshotName":  "20260722-222131-after-premium-campaign-ai-pass",
+    "generatedAt":  "2026-07-22T22:31:18",
+    "snapshotName":  "20260722-223117-after-ci-prettier-fix-final",
     "root":  "C:\\Users\\ASUS\\Documents\\testing mobile github\\arcomage-hd-main",
     "totals":  {
                    "sourceFiles":  239,
@@ -903,10 +903,6 @@
                     },
                     {
                         "file":  "src\\ai\\main.ts",
-                        "import":  "@/campaign/levels"
-                    },
-                    {
-                        "file":  "src\\ai\\main.ts",
                         "import":  "@/constants/resourceNames"
                     },
                     {
@@ -1376,6 +1372,10 @@
                     {
                         "file":  "src\\components\\screens\\EndScreen.tsx",
                         "import":  "./EndScreenReviewCardsBtn"
+                    },
+                    {
+                        "file":  "src\\components\\screens\\EndScreen.tsx",
+                        "import":  "@/campaign/levels"
                     },
                     {
                         "file":  "src\\components\\screens\\EndScreen.tsx",

@@ -28,6 +28,6 @@ export default (
           position,
           owner,
         },
-      ).pipe(takeUntil(action$.pipe(ofType(ABORT_ALL))))
+      }).pipe(takeUntil(action$.pipe(ofType(ABORT_ALL))))
     }),
   )

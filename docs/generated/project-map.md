@@ -1,7 +1,7 @@
 ﻿# Project Map
 
-Generated: 2026-07-22T22:21:31
-Snapshot: 20260722-222131-after-premium-campaign-ai-pass
+Generated: 2026-07-22T22:31:18
+Snapshot: 20260722-223117-after-ci-prettier-fix-final
 
 ## Totals
 

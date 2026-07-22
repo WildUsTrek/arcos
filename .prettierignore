@@ -3,3 +3,7 @@
 *.scss.d.ts
 *.sass.d.ts
 others
+backups/
+docs/generated/snapshots/
+dist/
+node_modules/

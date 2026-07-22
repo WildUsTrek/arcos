@@ -1,5 +1,8 @@
 import { allStatusNames, resNames } from '@/constants/resourceNames'
-import type { CampaignAiProfile, CampaignChallengeMode } from '@/campaign/levels'
+import type {
+  CampaignAiProfile,
+  CampaignChallengeMode,
+} from '@/campaign/levels'
 import cards from '@/data/cards'
 import { AiCardListItemType, AiInstructionType, ScoreObjType } from '@/types/ai'
 import { PersonStatusType, StatusType, WinSettingsType } from '@/types/state'
@@ -285,10 +288,11 @@ export const aiDecision = (
     const weight = tacticalWeight(aiLevel)
     if (weight > 0 && canuse) {
       const threatAfter = victoryPressure(pAfter, oAfter, winSettings)
-      card.score +=
-        (threatBefore - threatAfter) * coefs.threatPressure * weight
+      card.score += (threatBefore - threatAfter) * coefs.threatPressure * weight
 
-      if (hasImmediateWinningReply(playerCardList, pAfter, oAfter, winSettings)) {
+      if (
+        hasImmediateWinningReply(playerCardList, pAfter, oAfter, winSettings)
+      ) {
         card.score -= coefs.playerImmediateWinPenalty * weight
       }
 

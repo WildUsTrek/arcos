@@ -101,9 +101,7 @@ const Pref = () => {
 
           <div className={styles.campaignmode}>
             <strong>{_.i18n('Mode effect')}</strong>
-            <p>
-              {level.challengeDescription}
-            </p>
+            <p>{level.challengeDescription}</p>
           </div>
 
           <div className={styles.campaignvictory}>
@@ -131,7 +129,11 @@ const Pref = () => {
         )}
 
         <div className={cl(styles.buttonwrapper)}>
-          <button accessKey="a" className={styles.warning} onClick={startBattle}>
+          <button
+            accessKey="a"
+            className={styles.warning}
+            onClick={startBattle}
+          >
             {campaignCompleted
               ? _.i18n('Replay final battle')
               : _.i18n('Start battle')}
