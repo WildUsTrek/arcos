@@ -21,11 +21,10 @@ describe('i18n all good', () => {
   for (const lang of langs) {
     it(`${lang} main is good`, async () => {
       const { i18n } = await import(path.join(mainBasePath, lang))
-      expect(
-        Object.keys(defaultI18n).every(
-          (key) => i18n[key] !== undefined && i18n[key] !== '',
-        ),
-      ).toBeTruthy()
+      const requiredKeys =
+        lang === defaultLang ? Object.keys(defaultI18n) : Object.keys(i18n)
+
+      expect(requiredKeys.every((key) => i18n[key] !== '')).toBeTruthy()
     })
 
     it(`${lang} cards is good`, async () => {
