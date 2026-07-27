@@ -47,6 +47,14 @@ const cardPath = path.join(
   import.meta.dir,
   '../../src/components/zoneCards/Card.tsx',
 )
+const aiPlayCardEpicPath = path.join(
+  import.meta.dir,
+  '../../src/epics/cards/aiPlayCardEpic.ts',
+)
+const drawCardCoreEpicPath = path.join(
+  import.meta.dir,
+  '../../src/epics/cards/drawCardCoreEpic.ts',
+)
 const statusPath = path.join(
   import.meta.dir,
   '../../src/components/zoneStatus/Status.tsx',
@@ -87,7 +95,7 @@ test('campaign intro overlay has click-through protection and landscape layout',
 test('campaign intro is suppressed while the landscape notice is active', () => {
   const source = fs.readFileSync(windowListPath, 'utf8')
 
-  expect(source).toContain('const campaignIntroVisible = !landscape')
+  expect(source).toContain('!pref && !landscape')
   expect(source).toContain('{campaignIntroVisible && <CampaignBattleIntro />}')
 })
 
@@ -100,6 +108,9 @@ test('campaign battle starts only after the intro confirmation', () => {
   expect(prefSource).toContain('cancellable={false}')
   expect(introSource).toContain('UPDATE_SETTINGS_INIT')
   expect(introSource).toContain('onClick={startBattle}')
+  expect(introSource.indexOf('setHidden(true)')).toBeLessThan(
+    introSource.indexOf('type: UPDATE_SETTINGS_INIT'),
+  )
 })
 
 test('campaign menu uses a landscape grid instead of a narrow vertical panel', () => {
@@ -157,9 +168,20 @@ test('mobile card layout reserves side safe area', () => {
   expect(source).toContain('z-index: 20')
   expect(cardSource).not.toContain('hover:scale-105')
   expect(cardSource).toContain('styles.playable')
+  expect(cardSource).toContain('usesReservedOpponentBackLayout')
+  expect(cardSource).toContain('`card-pos-${posMode}`')
   expect(cardStyles).toContain('(hover: hover) and (pointer: fine)')
   expect(cardStyles).toContain('(hover: none), (pointer: coarse)')
   expect(cardStyles).toContain('touch-action: manipulation')
+})
+
+test('AI cannot play while modal screens are active', () => {
+  const aiPlayCardSource = fs.readFileSync(aiPlayCardEpicPath, 'utf8')
+  const drawCardCoreSource = fs.readFileSync(drawCardCoreEpicPath, 'utf8')
+
+  expect(aiPlayCardSource).toContain('isScreenState(state)')
+  expect(aiPlayCardSource).toContain('return EMPTY')
+  expect(drawCardCoreSource).toContain('!isScreenState(state)')
 })
 
 test('mobile campaign overlays use available landscape space with readable text', () => {

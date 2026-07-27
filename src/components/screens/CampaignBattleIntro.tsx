@@ -35,6 +35,7 @@ const CampaignBattleIntroContent = ({
   const level = resolveCampaignLevel(levelId, challengeSeed)
 
   const startBattle = () => {
+    setHidden(true)
     dispatch({
       type: UPDATE_SETTINGS_INIT,
       payload: {
@@ -43,7 +44,6 @@ const CampaignBattleIntroContent = ({
         ...level.settings,
       },
     })
-    setHidden(true)
   }
 
   if (hidden) {

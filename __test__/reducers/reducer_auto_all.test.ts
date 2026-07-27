@@ -1,5 +1,6 @@
 import { expect, test } from 'bun:test'
 import {
+  CAMPAIGN_START_LEVEL_MAIN,
   CAMPAIGN_COMPLETE_LEVEL_MAIN,
   INIT,
   SCREEN_END_MAIN,
@@ -20,6 +21,28 @@ test('initial store matches the offline campaign contract', () => {
     unlockedLevel: 1,
   })
   expect('multiplayer' in state).toBe(false)
+})
+
+test('campaign progress reset clears the active battle after campaign loss', () => {
+  const activeState = reducers(undefined, {
+    type: CAMPAIGN_START_LEVEL_MAIN,
+    levelId: 4,
+    challengeMode: 'siege',
+  })
+
+  const resetState = reducers(activeState, {
+    type: UPDATE_CAMPAIGN_PROGRESS_MAIN,
+    payload: {
+      activeChallengeMode: null,
+      activeLevel: null,
+      completedLevels: [],
+      lastCompletedLevel: null,
+      unlockedLevel: 1,
+    },
+  })
+
+  expect(resetState.campaign.activeLevel).toBeNull()
+  expect(resetState.campaign.activeChallengeMode).toBeNull()
 })
 
 test('campaign completion unlocks the next challenger instead of replaying level one', () => {

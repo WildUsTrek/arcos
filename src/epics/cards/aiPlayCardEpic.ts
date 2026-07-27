@@ -12,6 +12,7 @@ import {
 import { RootActionType } from '@/types/actionObj'
 import { AiInstructionType } from '@/types/ai'
 import { RootStateType } from '@/types/state'
+import isScreenState from '@/utils/isScreenState'
 
 export default (
   action$: Observable<RootActionType>,
@@ -21,6 +22,10 @@ export default (
     ofType(AI_PLAY_CARD),
     withLatestFrom(state$),
     mergeMap(([_action, state]) => {
+      if (isScreenState(state)) {
+        return EMPTY
+      }
+
       const aiInstruction: AiInstructionType | null = ai(state)
       if (aiInstruction === null) {
         return of<RootActionType>({

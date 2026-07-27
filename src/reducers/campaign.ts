@@ -25,6 +25,16 @@ const uniqueSortedLevels = (levels: number[]) =>
 export default produce((draft: CampaignStateType, action: RootActionType) => {
   switch (action.type) {
     case UPDATE_CAMPAIGN_PROGRESS_MAIN: {
+      const payloadHasActiveLevel = Object.prototype.hasOwnProperty.call(
+        action.payload,
+        'activeLevel',
+      )
+      const payloadHasActiveChallengeMode =
+        Object.prototype.hasOwnProperty.call(
+          action.payload,
+          'activeChallengeMode',
+        )
+
       draft.completedLevels = uniqueSortedLevels(
         action.payload.completedLevels ?? draft.completedLevels,
       )
@@ -35,8 +45,12 @@ export default produce((draft: CampaignStateType, action: RootActionType) => {
       draft.lastCompletedLevel =
         action.payload.lastCompletedLevel ?? draft.lastCompletedLevel
       draft.challengeSeed = action.payload.challengeSeed ?? draft.challengeSeed
-      draft.activeChallengeMode =
-        action.payload.activeChallengeMode ?? draft.activeChallengeMode
+      if (payloadHasActiveLevel) {
+        draft.activeLevel = action.payload.activeLevel ?? null
+      }
+      if (payloadHasActiveChallengeMode) {
+        draft.activeChallengeMode = action.payload.activeChallengeMode ?? null
+      }
       break
     }
     case CAMPAIGN_START_LEVEL_MAIN: {

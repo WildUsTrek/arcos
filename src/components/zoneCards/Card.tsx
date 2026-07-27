@@ -58,6 +58,9 @@ const Card = ({
       : totalObj[owner]
   const isM0 = total === cardsInHand
   const isCardback = n === -1 || (hideOpponentCard && owner === 'opponent')
+  const usesReservedOpponentBackLayout =
+    hideOpponentCard && owner === 'opponent' && position >= 0
+  const posMode = usesReservedOpponentBackLayout || isM0 ? 'm0' : 'm1'
   const type = isCardback ? undefined : dataCards[n].type
   const isNotPlayersTurn =
     (playersTurn && owner === 'opponent') ||
@@ -79,7 +82,7 @@ const Card = ({
           n === -1 && styles.unusableopacity,
           'card',
           `card-pos-${position}`,
-          `card-pos-${isM0 ? 'm0' : 'm1'}`,
+          `card-pos-${posMode}`,
         )}
       >
         <div className={cl(styles.cardbackimage, 'pixelated')}></div>
@@ -233,7 +236,7 @@ const Card = ({
         position >= 0 && styles.playable,
         'card',
         `card-pos-${position}`,
-        `card-pos-${isM0 ? 'm0' : 'm1'}`,
+        `card-pos-${posMode}`,
       )}
       accessKey={accessKey}
       tabIndex={tabIndexShown}
