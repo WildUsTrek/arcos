@@ -33,6 +33,7 @@ type PropType = {
   onCancel?: () => void
   darkerBg?: boolean
   exitableDelay?: number
+  cancellable?: boolean
 }
 const Window = ({
   screenActionType,
@@ -40,6 +41,7 @@ const Window = ({
   onCancel,
   darkerBg = false,
   exitableDelay = 0,
+  cancellable = true,
 }: PropType) => {
   const dispatch = useAppDispatch()
   const _ = useContext(I18nContext)
@@ -65,21 +67,21 @@ const Window = ({
   }, [exitable])
 
   const cancelFunc = useCallback(() => {
-    if (exitableRef.current) {
+    if (cancellable && exitableRef.current) {
       onCancel?.()
       dispatch({
         type: screenActionType,
         show: false,
       })
     }
-    // no lint reason: dispatch, onCancel, screenActionType are stable
+    // no lint reason: dispatch, onCancel, screenActionType and cancellable are stable
     // eslint-disable-next-line react-compiler/react-compiler
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const prefRef = useRef<HTMLDivElement>(null)
-  useClickOutside(prefRef, cancelFunc)
-  useKeyDown('Escape', cancelFunc)
+  useClickOutside(prefRef, cancellable ? cancelFunc : () => {})
+  useKeyDown('Escape', cancellable ? cancelFunc : () => {})
 
   const size = useContext(GameSizeContext)
 
@@ -114,13 +116,15 @@ const Window = ({
 
           {children}
 
-          <button
-            accessKey="x"
-            className={cl(styles.cancel, 'cancel')}
-            onClick={cancelFunc}
-            aria-label={_.i18n('Cancel')}
-            {...tooltipAttrs(_.i18n('Cancel'), 'bottom')}
-          ></button>
+          {cancellable && (
+            <button
+              accessKey="x"
+              className={cl(styles.cancel, 'cancel')}
+              onClick={cancelFunc}
+              aria-label={_.i18n('Cancel')}
+              {...tooltipAttrs(_.i18n('Cancel'), 'bottom')}
+            ></button>
+          )}
         </div>
       </div>
     </div>

@@ -56,7 +56,7 @@ const Pref = () => {
   }
 
   return (
-    <Window screenActionType={SCREEN_PREF} darkerBg>
+    <Window screenActionType={SCREEN_PREF} darkerBg cancellable={false}>
       <div className={styles.campaignpanel}>
         <div className={styles.campaignheader}>
           <div>

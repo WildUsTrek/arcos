@@ -12,7 +12,7 @@ type PropType = {
 }
 const Status = ({ playerName, isOpponent = false }: PropType) => {
   const size = useContext(GameSizeContext)
-  const height = (size.height / 3) * 2
+  const height = size.height * (size.narrowMobile ? 1 / 2 : 2 / 3)
 
   return (
     <div

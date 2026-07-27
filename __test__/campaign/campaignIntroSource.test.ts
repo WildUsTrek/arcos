@@ -26,6 +26,18 @@ const cardPosStylePath = path.join(
   import.meta.dir,
   '../../src/components/zoneCards/CardPosStyle.tsx',
 )
+const statusPath = path.join(
+  import.meta.dir,
+  '../../src/components/zoneStatus/Status.tsx',
+)
+const statusStylesPath = path.join(
+  import.meta.dir,
+  '../../src/components/zoneStatus/Status.module.scss',
+)
+const windowPath = path.join(
+  import.meta.dir,
+  '../../src/components/screens/Window.tsx',
+)
 
 test('campaign intro cannot be globally skipped before rules are readable', () => {
   const source = fs.readFileSync(introPath, 'utf8')
@@ -64,6 +76,7 @@ test('campaign battle starts only after the intro confirmation', () => {
 
   expect(prefSource).not.toContain('UPDATE_SETTINGS_INIT')
   expect(prefSource).toContain('styles.campaignstart')
+  expect(prefSource).toContain('cancellable={false}')
   expect(introSource).toContain('UPDATE_SETTINGS_INIT')
   expect(introSource).toContain('onClick={startBattle}')
 })
@@ -89,4 +102,18 @@ test('mobile card layout reserves side safe area', () => {
   expect(source).toContain('mobileSafeSideRatio')
   expect(source).toContain('layoutWidth')
   expect(source).toContain('layoutOffsetX')
+})
+
+test('mobile status columns use the same compact height as the status zone', () => {
+  const statusSource = fs.readFileSync(statusPath, 'utf8')
+  const statusStyles = fs.readFileSync(statusStylesPath, 'utf8')
+  const windowSource = fs.readFileSync(windowPath, 'utf8')
+
+  expect(statusSource).toContain(
+    'size.height * (size.narrowMobile ? 1 / 2 : 2 / 3)',
+  )
+  expect(statusStyles).toContain(
+    '(height <= 560px) and (orientation: landscape)',
+  )
+  expect(windowSource).toContain('cancellable = true')
 })

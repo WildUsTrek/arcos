@@ -3,3 +3,10 @@
 
   min-width: 7.8rem;
 }
+
+@media (height <= 560px) and (orientation: landscape) {
+  .main {
+    padding: 0.5rem;
+    min-width: 5.4rem;
+  }
+}

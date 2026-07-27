@@ -78,6 +78,9 @@ $pwaNoticeFile = Join-Path $resolvedRoot "src\components\PwaUpdateNotice.tsx"
 $balanceToolFile = Join-Path $resolvedRoot "tools\campaign-balance-report.ts"
 $balanceTestFile = Join-Path $resolvedRoot "__test__\campaign\campaignBalance.test.ts"
 $cardPosStyleFile = Join-Path $resolvedRoot "src\components\zoneCards\CardPosStyle.tsx"
+$statusFile = Join-Path $resolvedRoot "src\components\zoneStatus\Status.tsx"
+$statusStylesFile = Join-Path $resolvedRoot "src\components\zoneStatus\Status.module.scss"
+$windowFile = Join-Path $resolvedRoot "src\components\screens\Window.tsx"
 $windowStylesFile = Join-Path $resolvedRoot "src\components\screens\Window.module.scss"
 $endScreenFile = Join-Path $resolvedRoot "src\components\screens\EndScreen.tsx"
 $endScreenStylesFile = Join-Path $resolvedRoot "src\components\screens\EndScreen.module.scss"
@@ -94,6 +97,9 @@ $pwaNoticeText = if (Test-Path $pwaNoticeFile) { Get-Content -LiteralPath $pwaNo
 $balanceToolText = if (Test-Path $balanceToolFile) { Get-Content -LiteralPath $balanceToolFile -Raw } else { "" }
 $balanceTestText = if (Test-Path $balanceTestFile) { Get-Content -LiteralPath $balanceTestFile -Raw } else { "" }
 $cardPosStyleText = if (Test-Path $cardPosStyleFile) { Get-Content -LiteralPath $cardPosStyleFile -Raw } else { "" }
+$statusText = if (Test-Path $statusFile) { Get-Content -LiteralPath $statusFile -Raw } else { "" }
+$statusStylesText = if (Test-Path $statusStylesFile) { Get-Content -LiteralPath $statusStylesFile -Raw } else { "" }
+$windowText = if (Test-Path $windowFile) { Get-Content -LiteralPath $windowFile -Raw } else { "" }
 $windowStylesText = if (Test-Path $windowStylesFile) { Get-Content -LiteralPath $windowStylesFile -Raw } else { "" }
 $endScreenText = if (Test-Path $endScreenFile) { Get-Content -LiteralPath $endScreenFile -Raw } else { "" }
 $endScreenStylesText = if (Test-Path $endScreenStylesFile) { Get-Content -LiteralPath $endScreenStylesFile -Raw } else { "" }
@@ -110,7 +116,9 @@ Add-Check "campaign-intro-mobile-landscape" ($campaignIntroStylesText -match "\(
 Add-Check "campaign-starts-after-intro" ($prefCampaignText -notmatch "UPDATE_SETTINGS_INIT" -and $campaignIntroText -match "UPDATE_SETTINGS_INIT" -and $campaignIntroText -match "onClick=\{startBattle\}") "Campaign gameplay must initialize only after the premium intro confirmation"
 Add-Check "campaign-menu-landscape-grid" ($windowStylesText -match "width: min\(1180px, calc\(100vw - 48px\)\)" -and $windowStylesText -match "grid-template-areas" -and $windowStylesText -match "'map'" -and $prefCampaignText -match "Dettagli" -and $windowStylesText -match "campaigndetailsoverlay") "Campaign menu must use a landscape grid with details moved to a controlled popup"
 Add-Check "campaign-menu-mobile-landscape" ($windowStylesText -notmatch "@media \(width <= 900px\), \(height <= 560px\)" -and $windowStylesText -match "\(height <= 560px\) and \(orientation: landscape\)" -and $prefCampaignText -match "campaignstart") "Campaign menu must keep a compact landscape layout on short mobile screens"
+Add-Check "campaign-menu-no-close-x" ($prefCampaignText -match "cancellable=\{false\}" -and $windowText -match "cancellable = true") "Campaign menu must not expose a generic close button in the required start flow"
 Add-Check "mobile-card-safe-area" ($cardPosStyleText -match "mobileSafeSideRatio" -and $cardPosStyleText -match "layoutWidth" -and $cardPosStyleText -match "layoutOffsetX") "Mobile battle card layout must reserve side safe area"
+Add-Check "mobile-status-safe-area" ($statusText -match "size\.height \* \(size\.narrowMobile \? 1 / 2 : 2 / 3\)" -and $statusStylesText -match "\(height <= 560px\) and \(orientation: landscape\)") "Mobile battle status columns must use compact status-zone sizing"
 Add-Check "campaign-opponent-name-in-battle" ($zoneStatusText -match "resolveCampaignLevel" -and $zoneStatusText -match "campaignOpponentName") "Battle status must show the resolved campaign opponent name"
 Add-Check "campaign-durable-cache" ($localstorageText -match "campaignCacheSet" -and $readLsEpicText -match "campaignCacheGet" -and $campaignProgressEpicText -match "campaignCacheSet") "Campaign progress must be stored in a dedicated durable cache"
 Add-Check "campaign-cache-reset-on-finish-or-loss" ($campaignProgressEpicText -match "campaignCompleted" -and $campaignProgressEpicText -match "campaignCacheClear" -and $screenEndEpicText -match "shouldResetCampaign" -and $screenEndEpicText -match "campaignCacheClear") "Campaign cache must clear only on campaign completion or campaign loss"
