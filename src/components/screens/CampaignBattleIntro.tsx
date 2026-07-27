@@ -4,7 +4,9 @@ import { useAppSelector } from '@/utils/hooks/useAppDispatch'
 import styles from './CampaignBattleIntro.module.scss'
 
 const tavernPhaseMs = 1900
-const totalIntroMs = 5600
+const rulesDismissDelayMs = 3600
+
+type IntroPhase = 'tavern' | 'rules' | 'dismissible'
 
 type CampaignBattleIntroContentProps = {
   levelId: number
@@ -15,20 +17,20 @@ const CampaignBattleIntroContent = ({
   levelId,
   challengeSeed,
 }: CampaignBattleIntroContentProps) => {
-  const [showRules, setShowRules] = useState(false)
+  const [phase, setPhase] = useState<IntroPhase>('tavern')
   const [hidden, setHidden] = useState(false)
 
   useEffect(() => {
     const rulesTimer: ReturnType<typeof setTimeout> = setTimeout(() => {
-      setShowRules(true)
+      setPhase('rules')
     }, tavernPhaseMs)
-    const hideTimer: ReturnType<typeof setTimeout> = setTimeout(() => {
-      setHidden(true)
-    }, totalIntroMs)
+    const dismissTimer: ReturnType<typeof setTimeout> = setTimeout(() => {
+      setPhase('dismissible')
+    }, tavernPhaseMs + rulesDismissDelayMs)
 
     return () => {
       clearTimeout(rulesTimer)
-      clearTimeout(hideTimer)
+      clearTimeout(dismissTimer)
     }
   }, [])
 
@@ -39,15 +41,9 @@ const CampaignBattleIntroContent = ({
   }
 
   return (
-    <div
-      className={styles.overlay}
-      onClick={() => {
-        setHidden(true)
-      }}
-      role="presentation"
-    >
+    <div className={styles.overlay} role="dialog" aria-modal={true}>
       <div className={styles.inner}>
-        {!showRules ? (
+        {phase === 'tavern' ? (
           <>
             <span className={styles.eyebrow}>Livello {level.id}</span>
             <h1 className={styles.tavern}>{level.tavernName}</h1>
@@ -64,6 +60,17 @@ const CampaignBattleIntroContent = ({
                 <li key={condition}>{condition}</li>
               ))}
             </ul>
+            {phase === 'dismissible' && (
+              <button
+                className={styles['continue-button']}
+                onClick={() => {
+                  setHidden(true)
+                }}
+                type="button"
+              >
+                Inizia battaglia
+              </button>
+            )}
           </div>
         )}
       </div>
