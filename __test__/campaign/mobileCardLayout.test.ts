@@ -1,5 +1,6 @@
 import { expect, test } from 'bun:test'
 import { getCardLayoutMetrics } from '@/components/zoneCards/CardLayoutMetrics'
+import { maxCardsInHand } from '@/constants/ranges'
 
 type Viewport = {
   width: number
@@ -39,9 +40,9 @@ const getHandRects = ({
   })
 }
 
-test('mobile hand layout fits normal and transient extra-card counts', () => {
+test('mobile hand layout fits normal, transient, and historical max card counts', () => {
   for (const viewport of viewports) {
-    for (const cardsInHand of [5, 6, 7, 8]) {
+    for (const cardsInHand of [5, 6, 7, 8, maxCardsInHand]) {
       const rects = getHandRects({ cardsInHand, viewport })
 
       expect(rects.length).toBe(cardsInHand + 1)
