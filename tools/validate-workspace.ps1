@@ -53,6 +53,12 @@ $buttonBarFile = Join-Path $resolvedRoot "src\components\buttons\ButtonBar.tsx"
 $buttonBarText = if (Test-Path $buttonBarFile) { Get-Content -LiteralPath $buttonBarFile -Raw } else { "" }
 $buttonPrefFile = Join-Path $resolvedRoot "src\components\buttons\ButtonPref.tsx"
 $buttonPrefText = if (Test-Path $buttonPrefFile) { Get-Content -LiteralPath $buttonPrefFile -Raw } else { "" }
+$buttonHelpFile = Join-Path $resolvedRoot "src\components\buttons\ButtonHelp.tsx"
+$buttonHelpText = if (Test-Path $buttonHelpFile) { Get-Content -LiteralPath $buttonHelpFile -Raw } else { "" }
+$buttonSgPrefFile = Join-Path $resolvedRoot "src\components\buttons\ButtonSgPref.tsx"
+$buttonSgPrefText = if (Test-Path $buttonSgPrefFile) { Get-Content -LiteralPath $buttonSgPrefFile -Raw } else { "" }
+$buttonGithubFile = Join-Path $resolvedRoot "src\components\buttons\ButtonGithub.tsx"
+$buttonGithubText = if (Test-Path $buttonGithubFile) { Get-Content -LiteralPath $buttonGithubFile -Raw } else { "" }
 $generalStylesFile = Join-Path $resolvedRoot "src\styles\general.scss"
 $generalStylesText = if (Test-Path $generalStylesFile) { Get-Content -LiteralPath $generalStylesFile -Raw } else { "" }
 $langButtonFile = Join-Path $resolvedRoot "src\components\buttons\ButtonLangPref.tsx"
@@ -89,12 +95,14 @@ $balanceTestFile = Join-Path $resolvedRoot "__test__\campaign\campaignBalance.te
 $mobileCardLayoutTestFile = Join-Path $resolvedRoot "__test__\campaign\mobileCardLayout.test.ts"
 $aiMultiturnHandTestFile = Join-Path $resolvedRoot "__test__\ai\multiturnHandSize.test.ts"
 $aiOverlayPauseTestFile = Join-Path $resolvedRoot "__test__\epics\aiOverlayPause.test.ts"
+$playCardCoreGuardedTestFile = Join-Path $resolvedRoot "__test__\epics\playCardCoreGuarded.test.ts"
 $cardLayoutMetricsFile = Join-Path $resolvedRoot "src\components\zoneCards\CardLayoutMetrics.ts"
 $cardPosStyleFile = Join-Path $resolvedRoot "src\components\zoneCards\CardPosStyle.tsx"
 $cardFile = Join-Path $resolvedRoot "src\components\zoneCards\Card.tsx"
 $cardStyleFile = Join-Path $resolvedRoot "src\components\zoneCards\Card.module.scss"
 $aiPlayCardEpicFile = Join-Path $resolvedRoot "src\epics\cards\aiPlayCardEpic.ts"
 $drawCardCoreEpicFile = Join-Path $resolvedRoot "src\epics\cards\drawCardCoreEpic.ts"
+$playCardCoreGuardedEpicFile = Join-Path $resolvedRoot "src\epics\cards\playCardCoreGuardedEpic.ts"
 $statusFile = Join-Path $resolvedRoot "src\components\zoneStatus\Status.tsx"
 $statusStylesFile = Join-Path $resolvedRoot "src\components\zoneStatus\Status.module.scss"
 $windowFile = Join-Path $resolvedRoot "src\components\screens\Window.tsx"
@@ -118,12 +126,14 @@ $balanceTestText = if (Test-Path $balanceTestFile) { Get-Content -LiteralPath $b
 $mobileCardLayoutTestText = if (Test-Path $mobileCardLayoutTestFile) { Get-Content -LiteralPath $mobileCardLayoutTestFile -Raw } else { "" }
 $aiMultiturnHandTestText = if (Test-Path $aiMultiturnHandTestFile) { Get-Content -LiteralPath $aiMultiturnHandTestFile -Raw } else { "" }
 $aiOverlayPauseTestText = if (Test-Path $aiOverlayPauseTestFile) { Get-Content -LiteralPath $aiOverlayPauseTestFile -Raw } else { "" }
+$playCardCoreGuardedTestText = if (Test-Path $playCardCoreGuardedTestFile) { Get-Content -LiteralPath $playCardCoreGuardedTestFile -Raw } else { "" }
 $cardLayoutMetricsText = if (Test-Path $cardLayoutMetricsFile) { Get-Content -LiteralPath $cardLayoutMetricsFile -Raw } else { "" }
 $cardPosStyleText = if (Test-Path $cardPosStyleFile) { Get-Content -LiteralPath $cardPosStyleFile -Raw } else { "" }
 $cardText = if (Test-Path $cardFile) { Get-Content -LiteralPath $cardFile -Raw } else { "" }
 $cardStyleText = if (Test-Path $cardStyleFile) { Get-Content -LiteralPath $cardStyleFile -Raw } else { "" }
 $aiPlayCardEpicText = if (Test-Path $aiPlayCardEpicFile) { Get-Content -LiteralPath $aiPlayCardEpicFile -Raw } else { "" }
 $drawCardCoreEpicText = if (Test-Path $drawCardCoreEpicFile) { Get-Content -LiteralPath $drawCardCoreEpicFile -Raw } else { "" }
+$playCardCoreGuardedEpicText = if (Test-Path $playCardCoreGuardedEpicFile) { Get-Content -LiteralPath $playCardCoreGuardedEpicFile -Raw } else { "" }
 $statusText = if (Test-Path $statusFile) { Get-Content -LiteralPath $statusFile -Raw } else { "" }
 $statusStylesText = if (Test-Path $statusStylesFile) { Get-Content -LiteralPath $statusStylesFile -Raw } else { "" }
 $windowText = if (Test-Path $windowFile) { Get-Content -LiteralPath $windowFile -Raw } else { "" }
@@ -140,7 +150,7 @@ Add-Check "campaign-battle-intro-no-duplicate-tavern-card" ($campaignIntroText -
 Add-Check "campaign-battle-intro-no-duplicate-rules-phase" ($campaignIntroText -notmatch "dismissible") "Campaign intro must not show the same rules panel twice before battle start"
 Add-Check "campaign-battle-intro-landscape-gated" ($windowListText -match "!pref && !landscape" -and $campaignIntroStylesText -match "aspect-ratio: 16 / 9" -and $campaignIntroStylesText -match "z-index: 130") "Campaign battle intro must respect landscape-first gameplay and overlay priority"
 Add-Check "campaign-intro-mobile-landscape" ($campaignIntroStylesText -match "\(height <= 520px\) and \(orientation: landscape\)" -and $campaignIntroStylesText -match "\(width <= 760px\) and \(orientation: portrait\)") "Campaign intro must not collapse into a tall mobile landscape column"
-Add-Check "campaign-starts-after-intro" ($prefCampaignText -notmatch "UPDATE_SETTINGS_INIT" -and $campaignIntroText -match "UPDATE_SETTINGS_INIT" -and $campaignIntroText -match "onClick=\{startBattle\}") "Campaign gameplay must initialize only after the premium intro confirmation"
+Add-Check "campaign-starts-after-intro" ($prefCampaignText -notmatch "UPDATE_SETTINGS_INIT" -and $campaignIntroText -match "UPDATE_SETTINGS_INIT" -and $campaignIntroText -match "onClick=\{startBattle\}" -and $prefCampaignText.IndexOf("type: ABORT_ALL") -lt $prefCampaignText.IndexOf("type: CAMPAIGN_START_LEVEL_MAIN")) "Campaign gameplay must initialize only after the premium intro confirmation and after aborting stale flows"
 Add-Check "campaign-menu-landscape-grid" ($windowStylesText -match "100dvw" -and $windowStylesText -match "safe-area-inset-right" -and $windowStylesText -match "min-height: min\(760px, calc\(100dvh - 24px\)\)" -and $windowStylesText -match "grid-template-areas" -and $windowStylesText -match "'map'" -and $prefCampaignText -match "Dettagli" -and $windowStylesText -match "campaigndetailsoverlay" -and $windowStylesText -match "position: fixed" -and $windowStylesText -match "z-index: 150") "Campaign menu must use a landscape grid with details moved to a controlled popup"
 Add-Check "campaign-menu-mobile-landscape" ($windowStylesText -notmatch "@media \(width <= 900px\), \(height <= 560px\)" -and $windowStylesText -match "\(height <= 560px\) and \(orientation: landscape\)" -and $prefCampaignText -match "campaignstart" -and $windowListText -match "!pref && !landscape") "Campaign menu must keep a compact landscape layout on short mobile screens"
 Add-Check "campaign-menu-no-close-x" ($prefCampaignText -match "cancellable=\{false\}" -and $windowText -match "cancellable = true") "Campaign menu must not expose a generic close button in the required start flow"
@@ -154,13 +164,16 @@ Add-Check "mobile-card-touch-hover-safe" ($cardText -notmatch "hover:scale-105" 
 Add-Check "opponent-cardback-stable-layout" ($cardText -match "usesReservedOpponentBackLayout" -and $cardText -match "posMode" -and $cardText -match "card-pos-\$\{posMode\}") "Opponent hidden card backs must keep the reserved hand layout during enemy turns"
 Add-Check "ai-pauses-during-active-screen" ($aiPlayCardEpicText -match "isScreenState\(state\)" -and $aiPlayCardEpicText -match "filter\(\(state0\) => !isScreenState\(state0\)\)" -and $aiPlayCardEpicText -match "type: AI_PLAY_CARD" -and $aiPlayCardEpicText -match "takeUntil\(action\$\.pipe\(ofType\(ABORT_ALL\)\)\)" -and $drawCardCoreEpicText -notmatch "!isScreenState\(state\)") "AI timers must pause during modal screens, resume after close, and cancel on abort"
 Add-Check "ai-overlay-pause-behavior-test" ((Test-Path $aiOverlayPauseTestFile) -and $aiOverlayPauseTestText -match "pauses behind an overlay and resumes" -and $aiOverlayPauseTestText -match "cancelled when the battle is aborted" -and $aiOverlayPauseTestText -match "StateObservable") "AI overlay pause/resume behavior must be covered by an executable epic test"
+Add-Check "card-input-blocked-by-active-screen" ($cardText -match "!isScreen" -and $cardText -match "isNotPlayersTurn \|\| isScreen") "Playable cards must disable click, keyboard, and access-key input while any overlay is active"
+Add-Check "guarded-card-actions-abort-on-reset" ($playCardCoreGuardedEpicText -match "ABORT_ALL" -and $playCardCoreGuardedEpicText -match "takeUntil\(action\$\.pipe\(ofType\(ABORT_ALL\)\)\)" -and $playCardCoreGuardedEpicText -notmatch "ABORT_CONNECTION" -and (Test-Path $playCardCoreGuardedTestFile) -and $playCardCoreGuardedTestText -match "cancelled by a full game abort") "Queued card actions behind locks must be cancelled by full game aborts"
 Add-Check "mobile-status-safe-area" ($statusText -match "size\.height \* \(size\.narrowMobile \? 1 / 2 : 2 / 3\)" -and $statusStylesText -match "\(height <= 560px\) and \(orientation: landscape\)") "Mobile battle status columns must use compact status-zone sizing"
 Add-Check "campaign-opponent-name-in-battle" ($zoneStatusText -match "resolveCampaignLevel" -and $zoneStatusText -match "campaignOpponentName") "Battle status must show the resolved campaign opponent name"
 Add-Check "campaign-durable-cache" ($localstorageText -match "campaignCacheSet" -and $readLsEpicText -match "campaignCacheGet" -and $campaignProgressEpicText -match "campaignCacheSet") "Campaign progress must be stored in a dedicated durable cache"
 Add-Check "campaign-cache-reset-on-finish-or-loss" ($campaignProgressEpicText -match "campaignCompleted" -and $campaignProgressEpicText -match "campaignCacheClear" -and $screenEndEpicText -match "shouldResetCampaign" -and $screenEndEpicText -match "campaignCacheClear") "Campaign cache must clear only on campaign completion or campaign loss"
 Add-Check "end-screen-returns-to-campaign-menu" ($closeEndEpicText -match "SCREEN_PREF" -and $closeEndEpicText -notmatch "type: INIT") "Closing the end screen must return to campaign menu instead of starting a generic battle"
 Add-Check "campaign-tie-clears-active-battle" ($screenEndEpicText -match "shouldStopCampaignBattle" -and $screenEndEpicText -match "payload\.type === 'tie'" -and $screenEndEpicText -match "activeLevel: null" -and $screenEndEpicText -match "activeChallengeMode: null") "Campaign ties must clear the active battle without advancing or resetting the campaign"
-Add-Check "campaign-menu-disabled-during-battle" ($buttonPrefText -match "activeCampaignBattle" -and $buttonPrefText -match "disabled=\{activeCampaignBattle\}" -and $buttonPrefText -match "return") "Campaign menu button must not open over an active campaign battle"
+Add-Check "campaign-menu-disabled-during-battle" ($buttonPrefText -match "activeCampaignBattle" -and $buttonPrefText -match "activeCampaignBattle \|\| isScreen" -and $buttonPrefText -match "disabled=\{activeCampaignBattle \|\| isScreen\}" -and $buttonPrefText -match "return") "Campaign menu button must not open over an active campaign battle or active overlay"
+Add-Check "topbar-no-window-stacking" ($buttonPrefText -match "activeCampaignBattle \|\| isScreen" -and $buttonPrefText -match "disabled=\{activeCampaignBattle \|\| isScreen\}" -and $buttonHelpText -match "disabled=\{isScreen\}" -and $buttonSgPrefText -match "disabled=\{isScreen\}" -and $buttonGithubText -match "aria-disabled=\{isScreen\}" -and $buttonGithubText -match "accessKey=\{isScreen \? undefined : 'g'\}") "Top bar controls must not stack new windows over an active overlay"
 Add-Check "campaign-map-present" ($prefCampaignText -match "campaignmap" -and $prefCampaignText -match "campaignnode" -and $windowStylesText -match "campaignmap") "Campaign menu must show a persistent level map"
 Add-Check "campaign-loss-explained" ($screenEndEpicText -match "campaign-lost" -and $endScreenText -match "Campagna perduta" -and $endScreenStylesText -match "campaignlost") "Campaign loss must be explicitly explained to the player"
 Add-Check "pwa-update-notice" ((Test-Path $pwaNoticeFile) -and $pwaNoticeText -match "registerSW" -and $pwaNoticeText -match "Nuova versione disponibile") "PWA must expose a visible update notice"

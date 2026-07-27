@@ -38,6 +38,9 @@ const Pref = () => {
 
   const startBattle = () => {
     dispatch({
+      type: ABORT_ALL,
+    })
+    dispatch({
       type: SCREEN_PREF,
       show: false,
     })
@@ -49,9 +52,6 @@ const Pref = () => {
     dispatch({
       type: UPDATE_AILEVEL,
       aiLevel: level.aiLevel,
-    })
-    dispatch({
-      type: ABORT_ALL,
     })
   }
 

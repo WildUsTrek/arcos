@@ -19,7 +19,7 @@ const ButtonPref = () => {
   const dispatch = useAppDispatch()
 
   const clickFunc = () => {
-    if (activeCampaignBattle) {
+    if (activeCampaignBattle || isScreen) {
       return
     }
 
@@ -40,7 +40,7 @@ const ButtonPref = () => {
       )}
       onClick={clickFunc}
       onAuxClick={clickFunc}
-      disabled={activeCampaignBattle}
+      disabled={activeCampaignBattle || isScreen}
       {...tooltipAttrs(_.i18n('Campaign'), 'bottom')}
       aria-label={_.i18n('Campaign')}
     >

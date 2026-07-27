@@ -16,6 +16,10 @@ const ButtonHelp = () => {
   const dispatch = useAppDispatch()
 
   const clickFunc = () => {
+    if (isScreen) {
+      return
+    }
+
     dispatch({
       type: SCREEN_HELP,
       show: true,
@@ -33,6 +37,7 @@ const ButtonHelp = () => {
       )}
       onClick={clickFunc}
       onAuxClick={clickFunc}
+      disabled={isScreen}
       {...tooltipAttrs(_.i18n('Help'), 'bottom')}
       aria-label={_.i18n('Help')}
     >

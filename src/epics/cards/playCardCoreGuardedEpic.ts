@@ -8,10 +8,7 @@ import {
   take,
   takeUntil,
 } from 'rxjs/operators'
-import {
-  ABORT_CONNECTION,
-  PLAY_CARD_CORE_GUARDED,
-} from '@/constants/ActionTypes'
+import { ABORT_ALL, PLAY_CARD_CORE_GUARDED } from '@/constants/ActionTypes'
 import { RootActionType } from '@/types/actionObj'
 import { RootStateType } from '@/types/state'
 import devLog from '@/utils/devLog'
@@ -41,7 +38,7 @@ export default (
           filter((locked0) => !locked0.some((l) => l === true)),
           take(1),
           map(() => playCardAction),
-          takeUntil(action$.pipe(ofType(ABORT_CONNECTION))),
+          takeUntil(action$.pipe(ofType(ABORT_ALL))),
         )
       } else {
         return of<RootActionType>(playCardAction)

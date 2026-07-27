@@ -120,6 +120,7 @@ const Card = ({
   const onClickFunc = (() => {
     if (
       owner !== 'common' &&
+      !isScreen &&
       !locked &&
       !(shouldUseAi && owner === 'opponent')
     ) {
@@ -145,6 +146,7 @@ const Card = ({
   const onContextMenuFunc = (() => {
     if (
       owner !== 'common' &&
+      !isScreen &&
       !locked &&
       (!special?.undiscardable ||
         (discardMode && canDiscardUndiscardableWhenDDP)) &&
@@ -188,7 +190,7 @@ const Card = ({
     return {}
   })()
 
-  if (isNotPlayersTurn) {
+  if (isNotPlayersTurn || isScreen) {
     buttonDisabled = true
   }
 

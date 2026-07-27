@@ -11,16 +11,27 @@ const ButtonGithub = () => {
   const _ = useContext(I18nContext)
 
   const isScreen = useAppSelector(isScreenState)
+  const clickFunc = (e: React.MouseEvent) => {
+    if (isScreen) {
+      e.preventDefault()
+    }
+  }
 
   return (
     <a
       {...(isScreen ? { tabIndex: -1 } : {})}
-      accessKey="g"
+      accessKey={isScreen ? undefined : 'g'}
+      aria-disabled={isScreen}
       className={cl('topbutton', styles.githubbutton)}
       href={githubUrl}
       target="_blank"
       rel="noopener noreferrer"
-      onContextMenu={() => {
+      onClick={clickFunc}
+      onContextMenu={(e) => {
+        if (isScreen) {
+          e.preventDefault()
+          return
+        }
         window.open(githubUrl)
       }}
       {...tooltipAttrs(_.i18n('GitHub'), 'bottom')}

@@ -47,6 +47,10 @@ const cardPath = path.join(
   import.meta.dir,
   '../../src/components/zoneCards/Card.tsx',
 )
+const playCardCoreGuardedEpicPath = path.join(
+  import.meta.dir,
+  '../../src/epics/cards/playCardCoreGuardedEpic.ts',
+)
 const aiPlayCardEpicPath = path.join(
   import.meta.dir,
   '../../src/epics/cards/aiPlayCardEpic.ts',
@@ -66,6 +70,22 @@ const statusStylesPath = path.join(
 const windowPath = path.join(
   import.meta.dir,
   '../../src/components/screens/Window.tsx',
+)
+const buttonPrefPath = path.join(
+  import.meta.dir,
+  '../../src/components/buttons/ButtonPref.tsx',
+)
+const buttonHelpPath = path.join(
+  import.meta.dir,
+  '../../src/components/buttons/ButtonHelp.tsx',
+)
+const buttonSgPrefPath = path.join(
+  import.meta.dir,
+  '../../src/components/buttons/ButtonSgPref.tsx',
+)
+const buttonGithubPath = path.join(
+  import.meta.dir,
+  '../../src/components/buttons/ButtonGithub.tsx',
 )
 
 test('campaign intro cannot be globally skipped before rules are readable', () => {
@@ -106,6 +126,9 @@ test('campaign battle starts only after the intro confirmation', () => {
   expect(prefSource).not.toContain('UPDATE_SETTINGS_INIT')
   expect(prefSource).toContain('styles.campaignstart')
   expect(prefSource).toContain('cancellable={false}')
+  expect(prefSource.indexOf('type: ABORT_ALL')).toBeLessThan(
+    prefSource.indexOf('type: CAMPAIGN_START_LEVEL_MAIN'),
+  )
   expect(introSource).toContain('UPDATE_SETTINGS_INIT')
   expect(introSource).toContain('onClick={startBattle}')
   expect(introSource.indexOf('setHidden(true)')).toBeLessThan(
@@ -188,6 +211,35 @@ test('AI cannot play while modal screens are active', () => {
   )
   expect(drawCardCoreSource).toContain('type: AI_PLAY_CARD')
   expect(drawCardCoreSource).not.toContain('!isScreenState(state)')
+})
+
+test('gameplay card input cannot execute behind overlays or stale locks', () => {
+  const cardSource = fs.readFileSync(cardPath, 'utf8')
+  const guardedSource = fs.readFileSync(playCardCoreGuardedEpicPath, 'utf8')
+
+  expect(cardSource).toContain('!isScreen')
+  expect(cardSource).toContain('isNotPlayersTurn || isScreen')
+  expect(guardedSource).toContain('ABORT_ALL')
+  expect(guardedSource).toContain('takeUntil(action$.pipe(ofType(ABORT_ALL)))')
+  expect(guardedSource).not.toContain('ABORT_CONNECTION')
+})
+
+test('top bar controls cannot stack new windows over active overlays', () => {
+  const buttonPrefSource = fs.readFileSync(buttonPrefPath, 'utf8')
+  const buttonHelpSource = fs.readFileSync(buttonHelpPath, 'utf8')
+  const buttonSgPrefSource = fs.readFileSync(buttonSgPrefPath, 'utf8')
+  const buttonGithubSource = fs.readFileSync(buttonGithubPath, 'utf8')
+
+  expect(buttonPrefSource).toContain('activeCampaignBattle || isScreen')
+  expect(buttonPrefSource).toContain(
+    'disabled={activeCampaignBattle || isScreen}',
+  )
+  expect(buttonHelpSource).toContain('if (isScreen)')
+  expect(buttonHelpSource).toContain('disabled={isScreen}')
+  expect(buttonSgPrefSource).toContain('if (isScreen)')
+  expect(buttonSgPrefSource).toContain('disabled={isScreen}')
+  expect(buttonGithubSource).toContain('e.preventDefault()')
+  expect(buttonGithubSource).toContain("accessKey={isScreen ? undefined : 'g'}")
 })
 
 test('mobile campaign overlays use available landscape space with readable text', () => {

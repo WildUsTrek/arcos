@@ -16,6 +16,10 @@ const ButtonSgPref = () => {
   const dispatch = useAppDispatch()
 
   const clickFunc = () => {
+    if (isScreen) {
+      return
+    }
+
     dispatch({
       type: SCREEN_VOLUME_PREF,
       show: true,
@@ -33,6 +37,7 @@ const ButtonSgPref = () => {
       )}
       onClick={clickFunc}
       onAuxClick={clickFunc}
+      disabled={isScreen}
       {...tooltipAttrs(_.i18n('Sound & Graphics'), 'bottom')}
       aria-label={_.i18n('Sound & Graphics')}
     >
