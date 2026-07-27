@@ -49,6 +49,7 @@
     &.screenpref {
       width: min(1180px, calc(100vw - 48px));
       max-width: none;
+      background: rgb(5 5 5 / 92%);
     }
 
     &.screenpref .windowinner,
@@ -418,7 +419,7 @@
       @apply font-normal text-gray-400 ltr:pl-1 rtl:pl-4 ltr:pr-4 rtl:pr-1 text-sm;
     }
 
-    @media (width <= 900px), (height <= 560px) {
+    @media (width <= 900px) {
       .campaignbody {
         grid-template-columns: 1fr;
         grid-template-areas:
@@ -433,6 +434,126 @@
       .campaignmap,
       .campaignmetagrid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (height <= 560px) and (orientation: landscape) {
+      &.windowmain {
+        width: calc(100vw - 20px);
+        padding: 8px 10px;
+      }
+
+      &.windowmain .windowinner {
+        max-height: calc(100dvh - 18px);
+        padding-right: 8px;
+        padding-left: 8px;
+      }
+
+      .logo {
+        display: none;
+      }
+
+      .campaignpanel {
+        gap: 8px;
+      }
+
+      .campaignheader {
+        align-items: center;
+        padding-bottom: 6px;
+      }
+
+      .campaignheader h3 {
+        font-size: 1rem;
+        line-height: 1.1;
+      }
+
+      .campaigneyebrow,
+      .campaignprogress {
+        font-size: 0.72rem;
+      }
+
+      .campaignbody {
+        grid-template-columns: minmax(0, 1.12fr) minmax(250px, 0.88fr);
+        grid-template-areas:
+          'map reward'
+          'map meta'
+          'map mode'
+          'map victory'
+          'risk victory';
+        gap: 8px;
+      }
+
+      .campaignmap {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 6px;
+      }
+
+      .campaignnode {
+        min-height: 42px;
+        padding: 5px 6px;
+
+        span {
+          padding: 1px 5px;
+          font-size: 0.62rem;
+        }
+
+        strong {
+          padding-right: 22px;
+          font-size: 0.72rem;
+          line-height: 1.05;
+        }
+
+        small {
+          padding-top: 2px;
+          font-size: 0.58rem;
+          line-height: 1;
+        }
+      }
+
+      .campaignreward,
+      .campaignmode,
+      .campaignvictory,
+      .campaignrisk {
+        padding: 7px 9px;
+      }
+
+      .campaignreward strong,
+      .campaignmetagrid span {
+        font-size: 0.9rem;
+        line-height: 1.1;
+      }
+
+      .campaignmetagrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 6px;
+      }
+
+      .campaignmetagrid p {
+        padding: 6px 8px;
+      }
+
+      .campaignmode p,
+      .campaignrisk p,
+      .campaignvictory li {
+        font-size: 0.78rem;
+        line-height: 1.15;
+      }
+
+      .campaignvictory ul {
+        margin-top: 6px;
+      }
+
+      .campaignvictory li {
+        padding: 6px 8px;
+      }
+
+      .buttonwrapper {
+        margin-top: 4px;
+      }
+
+      button:not(:global(div.number-input) > button) {
+        padding: 6px 12px;
+        font-size: 0.86rem;
       }
     }
 

@@ -43,6 +43,8 @@ test('campaign intro overlay has click-through protection and landscape layout',
   expect(source).toContain('z-index: 130')
   expect(source).toContain('pointer-events: auto')
   expect(source).toContain('aspect-ratio: 16 / 9')
+  expect(source).toContain('(height <= 520px) and (orientation: landscape)')
+  expect(source).toContain('(width <= 760px) and (orientation: portrait)')
 })
 
 test('campaign intro is suppressed while the landscape notice is active', () => {
@@ -67,4 +69,6 @@ test('campaign menu uses a landscape grid instead of a narrow vertical panel', (
   expect(source).toContain('width: min(1180px, calc(100vw - 48px))')
   expect(source).toContain('grid-template-areas:')
   expect(source).toContain("'map reward'")
+  expect(source).not.toContain('@media (width <= 900px), (height <= 560px)')
+  expect(source).toContain('(height <= 560px) and (orientation: landscape)')
 })

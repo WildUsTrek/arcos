@@ -7,8 +7,8 @@
   justify-content: center;
   padding: clamp(10px, 2vw, 24px);
   background:
-    radial-gradient(circle at center, rgb(17 14 10 / 74%), rgb(4 3 2 / 94%)),
-    rgb(4 3 2 / 88%);
+    radial-gradient(circle at center, rgb(17 14 10 / 82%), rgb(4 3 2 / 98%)),
+    rgb(4 3 2 / 96%);
   color: #f6e6bf;
   text-align: center;
   pointer-events: auto;
@@ -161,6 +161,7 @@
 @media (height <= 520px) {
   .inner {
     min-height: calc(100dvh - 16px);
+    aspect-ratio: auto;
   }
 
   .rules {
@@ -180,7 +181,39 @@
   }
 }
 
-@media (width <= 760px) {
+@media (height <= 520px) and (orientation: landscape) {
+  .rules {
+    width: min(760px, 100%);
+  }
+
+  .ruleheader {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 8px;
+  }
+
+  .conditions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .subtitle {
+    margin-top: 6px;
+    font-size: 0.84rem;
+  }
+
+  .location strong,
+  .challenger strong {
+    font-size: clamp(1.15rem, 4vw, 1.8rem);
+  }
+
+  .continue-button {
+    min-width: 160px;
+    padding: 8px 14px;
+    font-size: 0.82rem;
+  }
+}
+
+@media (width <= 760px) and (orientation: portrait) {
   .ruleheader,
   .conditions {
     grid-template-columns: 1fr;
