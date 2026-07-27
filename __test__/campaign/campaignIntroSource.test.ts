@@ -35,6 +35,10 @@ const cardPosStylePath = path.join(
   import.meta.dir,
   '../../src/components/zoneCards/CardPosStyle.tsx',
 )
+const cardLayoutMetricsPath = path.join(
+  import.meta.dir,
+  '../../src/components/zoneCards/CardLayoutMetrics.ts',
+)
 const cardStylePath = path.join(
   import.meta.dir,
   '../../src/components/zoneCards/Card.module.scss',
@@ -135,22 +139,41 @@ test('mobile layout uses visual viewport and requires fullscreen when supported'
   expect(indexHtmlSource).toContain('apple-mobile-web-app-capable')
   expect(indexHtmlSource).toContain('apple-mobile-web-app-status-bar-style')
   expect(windowListSource).toContain('<MobileFullscreenGate />')
-  expect(windowStylesSource).toContain('min-height: calc(100dvh - 56px)')
+  expect(windowStylesSource).toContain('min-height: calc(100dvh - 22px)')
 })
 
 test('mobile card layout reserves side safe area', () => {
   const source = fs.readFileSync(cardPosStylePath, 'utf8')
+  const metricsSource = fs.readFileSync(cardLayoutMetricsPath, 'utf8')
   const cardSource = fs.readFileSync(cardPath, 'utf8')
   const cardStyles = fs.readFileSync(cardStylePath, 'utf8')
 
-  expect(source).toContain('mobileSafeSideRatio')
-  expect(source).toContain('layoutWidth')
-  expect(source).toContain('layoutOffsetX')
+  expect(metricsSource).toContain('mobileSafeSideRatio')
+  expect(metricsSource).toContain('mobileHandVerticalShare')
+  expect(metricsSource).toContain('mobileHandTopShare')
+  expect(metricsSource).toContain('mobileMinHandGapPx')
+  expect(metricsSource).toContain('layoutWidth')
+  expect(metricsSource).toContain('layoutOffsetX')
+  expect(source).toContain('z-index: 20')
   expect(cardSource).not.toContain('hover:scale-105')
   expect(cardSource).toContain('styles.playable')
   expect(cardStyles).toContain('(hover: hover) and (pointer: fine)')
   expect(cardStyles).toContain('(hover: none), (pointer: coarse)')
   expect(cardStyles).toContain('touch-action: manipulation')
+})
+
+test('mobile campaign overlays use available landscape space with readable text', () => {
+  const windowStylesSource = fs.readFileSync(windowStylesPath, 'utf8')
+  const introStylesSource = fs.readFileSync(introStylesPath, 'utf8')
+
+  expect(windowStylesSource).toContain('min-height: calc(100dvh - 22px)')
+  expect(windowStylesSource).toContain('width: min(980px, calc(100dvw - 16px))')
+  expect(windowStylesSource).toContain('font-size: clamp(15px, 3.3dvh, 18px)')
+  expect(windowStylesSource).toContain('font-size: clamp(12px, 2.9dvh, 15px)')
+  expect(windowStylesSource).not.toContain('font-size: 0.74rem')
+  expect(windowStylesSource).not.toContain('font-size: clamp(0.98rem')
+  expect(introStylesSource).toContain('min-height: calc(100dvh - 28px)')
+  expect(introStylesSource).toContain('font-size: clamp(15px, 3.4dvh, 18px)')
 })
 
 test('mobile status columns use the same compact height as the status zone', () => {

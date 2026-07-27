@@ -81,6 +81,8 @@ $closeEndEpicFile = Join-Path $resolvedRoot "src\epics\screen\closeScreenEndInit
 $pwaNoticeFile = Join-Path $resolvedRoot "src\components\PwaUpdateNotice.tsx"
 $balanceToolFile = Join-Path $resolvedRoot "tools\campaign-balance-report.ts"
 $balanceTestFile = Join-Path $resolvedRoot "__test__\campaign\campaignBalance.test.ts"
+$mobileCardLayoutTestFile = Join-Path $resolvedRoot "__test__\campaign\mobileCardLayout.test.ts"
+$cardLayoutMetricsFile = Join-Path $resolvedRoot "src\components\zoneCards\CardLayoutMetrics.ts"
 $cardPosStyleFile = Join-Path $resolvedRoot "src\components\zoneCards\CardPosStyle.tsx"
 $cardFile = Join-Path $resolvedRoot "src\components\zoneCards\Card.tsx"
 $cardStyleFile = Join-Path $resolvedRoot "src\components\zoneCards\Card.module.scss"
@@ -104,6 +106,8 @@ $closeEndEpicText = if (Test-Path $closeEndEpicFile) { Get-Content -LiteralPath 
 $pwaNoticeText = if (Test-Path $pwaNoticeFile) { Get-Content -LiteralPath $pwaNoticeFile -Raw } else { "" }
 $balanceToolText = if (Test-Path $balanceToolFile) { Get-Content -LiteralPath $balanceToolFile -Raw } else { "" }
 $balanceTestText = if (Test-Path $balanceTestFile) { Get-Content -LiteralPath $balanceTestFile -Raw } else { "" }
+$mobileCardLayoutTestText = if (Test-Path $mobileCardLayoutTestFile) { Get-Content -LiteralPath $mobileCardLayoutTestFile -Raw } else { "" }
+$cardLayoutMetricsText = if (Test-Path $cardLayoutMetricsFile) { Get-Content -LiteralPath $cardLayoutMetricsFile -Raw } else { "" }
 $cardPosStyleText = if (Test-Path $cardPosStyleFile) { Get-Content -LiteralPath $cardPosStyleFile -Raw } else { "" }
 $cardText = if (Test-Path $cardFile) { Get-Content -LiteralPath $cardFile -Raw } else { "" }
 $cardStyleText = if (Test-Path $cardStyleFile) { Get-Content -LiteralPath $cardStyleFile -Raw } else { "" }
@@ -130,8 +134,9 @@ Add-Check "campaign-menu-no-close-x" ($prefCampaignText -match "cancellable=\{fa
 Add-Check "mobile-visual-viewport" ($gameSizeProviderText -match "window\.visualViewport" -and $gameSizeProviderText -match "visualViewport\?\.addEventListener\('resize'" -and $gameSizeProviderText -match "visualViewport\?\.addEventListener\('scroll'") "Mobile sizing must use the visual viewport, not only layout viewport"
 Add-Check "mobile-fullscreen-gate" ((Test-Path $fullscreenGateFile) -and $fullscreenGateText -match "Schermo intero richiesto" -and $fullscreenGateText -match "requestFs\(\)" -and $fullscreenGateText -match "pointer: coarse" -and $windowListText -match "MobileFullscreenGate") "Mobile play must require fullscreen where the browser supports it"
 Add-Check "pwa-mobile-meta" ($indexHtmlText -match "mobile-web-app-capable" -and $indexHtmlText -match "apple-mobile-web-app-capable" -and $indexHtmlText -match "apple-mobile-web-app-title" -and $indexHtmlText -match "apple-mobile-web-app-status-bar-style") "PWA must declare mobile standalone/fullscreen meta tags"
-Add-Check "campaign-popup-readable-height" ($windowStylesText -match "min-height: calc\(100dvh - 56px\)" -and $windowStylesText -match "min-height: calc\(100dvh - 42px\)" -and $windowStylesText -match "font-size: 0\.9rem") "Campaign and details popups must use more mobile vertical space with readable text"
-Add-Check "mobile-card-safe-area" ($cardPosStyleText -match "mobileSafeSideRatio" -and $cardPosStyleText -match "layoutWidth" -and $cardPosStyleText -match "layoutOffsetX") "Mobile battle card layout must reserve side safe area"
+Add-Check "campaign-popup-readable-height" ($windowStylesText -match "min-height: calc\(100dvh - 22px\)" -and $windowStylesText -match "width: min\(980px, calc\(100dvw - 16px\)\)" -and $windowStylesText -match "font-size: clamp\(15px, 3\.3dvh, 18px\)" -and $windowStylesText -match "font-size: clamp\(12px, 2\.9dvh, 15px\)" -and $windowStylesText -notmatch "font-size: clamp\(0\.98rem" -and $campaignIntroStylesText -match "min-height: calc\(100dvh - 28px\)" -and $campaignIntroStylesText -match "font-size: clamp\(15px, 3\.4dvh, 18px\)") "Campaign and details popups must use more mobile vertical space with readable text"
+Add-Check "mobile-card-safe-area" ($cardLayoutMetricsText -match "mobileSafeSideRatio" -and $cardLayoutMetricsText -match "mobileHandVerticalShare" -and $cardLayoutMetricsText -match "mobileHandTopShare" -and $cardLayoutMetricsText -match "mobileMinHandGapPx" -and $cardLayoutMetricsText -match "layoutWidth" -and $cardLayoutMetricsText -match "layoutOffsetX" -and $cardPosStyleText -match "z-index: 20") "Mobile battle card layout must reserve side safe area and keep playable hand cards above transition cards"
+Add-Check "mobile-card-overflow-tests" ($cardLayoutMetricsText -match "getCardLayoutMetrics" -and $mobileCardLayoutTestText -match "cardsInHand of \[5, 6, 7, 8\]" -and $mobileCardLayoutTestText -match "toBeLessThanOrEqual\(\s*viewport\.width" -and $mobileCardLayoutTestText -match "toBeGreaterThanOrEqual\(rects\[i - 1\]\.right") "Mobile card layout must be tested for 6, 7, 8, and 9 rendered slots"
 Add-Check "mobile-card-touch-hover-safe" ($cardText -notmatch "hover:scale-105" -and $cardText -match "styles\.playable" -and $cardStyleText -match "\(hover: hover\) and \(pointer: fine\)" -and $cardStyleText -match "\(hover: none\), \(pointer: coarse\)" -and $cardStyleText -match "touch-action: manipulation") "Mobile cards must not keep sticky hover scaling on touch devices"
 Add-Check "mobile-status-safe-area" ($statusText -match "size\.height \* \(size\.narrowMobile \? 1 / 2 : 2 / 3\)" -and $statusStylesText -match "\(height <= 560px\) and \(orientation: landscape\)") "Mobile battle status columns must use compact status-zone sizing"
 Add-Check "campaign-opponent-name-in-battle" ($zoneStatusText -match "resolveCampaignLevel" -and $zoneStatusText -match "campaignOpponentName") "Battle status must show the resolved campaign opponent name"
