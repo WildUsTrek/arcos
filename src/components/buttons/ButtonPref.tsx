@@ -11,11 +11,18 @@ const ButtonPref = () => {
   const _ = useContext(I18nContext)
 
   const pref = useAppSelector((state) => state.screen.pref)
+  const activeCampaignBattle = useAppSelector(
+    (state) => state.campaign.activeLevel !== null,
+  )
   const isScreen = useAppSelector(isScreenState)
 
   const dispatch = useAppDispatch()
 
   const clickFunc = () => {
+    if (activeCampaignBattle) {
+      return
+    }
+
     dispatch({
       type: SCREEN_PREF,
       show: true,
@@ -33,6 +40,7 @@ const ButtonPref = () => {
       )}
       onClick={clickFunc}
       onAuxClick={clickFunc}
+      disabled={activeCampaignBattle}
       {...tooltipAttrs(_.i18n('Campaign'), 'bottom')}
       aria-label={_.i18n('Campaign')}
     >

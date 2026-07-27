@@ -51,6 +51,10 @@ $langsFile = Join-Path $resolvedRoot "src\i18n\langs.ts"
 $langsText = if (Test-Path $langsFile) { Get-Content -LiteralPath $langsFile -Raw } else { "" }
 $buttonBarFile = Join-Path $resolvedRoot "src\components\buttons\ButtonBar.tsx"
 $buttonBarText = if (Test-Path $buttonBarFile) { Get-Content -LiteralPath $buttonBarFile -Raw } else { "" }
+$buttonPrefFile = Join-Path $resolvedRoot "src\components\buttons\ButtonPref.tsx"
+$buttonPrefText = if (Test-Path $buttonPrefFile) { Get-Content -LiteralPath $buttonPrefFile -Raw } else { "" }
+$generalStylesFile = Join-Path $resolvedRoot "src\styles\general.scss"
+$generalStylesText = if (Test-Path $generalStylesFile) { Get-Content -LiteralPath $generalStylesFile -Raw } else { "" }
 $langButtonFile = Join-Path $resolvedRoot "src\components\buttons\ButtonLangPref.tsx"
 $langScreenFile = Join-Path $resolvedRoot "src\components\screens\LangPref.tsx"
 $windowListFile = Join-Path $resolvedRoot "src\components\GameWindowList.tsx"
@@ -66,6 +70,7 @@ Add-Check "stored-language-ignored" ($readLsEpicText -match "lang: defaultLang")
 Add-Check "stored-gameplay-settings-ignored" ($readLsEpicText -notmatch "payload: settings") "Startup must not restore old gameplay settings"
 Add-Check "stored-ai-level-ignored" ($readLsEpicText -notmatch "UPDATE_AILEVEL_MAIN") "Startup must not restore old AI level"
 Add-Check "startup-opens-campaign-menu" ($readLsEpicText -match "SCREEN_PREF" -and $readLsEpicText -notmatch "type: INIT") "Startup must open the campaign menu instead of starting a generic battle"
+Add-Check "game-ui-selection-disabled" ($generalStylesText -match "user-select: none" -and $generalStylesText -match "-webkit-touch-callout: none" -and $generalStylesText -match "-webkit-user-drag: none" -and $generalStylesText -match "touch-action: manipulation" -and $generalStylesText -match "input,[\s\S]*textarea[\s\S]*user-select: text") "Game UI must prevent accidental selection, callout, and drag while preserving text inputs"
 
 $campaignLevelsFile = Join-Path $resolvedRoot "src\campaign\levels.ts"
 $campaignReducerFile = Join-Path $resolvedRoot "src\reducers\campaign.ts"
@@ -151,6 +156,8 @@ Add-Check "campaign-opponent-name-in-battle" ($zoneStatusText -match "resolveCam
 Add-Check "campaign-durable-cache" ($localstorageText -match "campaignCacheSet" -and $readLsEpicText -match "campaignCacheGet" -and $campaignProgressEpicText -match "campaignCacheSet") "Campaign progress must be stored in a dedicated durable cache"
 Add-Check "campaign-cache-reset-on-finish-or-loss" ($campaignProgressEpicText -match "campaignCompleted" -and $campaignProgressEpicText -match "campaignCacheClear" -and $screenEndEpicText -match "shouldResetCampaign" -and $screenEndEpicText -match "campaignCacheClear") "Campaign cache must clear only on campaign completion or campaign loss"
 Add-Check "end-screen-returns-to-campaign-menu" ($closeEndEpicText -match "SCREEN_PREF" -and $closeEndEpicText -notmatch "type: INIT") "Closing the end screen must return to campaign menu instead of starting a generic battle"
+Add-Check "campaign-tie-clears-active-battle" ($screenEndEpicText -match "shouldStopCampaignBattle" -and $screenEndEpicText -match "payload\.type === 'tie'" -and $screenEndEpicText -match "activeLevel: null" -and $screenEndEpicText -match "activeChallengeMode: null") "Campaign ties must clear the active battle without advancing or resetting the campaign"
+Add-Check "campaign-menu-disabled-during-battle" ($buttonPrefText -match "activeCampaignBattle" -and $buttonPrefText -match "disabled=\{activeCampaignBattle\}" -and $buttonPrefText -match "return") "Campaign menu button must not open over an active campaign battle"
 Add-Check "campaign-map-present" ($prefCampaignText -match "campaignmap" -and $prefCampaignText -match "campaignnode" -and $windowStylesText -match "campaignmap") "Campaign menu must show a persistent level map"
 Add-Check "campaign-loss-explained" ($screenEndEpicText -match "campaign-lost" -and $endScreenText -match "Campagna perduta" -and $endScreenStylesText -match "campaignlost") "Campaign loss must be explicitly explained to the player"
 Add-Check "pwa-update-notice" ((Test-Path $pwaNoticeFile) -and $pwaNoticeText -match "registerSW" -and $pwaNoticeText -match "Nuova versione disponibile") "PWA must expose a visible update notice"

@@ -33,6 +33,8 @@ export default (
         payload.type === 'win' && state.campaign.activeLevel !== null
       const shouldResetCampaign =
         payload.type === 'lose' && state.campaign.activeLevel !== null
+      const shouldStopCampaignBattle =
+        payload.type === 'tie' && state.campaign.activeLevel !== null
       const campaignLevelId = state.campaign.activeLevel
       const isFinalCampaignLevel = campaignLevelId === campaignLevelCount
       const campaignOutcome = shouldCompleteCampaignLevel
@@ -56,6 +58,15 @@ export default (
           ? of<RootActionType>({
               type: UPDATE_CAMPAIGN_PROGRESS_MAIN,
               payload: defaultCampaignState,
+            })
+          : EMPTY,
+        shouldStopCampaignBattle
+          ? of<RootActionType>({
+              type: UPDATE_CAMPAIGN_PROGRESS_MAIN,
+              payload: {
+                activeChallengeMode: null,
+                activeLevel: null,
+              },
             })
           : EMPTY,
         shouldCompleteCampaignLevel

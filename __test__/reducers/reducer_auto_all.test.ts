@@ -88,3 +88,34 @@ test('end screen stores campaign outcome details', () => {
   expect(state.screen.end.campaignOutcome).toBe('campaign-lost')
   expect(state.screen.end.campaignLevelId).toBe(4)
 })
+
+test('campaign tie clears only the active battle without resetting progress', () => {
+  const activeState = reducers(
+    reducers(undefined, {
+      type: UPDATE_CAMPAIGN_PROGRESS_MAIN,
+      payload: {
+        completedLevels: [1, 2],
+        lastCompletedLevel: 2,
+        unlockedLevel: 3,
+      },
+    }),
+    {
+      type: CAMPAIGN_START_LEVEL_MAIN,
+      levelId: 3,
+      challengeMode: 'resource-race',
+    },
+  )
+
+  const tiedState = reducers(activeState, {
+    type: UPDATE_CAMPAIGN_PROGRESS_MAIN,
+    payload: {
+      activeChallengeMode: null,
+      activeLevel: null,
+    },
+  })
+
+  expect(tiedState.campaign.activeLevel).toBeNull()
+  expect(tiedState.campaign.activeChallengeMode).toBeNull()
+  expect(tiedState.campaign.completedLevels).toEqual([1, 2])
+  expect(tiedState.campaign.unlockedLevel).toBe(3)
+})
