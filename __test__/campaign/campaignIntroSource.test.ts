@@ -22,6 +22,14 @@ const windowListPath = path.join(
   import.meta.dir,
   '../../src/components/GameWindowList.tsx',
 )
+const fullscreenGatePath = path.join(
+  import.meta.dir,
+  '../../src/components/screens/MobileFullscreenGate.tsx',
+)
+const gameSizeProviderPath = path.join(
+  import.meta.dir,
+  '../../src/utils/contexts/GameSizeProvider.tsx',
+)
 const cardPosStylePath = path.join(
   import.meta.dir,
   '../../src/components/zoneCards/CardPosStyle.tsx',
@@ -85,7 +93,9 @@ test('campaign menu uses a landscape grid instead of a narrow vertical panel', (
   const source = fs.readFileSync(windowStylesPath, 'utf8')
   const prefSource = fs.readFileSync(prefPath, 'utf8')
 
-  expect(source).toContain('width: min(1180px, calc(100vw - 48px))')
+  expect(source).toContain('100dvw')
+  expect(source).toContain('safe-area-inset-right')
+  expect(source).toContain('min-height: min(760px, calc(100dvh - 24px))')
   expect(source).toContain('grid-template-areas:')
   expect(source).toContain("'map'")
   expect(prefSource).toContain('Dettagli')
@@ -97,6 +107,22 @@ test('campaign menu uses a landscape grid instead of a narrow vertical panel', (
   expect(source).not.toContain('@media (width <= 900px), (height <= 560px)')
   expect(source).toContain('(height <= 560px) and (orientation: landscape)')
   expect(source).toContain('.campaignstart')
+})
+
+test('mobile layout uses visual viewport and requires fullscreen when supported', () => {
+  const providerSource = fs.readFileSync(gameSizeProviderPath, 'utf8')
+  const fullscreenGateSource = fs.readFileSync(fullscreenGatePath, 'utf8')
+  const windowListSource = fs.readFileSync(windowListPath, 'utf8')
+  const windowStylesSource = fs.readFileSync(windowStylesPath, 'utf8')
+
+  expect(providerSource).toContain('window.visualViewport')
+  expect(providerSource).toContain("visualViewport?.addEventListener('resize'")
+  expect(providerSource).toContain("visualViewport?.addEventListener('scroll'")
+  expect(fullscreenGateSource).toContain('Schermo intero richiesto')
+  expect(fullscreenGateSource).toContain('requestFs()')
+  expect(fullscreenGateSource).toContain('pointer: coarse')
+  expect(windowListSource).toContain('<MobileFullscreenGate />')
+  expect(windowStylesSource).toContain('min-height: calc(100dvh - 56px)')
 })
 
 test('mobile card layout reserves side safe area', () => {

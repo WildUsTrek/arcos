@@ -6,6 +6,7 @@ import DisconnectNotice from './screens/DisconnectNotice'
 import EndScreen from './screens/EndScreen'
 import Help from './screens/Help'
 import LandscapeNotice from './screens/LandscapeNotice'
+import MobileFullscreenGate from './screens/MobileFullscreenGate'
 import Pref from './screens/Pref'
 import SgPref from './screens/SgPref'
 
@@ -30,6 +31,7 @@ const GameWindowList = () => {
       {help && <Help />}
       {landscape && <LandscapeNotice />}
       {disconnectNotice && <DisconnectNotice />}
+      <MobileFullscreenGate />
     </>
   )
 }

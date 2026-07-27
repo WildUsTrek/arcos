@@ -1,3 +1,8 @@
 .main {
-  @apply w-screen h-screen flex flex-col bg-black overflow-x-hidden select-none outline-none;
+  @apply flex flex-col bg-black overflow-hidden select-none outline-none;
+
+  width: 100dvw;
+  height: 100dvh;
+  max-width: 100%;
+  max-height: 100%;
 }

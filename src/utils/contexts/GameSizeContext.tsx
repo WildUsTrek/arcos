@@ -8,9 +8,11 @@ export type vType = {
 }
 
 export const defaultGameSize: vType = {
-  width: window.innerWidth,
-  height: window.innerHeight,
-  narrowMobile: window.innerHeight <= narrowMobileWinHeightMax,
+  width: Math.floor(window.visualViewport?.width ?? window.innerWidth),
+  height: Math.floor(window.visualViewport?.height ?? window.innerHeight),
+  narrowMobile:
+    Math.floor(window.visualViewport?.height ?? window.innerHeight) <=
+    narrowMobileWinHeightMax,
 }
 
 export const GameSizeContext = createContext<vType>(defaultGameSize)

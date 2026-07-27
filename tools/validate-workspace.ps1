@@ -69,6 +69,8 @@ $campaignLevelsFile = Join-Path $resolvedRoot "src\campaign\levels.ts"
 $campaignReducerFile = Join-Path $resolvedRoot "src\reducers\campaign.ts"
 $campaignIntroFile = Join-Path $resolvedRoot "src\components\screens\CampaignBattleIntro.tsx"
 $campaignIntroStylesFile = Join-Path $resolvedRoot "src\components\screens\CampaignBattleIntro.module.scss"
+$fullscreenGateFile = Join-Path $resolvedRoot "src\components\screens\MobileFullscreenGate.tsx"
+$gameSizeProviderFile = Join-Path $resolvedRoot "src\utils\contexts\GameSizeProvider.tsx"
 $zoneStatusFile = Join-Path $resolvedRoot "src\components\zoneStatus\ZoneStatus.tsx"
 $localstorageFile = Join-Path $resolvedRoot "src\utils\localstorage.ts"
 $campaignProgressEpicFile = Join-Path $resolvedRoot "src\epics\campaign\progressEpic.ts"
@@ -88,6 +90,8 @@ $campaignLevelsText = if (Test-Path $campaignLevelsFile) { Get-Content -LiteralP
 $prefCampaignText = if (Test-Path $pref) { Get-Content -LiteralPath $pref -Raw } else { "" }
 $campaignIntroText = if (Test-Path $campaignIntroFile) { Get-Content -LiteralPath $campaignIntroFile -Raw } else { "" }
 $campaignIntroStylesText = if (Test-Path $campaignIntroStylesFile) { Get-Content -LiteralPath $campaignIntroStylesFile -Raw } else { "" }
+$fullscreenGateText = if (Test-Path $fullscreenGateFile) { Get-Content -LiteralPath $fullscreenGateFile -Raw } else { "" }
+$gameSizeProviderText = if (Test-Path $gameSizeProviderFile) { Get-Content -LiteralPath $gameSizeProviderFile -Raw } else { "" }
 $zoneStatusText = if (Test-Path $zoneStatusFile) { Get-Content -LiteralPath $zoneStatusFile -Raw } else { "" }
 $localstorageText = if (Test-Path $localstorageFile) { Get-Content -LiteralPath $localstorageFile -Raw } else { "" }
 $campaignProgressEpicText = if (Test-Path $campaignProgressEpicFile) { Get-Content -LiteralPath $campaignProgressEpicFile -Raw } else { "" }
@@ -114,9 +118,12 @@ Add-Check "campaign-battle-intro-no-duplicate-rules-phase" ($campaignIntroText -
 Add-Check "campaign-battle-intro-landscape-gated" ($windowListText -match "campaignIntroVisible = !landscape" -and $campaignIntroStylesText -match "aspect-ratio: 16 / 9" -and $campaignIntroStylesText -match "z-index: 130") "Campaign battle intro must respect landscape-first gameplay and overlay priority"
 Add-Check "campaign-intro-mobile-landscape" ($campaignIntroStylesText -match "\(height <= 520px\) and \(orientation: landscape\)" -and $campaignIntroStylesText -match "\(width <= 760px\) and \(orientation: portrait\)") "Campaign intro must not collapse into a tall mobile landscape column"
 Add-Check "campaign-starts-after-intro" ($prefCampaignText -notmatch "UPDATE_SETTINGS_INIT" -and $campaignIntroText -match "UPDATE_SETTINGS_INIT" -and $campaignIntroText -match "onClick=\{startBattle\}") "Campaign gameplay must initialize only after the premium intro confirmation"
-Add-Check "campaign-menu-landscape-grid" ($windowStylesText -match "width: min\(1180px, calc\(100vw - 48px\)\)" -and $windowStylesText -match "grid-template-areas" -and $windowStylesText -match "'map'" -and $prefCampaignText -match "Dettagli" -and $windowStylesText -match "campaigndetailsoverlay" -and $windowStylesText -match "position: fixed" -and $windowStylesText -match "z-index: 150") "Campaign menu must use a landscape grid with details moved to a controlled popup"
+Add-Check "campaign-menu-landscape-grid" ($windowStylesText -match "100dvw" -and $windowStylesText -match "safe-area-inset-right" -and $windowStylesText -match "min-height: min\(760px, calc\(100dvh - 24px\)\)" -and $windowStylesText -match "grid-template-areas" -and $windowStylesText -match "'map'" -and $prefCampaignText -match "Dettagli" -and $windowStylesText -match "campaigndetailsoverlay" -and $windowStylesText -match "position: fixed" -and $windowStylesText -match "z-index: 150") "Campaign menu must use a landscape grid with details moved to a controlled popup"
 Add-Check "campaign-menu-mobile-landscape" ($windowStylesText -notmatch "@media \(width <= 900px\), \(height <= 560px\)" -and $windowStylesText -match "\(height <= 560px\) and \(orientation: landscape\)" -and $prefCampaignText -match "campaignstart") "Campaign menu must keep a compact landscape layout on short mobile screens"
 Add-Check "campaign-menu-no-close-x" ($prefCampaignText -match "cancellable=\{false\}" -and $windowText -match "cancellable = true") "Campaign menu must not expose a generic close button in the required start flow"
+Add-Check "mobile-visual-viewport" ($gameSizeProviderText -match "window\.visualViewport" -and $gameSizeProviderText -match "visualViewport\?\.addEventListener\('resize'" -and $gameSizeProviderText -match "visualViewport\?\.addEventListener\('scroll'") "Mobile sizing must use the visual viewport, not only layout viewport"
+Add-Check "mobile-fullscreen-gate" ((Test-Path $fullscreenGateFile) -and $fullscreenGateText -match "Schermo intero richiesto" -and $fullscreenGateText -match "requestFs\(\)" -and $fullscreenGateText -match "pointer: coarse" -and $windowListText -match "MobileFullscreenGate") "Mobile play must require fullscreen where the browser supports it"
+Add-Check "campaign-popup-readable-height" ($windowStylesText -match "min-height: calc\(100dvh - 56px\)" -and $windowStylesText -match "min-height: calc\(100dvh - 42px\)" -and $windowStylesText -match "font-size: 0\.9rem") "Campaign and details popups must use more mobile vertical space with readable text"
 Add-Check "mobile-card-safe-area" ($cardPosStyleText -match "mobileSafeSideRatio" -and $cardPosStyleText -match "layoutWidth" -and $cardPosStyleText -match "layoutOffsetX") "Mobile battle card layout must reserve side safe area"
 Add-Check "mobile-status-safe-area" ($statusText -match "size\.height \* \(size\.narrowMobile \? 1 / 2 : 2 / 3\)" -and $statusStylesText -match "\(height <= 560px\) and \(orientation: landscape\)") "Mobile battle status columns must use compact status-zone sizing"
 Add-Check "campaign-opponent-name-in-battle" ($zoneStatusText -match "resolveCampaignLevel" -and $zoneStatusText -match "campaignOpponentName") "Battle status must show the resolved campaign opponent name"

@@ -47,7 +47,17 @@
     }
 
     &.screenpref {
-      width: min(1180px, calc(100vw - 48px));
+      width: min(
+        1180px,
+        calc(
+          100dvw - env(safe-area-inset-left, 0px) - env(
+              safe-area-inset-right,
+              0px
+            ) -
+            24px
+        )
+      );
+      min-height: min(760px, calc(100dvh - 24px));
       max-width: none;
       background: rgb(5 5 5 / 92%);
     }
@@ -258,6 +268,8 @@
   .screenpref {
     .campaignpanel {
       @apply grid gap-3;
+
+      min-height: min(660px, calc(100dvh - 88px));
     }
 
     .campaignheader {
@@ -300,18 +312,18 @@
     }
 
     .campaignnode {
-      @apply min-h-16 rounded border border-white border-opacity-20 bg-black bg-opacity-30 px-2 py-2;
+      @apply min-h-20 rounded border border-white border-opacity-20 bg-black bg-opacity-30 px-3 py-3;
 
       span {
         @apply float-right rounded bg-gray-700 px-2 py-0.5 text-xs font-bold text-white;
       }
 
       strong {
-        @apply block pr-8 text-sm leading-tight text-white;
+        @apply block pr-8 text-base leading-tight text-white;
       }
 
       small {
-        @apply block pt-1 text-xs font-bold uppercase text-gray-300;
+        @apply block pt-1 text-sm font-bold uppercase text-gray-300;
       }
 
       &.completed {
@@ -366,10 +378,10 @@
     .campaignmode,
     .campaignvictory,
     .campaignrisk {
-      @apply rounded border border-white border-opacity-20 bg-black bg-opacity-30 px-3 py-2;
+      @apply rounded border border-white border-opacity-20 bg-black bg-opacity-30 px-4 py-3;
 
       strong {
-        @apply block text-sm uppercase text-yellow-200;
+        @apply block text-base uppercase text-yellow-200;
       }
     }
 
@@ -379,7 +391,7 @@
       @apply border-red-300 border-opacity-40 bg-red-950 bg-opacity-20;
 
       p {
-        @apply text-sm font-bold text-red-100;
+        @apply text-base font-bold text-red-100;
       }
     }
 
@@ -389,13 +401,13 @@
       }
 
       li {
-        @apply rounded bg-green-900 bg-opacity-30 px-3 py-2 text-sm;
+        @apply rounded bg-green-900 bg-opacity-30 px-3 py-2 text-base;
       }
     }
 
     .campaignmode {
       p {
-        @apply text-sm font-bold text-gray-100;
+        @apply text-base font-bold text-gray-100;
       }
     }
 
@@ -419,6 +431,7 @@
         'mode victory';
       gap: 10px;
       width: min(900px, 100%);
+      min-height: min(520px, calc(100dvh - 44px));
       max-height: calc(100dvh - 44px);
       overflow-y: auto;
       padding: 14px;
@@ -499,11 +512,19 @@
 
     @media (height <= 560px) and (orientation: landscape) {
       &.windowmain {
-        width: calc(100vw - 20px);
+        width: calc(
+          100dvw - env(safe-area-inset-left, 0px) - env(
+              safe-area-inset-right,
+              0px
+            ) -
+            12px
+        );
+        min-height: calc(100dvh - 12px);
         padding: 8px 10px;
       }
 
       &.windowmain .windowinner {
+        height: 100%;
         max-height: calc(100dvh - 18px);
         padding-right: 8px;
         padding-left: 8px;
@@ -515,6 +536,7 @@
 
       .campaignpanel {
         gap: 8px;
+        min-height: calc(100dvh - 42px);
       }
 
       .campaignheader {
@@ -568,23 +590,23 @@
       }
 
       .campaignnode {
-        min-height: 42px;
-        padding: 5px 6px;
+        min-height: 52px;
+        padding: 7px 8px;
 
         span {
           padding: 1px 5px;
-          font-size: 0.62rem;
+          font-size: 0.72rem;
         }
 
         strong {
           padding-right: 22px;
-          font-size: 0.72rem;
+          font-size: 0.84rem;
           line-height: 1.05;
         }
 
         small {
           padding-top: 2px;
-          font-size: 0.58rem;
+          font-size: 0.68rem;
           line-height: 1;
         }
       }
@@ -593,12 +615,12 @@
       .campaignmode,
       .campaignvictory,
       .campaignrisk {
-        padding: 7px 9px;
+        padding: 9px 11px;
       }
 
       .campaignreward strong,
       .campaignmetagrid span {
-        font-size: 0.9rem;
+        font-size: 1rem;
         line-height: 1.1;
       }
 
@@ -614,8 +636,8 @@
       .campaignmode p,
       .campaignrisk p,
       .campaignvictory li {
-        font-size: 0.78rem;
-        line-height: 1.15;
+        font-size: 0.9rem;
+        line-height: 1.2;
       }
 
       .campaignvictory ul {
@@ -636,18 +658,19 @@
           'header header'
           'reward meta'
           'mode victory';
+        min-height: calc(100dvh - 56px);
         max-height: calc(100dvh - 20px);
-        padding: 10px;
+        padding: 14px;
       }
 
       .campaigndetailsheader h3 {
-        font-size: 0.95rem;
+        font-size: 1.1rem;
         line-height: 1.1;
       }
 
       .campaigndetailsclose {
-        padding: 6px 8px;
-        font-size: 0.74rem;
+        padding: 8px 10px;
+        font-size: 0.86rem;
       }
 
       .buttonwrapper {
