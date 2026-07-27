@@ -18,11 +18,12 @@ const GameWindowList = () => {
   const disconnectNotice = useAppSelector(
     (state) => state.screen.disconnectNotice,
   )
+  const campaignIntroVisible = !landscape && !isEndScreenNoCloseState(end)
 
   // lazy loading is a bit slow for those frequently used settings only to save a few KBs, so we don't use it
   return (
     <>
-      <CampaignBattleIntro />
+      {campaignIntroVisible && <CampaignBattleIntro />}
       {isEndScreenNoCloseState(end) && <EndScreen {...end} />}
       {pref && <Pref />}
       {sgPref && <SgPref />}

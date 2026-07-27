@@ -58,10 +58,16 @@ const CampaignBattleIntroContent = ({
                 className={phase === 'dismissible' ? styles.ready : ''}
               ></span>
             </div>
-            <div className={styles.challenger}>
-              <span className={styles.eyebrow}>Sfidante</span>
-              <strong>{level.opponentName}</strong>
-              <p className={styles.subtitle}>{level.challengeLabel}</p>
+            <div className={styles.ruleheader}>
+              <div className={styles.location}>
+                <span className={styles.eyebrow}>Taverna</span>
+                <strong>{level.tavernName}</strong>
+              </div>
+              <div className={styles.challenger}>
+                <span className={styles.eyebrow}>Sfidante</span>
+                <strong>{level.opponentName}</strong>
+                <p className={styles.subtitle}>{level.challengeLabel}</p>
+              </div>
             </div>
             <ul className={styles.conditions}>
               {level.victoryConditions.map((condition) => (

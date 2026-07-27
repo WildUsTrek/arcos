@@ -1,25 +1,39 @@
 .overlay {
   position: fixed;
   inset: 0;
-  z-index: 30;
+  z-index: 130;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px;
+  padding: clamp(10px, 2vw, 24px);
   background:
     radial-gradient(circle at center, rgb(17 14 10 / 74%), rgb(4 3 2 / 94%)),
     rgb(4 3 2 / 88%);
   color: #f6e6bf;
   text-align: center;
+  pointer-events: auto;
+  user-select: none;
 }
 
 .inner {
-  width: min(640px, 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: min(1040px, 100%);
+  min-height: min(520px, calc(100dvh - 32px));
+  aspect-ratio: 16 / 9;
 }
 
 .taverncard {
   display: grid;
   gap: 10px;
+  width: min(900px, 100%);
+  padding: clamp(24px, 5vw, 54px);
+  border-top: 2px solid rgb(216 181 109 / 64%);
+  border-bottom: 2px solid rgb(216 181 109 / 64%);
+  background:
+    linear-gradient(90deg, transparent, rgb(70 44 18 / 62%), transparent),
+    rgb(10 7 4 / 42%);
 }
 
 .eyebrow {
@@ -52,10 +66,11 @@
 
 .rules {
   display: grid;
-  gap: 16px;
-  width: min(560px, 100%);
+  grid-template-rows: auto auto 1fr auto;
+  gap: clamp(10px, 2vh, 16px);
+  width: min(940px, 100%);
   margin: 0 auto;
-  padding: 22px;
+  padding: clamp(16px, 2.5vw, 26px);
   border: 2px solid rgb(216 181 109 / 72%);
   background: rgb(20 13 7 / 88%);
   box-shadow: 0 18px 50px rgb(0 0 0 / 50%);
@@ -78,22 +93,36 @@
   box-shadow: 0 0 16px rgb(242 193 95 / 70%);
 }
 
-.challenger {
+.ruleheader {
   display: grid;
-  gap: 6px;
-  padding-bottom: 14px;
-  border-bottom: 1px solid rgb(216 181 109 / 38%);
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 14px;
+  align-items: stretch;
 }
 
+.location,
+.challenger {
+  display: flex;
+  min-height: 120px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  padding: 14px;
+  border: 1px solid rgb(216 181 109 / 38%);
+  background: rgb(255 255 255 / 5%);
+}
+
+.location strong,
 .challenger strong {
   color: #fff4d7;
   font-family: 'Roboto Condensed', Roboto, sans-serif;
-  font-size: clamp(1.45rem, 6vw, 2.6rem);
+  font-size: clamp(1.35rem, 4vw, 2.6rem);
   line-height: 1;
 }
 
 .conditions {
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
   margin: 0;
   padding: 0;
@@ -127,4 +156,33 @@
 .continue-button:hover,
 .continue-button:focus-visible {
   background: #2a1c0b;
+}
+
+@media (height <= 520px) {
+  .inner {
+    min-height: calc(100dvh - 16px);
+  }
+
+  .rules {
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .location,
+  .challenger {
+    min-height: 84px;
+    padding: 10px;
+  }
+
+  .conditions li {
+    padding: 8px 10px;
+    font-size: 0.86rem;
+  }
+}
+
+@media (width <= 760px) {
+  .ruleheader,
+  .conditions {
+    grid-template-columns: 1fr;
+  }
 }
