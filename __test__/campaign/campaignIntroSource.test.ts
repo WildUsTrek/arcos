@@ -35,6 +35,7 @@ test('campaign intro cannot be globally skipped before rules are readable', () =
   expect(source).toContain(
     "type IntroPhase = 'tavern' | 'rules' | 'dismissible'",
   )
+  expect(source).not.toContain('styles.location')
 })
 
 test('campaign intro overlay has click-through protection and landscape layout', () => {

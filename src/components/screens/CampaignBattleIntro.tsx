@@ -74,10 +74,6 @@ const CampaignBattleIntroContent = ({
               ></span>
             </div>
             <div className={styles.ruleheader}>
-              <div className={styles.location}>
-                <span className={styles.eyebrow}>Taverna</span>
-                <strong>{level.tavernName}</strong>
-              </div>
               <div className={styles.challenger}>
                 <span className={styles.eyebrow}>Sfidante</span>
                 <strong>{level.opponentName}</strong>

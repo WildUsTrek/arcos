@@ -95,15 +95,12 @@
 
 .ruleheader {
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  gap: 14px;
   align-items: stretch;
 }
 
-.location,
 .challenger {
   display: flex;
-  min-height: 120px;
+  min-height: 104px;
   flex-direction: column;
   justify-content: center;
   gap: 6px;
@@ -112,7 +109,6 @@
   background: rgb(255 255 255 / 5%);
 }
 
-.location strong,
 .challenger strong {
   color: #fff4d7;
   font-family: 'Roboto Condensed', Roboto, sans-serif;
@@ -169,9 +165,8 @@
     padding: 12px;
   }
 
-  .location,
   .challenger {
-    min-height: 84px;
+    min-height: 76px;
     padding: 10px;
   }
 
@@ -187,7 +182,6 @@
   }
 
   .ruleheader {
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
     gap: 8px;
   }
 
@@ -201,7 +195,6 @@
     font-size: 0.84rem;
   }
 
-  .location strong,
   .challenger strong {
     font-size: clamp(1.15rem, 4vw, 1.8rem);
   }
