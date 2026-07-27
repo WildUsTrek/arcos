@@ -80,8 +80,9 @@ const Window = ({
   }, [])
 
   const prefRef = useRef<HTMLDivElement>(null)
-  useClickOutside(prefRef, cancellable ? cancelFunc : () => {})
-  useKeyDown('Escape', cancellable ? cancelFunc : () => {})
+  const noopCancel = useCallback(() => {}, [])
+  useClickOutside(prefRef, cancellable ? cancelFunc : noopCancel)
+  useKeyDown('Escape', cancellable ? cancelFunc : noopCancel)
 
   const size = useContext(GameSizeContext)
 

@@ -133,7 +133,11 @@ const Pref = () => {
         </section>
 
         {detailsOpen && (
-          <div className={styles.campaigndetailsoverlay} role="dialog">
+          <div
+            className={styles.campaigndetailsoverlay}
+            role="dialog"
+            aria-modal={true}
+          >
             <div className={styles.campaigndetailspanel}>
               <div className={styles.campaigndetailsheader}>
                 <div>
