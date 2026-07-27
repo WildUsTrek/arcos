@@ -55,7 +55,7 @@ export const evaluateCampaignBalance = (
     if (index > 0 && difficultyScore < previousScore - 18) {
       warnings.push('calo difficolta rispetto al livello precedente')
     }
-    if (settings.cardsInHand < 4 || settings.cardsInHand > 6) {
+    if (settings.cardsInHand < 3 || settings.cardsInHand > 6) {
       warnings.push('mano fuori range campagna')
     }
     if (settings.winTower < settings.tower + 15) {
