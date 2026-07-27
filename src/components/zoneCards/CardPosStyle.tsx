@@ -8,6 +8,7 @@ const minSpacingXPx = 5
 const topCardSpacingPx = 10
 const topCardMarginTop = 16 // '1rem' in px
 const middleCardMarginBottom = 16 // '1rem' in px
+const mobileSafeSideRatio = 0.04
 
 const shouldUseWidth = (
   tableHeight: number,
@@ -164,26 +165,46 @@ const CardPosStyle = ({ cardsInHand, winHeight, winWidth }: PropType) => {
   const css = useMemo(() => {
     const total = cardsInHand + 1
     const rangeArr = [...Array(total + 5).keys()]
+    const layoutWidth = narrowMobile
+      ? winWidth * (1 - mobileSafeSideRatio * 2)
+      : winWidth
+    const layoutOffsetX = narrowMobile ? winWidth * mobileSafeSideRatio : 0
 
     const zoneCardsHeight = winHeight * (narrowMobile ? 1 / 2 : 1 / 3)
 
-    const width = getWidth(zoneCardsHeight, winWidth, total)
+    const width = getWidth(zoneCardsHeight, layoutWidth, total)
 
-    const height = getHeight(zoneCardsHeight, winWidth, total)
+    const height = getHeight(zoneCardsHeight, layoutWidth, total)
 
     // index in the top, topM1, left, leftM1 arrays is not the real position, it needs to add 5
     const top = rangeArr.map(
-      positionTopMapFunc(total, winHeight, winWidth, narrowMobile),
+      positionTopMapFunc(total, winHeight, layoutWidth, narrowMobile),
     )
     const topM1 = rangeArr.map(
-      positionTopMapFunc(total - 1, winHeight, winWidth, narrowMobile),
+      positionTopMapFunc(total - 1, winHeight, layoutWidth, narrowMobile),
     )
 
-    const left = rangeArr.map(
-      positionLeftMapFunc(total, winHeight, winWidth, narrowMobile),
+    const left = rangeArr.map((position) =>
+      Math.round(
+        layoutOffsetX +
+          positionLeftMapFunc(
+            total,
+            winHeight,
+            layoutWidth,
+            narrowMobile,
+          )(position),
+      ),
     )
-    const leftM1 = rangeArr.map(
-      positionLeftMapFunc(total - 1, winHeight, winWidth, narrowMobile),
+    const leftM1 = rangeArr.map((position) =>
+      Math.round(
+        layoutOffsetX +
+          positionLeftMapFunc(
+            total - 1,
+            winHeight,
+            layoutWidth,
+            narrowMobile,
+          )(position),
+      ),
     )
 
     let _css = `

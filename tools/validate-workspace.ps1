@@ -77,6 +77,7 @@ $closeEndEpicFile = Join-Path $resolvedRoot "src\epics\screen\closeScreenEndInit
 $pwaNoticeFile = Join-Path $resolvedRoot "src\components\PwaUpdateNotice.tsx"
 $balanceToolFile = Join-Path $resolvedRoot "tools\campaign-balance-report.ts"
 $balanceTestFile = Join-Path $resolvedRoot "__test__\campaign\campaignBalance.test.ts"
+$cardPosStyleFile = Join-Path $resolvedRoot "src\components\zoneCards\CardPosStyle.tsx"
 $windowStylesFile = Join-Path $resolvedRoot "src\components\screens\Window.module.scss"
 $endScreenFile = Join-Path $resolvedRoot "src\components\screens\EndScreen.tsx"
 $endScreenStylesFile = Join-Path $resolvedRoot "src\components\screens\EndScreen.module.scss"
@@ -92,6 +93,7 @@ $closeEndEpicText = if (Test-Path $closeEndEpicFile) { Get-Content -LiteralPath 
 $pwaNoticeText = if (Test-Path $pwaNoticeFile) { Get-Content -LiteralPath $pwaNoticeFile -Raw } else { "" }
 $balanceToolText = if (Test-Path $balanceToolFile) { Get-Content -LiteralPath $balanceToolFile -Raw } else { "" }
 $balanceTestText = if (Test-Path $balanceTestFile) { Get-Content -LiteralPath $balanceTestFile -Raw } else { "" }
+$cardPosStyleText = if (Test-Path $cardPosStyleFile) { Get-Content -LiteralPath $cardPosStyleFile -Raw } else { "" }
 $windowStylesText = if (Test-Path $windowStylesFile) { Get-Content -LiteralPath $windowStylesFile -Raw } else { "" }
 $endScreenText = if (Test-Path $endScreenFile) { Get-Content -LiteralPath $endScreenFile -Raw } else { "" }
 $endScreenStylesText = if (Test-Path $endScreenStylesFile) { Get-Content -LiteralPath $endScreenStylesFile -Raw } else { "" }
@@ -106,8 +108,9 @@ Add-Check "campaign-battle-intro-no-duplicate-rules-phase" ($campaignIntroText -
 Add-Check "campaign-battle-intro-landscape-gated" ($windowListText -match "campaignIntroVisible = !landscape" -and $campaignIntroStylesText -match "aspect-ratio: 16 / 9" -and $campaignIntroStylesText -match "z-index: 130") "Campaign battle intro must respect landscape-first gameplay and overlay priority"
 Add-Check "campaign-intro-mobile-landscape" ($campaignIntroStylesText -match "\(height <= 520px\) and \(orientation: landscape\)" -and $campaignIntroStylesText -match "\(width <= 760px\) and \(orientation: portrait\)") "Campaign intro must not collapse into a tall mobile landscape column"
 Add-Check "campaign-starts-after-intro" ($prefCampaignText -notmatch "UPDATE_SETTINGS_INIT" -and $campaignIntroText -match "UPDATE_SETTINGS_INIT" -and $campaignIntroText -match "onClick=\{startBattle\}") "Campaign gameplay must initialize only after the premium intro confirmation"
-Add-Check "campaign-menu-landscape-grid" ($windowStylesText -match "width: min\(1180px, calc\(100vw - 48px\)\)" -and $windowStylesText -match "grid-template-areas" -and $windowStylesText -match "'map reward'") "Campaign menu must use a landscape grid instead of a narrow vertical panel"
+Add-Check "campaign-menu-landscape-grid" ($windowStylesText -match "width: min\(1180px, calc\(100vw - 48px\)\)" -and $windowStylesText -match "grid-template-areas" -and $windowStylesText -match "'map'" -and $prefCampaignText -match "Dettagli" -and $windowStylesText -match "campaigndetailsoverlay") "Campaign menu must use a landscape grid with details moved to a controlled popup"
 Add-Check "campaign-menu-mobile-landscape" ($windowStylesText -notmatch "@media \(width <= 900px\), \(height <= 560px\)" -and $windowStylesText -match "\(height <= 560px\) and \(orientation: landscape\)" -and $prefCampaignText -match "campaignstart") "Campaign menu must keep a compact landscape layout on short mobile screens"
+Add-Check "mobile-card-safe-area" ($cardPosStyleText -match "mobileSafeSideRatio" -and $cardPosStyleText -match "layoutWidth" -and $cardPosStyleText -match "layoutOffsetX") "Mobile battle card layout must reserve side safe area"
 Add-Check "campaign-opponent-name-in-battle" ($zoneStatusText -match "resolveCampaignLevel" -and $zoneStatusText -match "campaignOpponentName") "Battle status must show the resolved campaign opponent name"
 Add-Check "campaign-durable-cache" ($localstorageText -match "campaignCacheSet" -and $readLsEpicText -match "campaignCacheGet" -and $campaignProgressEpicText -match "campaignCacheSet") "Campaign progress must be stored in a dedicated durable cache"
 Add-Check "campaign-cache-reset-on-finish-or-loss" ($campaignProgressEpicText -match "campaignCompleted" -and $campaignProgressEpicText -match "campaignCacheClear" -and $screenEndEpicText -match "shouldResetCampaign" -and $screenEndEpicText -match "campaignCacheClear") "Campaign cache must clear only on campaign completion or campaign loss"

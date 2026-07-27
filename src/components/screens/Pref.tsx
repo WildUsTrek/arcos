@@ -1,5 +1,5 @@
 import cl from 'clarr'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import {
   campaignLevelCount,
   getNextPlayableLevelId,
@@ -19,6 +19,7 @@ import styles from './Window.module.scss'
 const Pref = () => {
   const _ = useContext(I18nContext)
   const dispatch = useAppDispatch()
+  const [detailsOpen, setDetailsOpen] = useState(false)
 
   const unlockedLevel = useAppSelector((state) => state.campaign.unlockedLevel)
   const completedLevels = useAppSelector(
@@ -68,6 +69,15 @@ const Pref = () => {
             {completedCount}/{campaignLevelCount}
           </span>
           <button
+            className={styles.campaigndetailsbutton}
+            onClick={() => {
+              setDetailsOpen(true)
+            }}
+            type="button"
+          >
+            Dettagli
+          </button>
+          <button
             accessKey="a"
             className={cl(styles.warning, styles.campaignstart)}
             onClick={startBattle}
@@ -113,44 +123,6 @@ const Pref = () => {
             })}
           </div>
 
-          <div className={styles.campaignreward}>
-            <span>{_.i18n('Reward')}</span>
-            <strong>{level.reward}</strong>
-          </div>
-
-          <div className={styles.campaignmetagrid}>
-            <p>
-              <strong>{_.i18n('Opponent')}</strong>
-              <span>{level.opponentName}</span>
-            </p>
-            <p>
-              <strong>{_.i18n('Challenge')}</strong>
-              <span>{level.challengeLabel}</span>
-            </p>
-            <p>
-              <strong>{_.i18n('AI Level')}</strong>
-              <span>{level.aiLevel + 1}/5</span>
-            </p>
-            <p>
-              <strong>{_.i18n('AI Profile')}</strong>
-              <span>{_.i18n(level.aiProfile)}</span>
-            </p>
-          </div>
-
-          <div className={styles.campaignmode}>
-            <strong>{_.i18n('Mode effect')}</strong>
-            <p>{level.challengeDescription}</p>
-          </div>
-
-          <div className={styles.campaignvictory}>
-            <strong>{_.i18n('Victory conditions')}</strong>
-            <ul>
-              {level.victoryConditions.map((condition) => (
-                <li key={condition}>{condition}</li>
-              ))}
-            </ul>
-          </div>
-
           <div className={styles.campaignrisk}>
             <strong>Regola campagna</strong>
             <p>
@@ -159,6 +131,68 @@ const Pref = () => {
             </p>
           </div>
         </section>
+
+        {detailsOpen && (
+          <div className={styles.campaigndetailsoverlay} role="dialog">
+            <div className={styles.campaigndetailspanel}>
+              <div className={styles.campaigndetailsheader}>
+                <div>
+                  <span className={styles.campaigneyebrow}>
+                    {_.i18n('Level')} {level.id}
+                  </span>
+                  <h3>Dettagli sfida</h3>
+                </div>
+                <button
+                  className={styles.campaigndetailsclose}
+                  onClick={() => {
+                    setDetailsOpen(false)
+                  }}
+                  type="button"
+                >
+                  Chiudi
+                </button>
+              </div>
+
+              <div className={styles.campaignreward}>
+                <span>{_.i18n('Reward')}</span>
+                <strong>{level.reward}</strong>
+              </div>
+
+              <div className={styles.campaignmetagrid}>
+                <p>
+                  <strong>{_.i18n('Opponent')}</strong>
+                  <span>{level.opponentName}</span>
+                </p>
+                <p>
+                  <strong>{_.i18n('Challenge')}</strong>
+                  <span>{level.challengeLabel}</span>
+                </p>
+                <p>
+                  <strong>{_.i18n('AI Level')}</strong>
+                  <span>{level.aiLevel + 1}/5</span>
+                </p>
+                <p>
+                  <strong>{_.i18n('AI Profile')}</strong>
+                  <span>{_.i18n(level.aiProfile)}</span>
+                </p>
+              </div>
+
+              <div className={styles.campaignmode}>
+                <strong>{_.i18n('Mode effect')}</strong>
+                <p>{level.challengeDescription}</p>
+              </div>
+
+              <div className={styles.campaignvictory}>
+                <strong>{_.i18n('Victory conditions')}</strong>
+                <ul>
+                  {level.victoryConditions.map((condition) => (
+                    <li key={condition}>{condition}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        )}
 
         {lastCompletedLevel !== null && (
           <p className="text-center text-sm font-light">

@@ -22,6 +22,10 @@ const windowListPath = path.join(
   import.meta.dir,
   '../../src/components/GameWindowList.tsx',
 )
+const cardPosStylePath = path.join(
+  import.meta.dir,
+  '../../src/components/zoneCards/CardPosStyle.tsx',
+)
 
 test('campaign intro cannot be globally skipped before rules are readable', () => {
   const source = fs.readFileSync(introPath, 'utf8')
@@ -66,11 +70,23 @@ test('campaign battle starts only after the intro confirmation', () => {
 
 test('campaign menu uses a landscape grid instead of a narrow vertical panel', () => {
   const source = fs.readFileSync(windowStylesPath, 'utf8')
+  const prefSource = fs.readFileSync(prefPath, 'utf8')
 
   expect(source).toContain('width: min(1180px, calc(100vw - 48px))')
   expect(source).toContain('grid-template-areas:')
-  expect(source).toContain("'map reward'")
+  expect(source).toContain("'map'")
+  expect(prefSource).toContain('Dettagli')
+  expect(prefSource).toContain('detailsOpen')
+  expect(source).toContain('.campaigndetailsoverlay')
   expect(source).not.toContain('@media (width <= 900px), (height <= 560px)')
   expect(source).toContain('(height <= 560px) and (orientation: landscape)')
   expect(source).toContain('.campaignstart')
+})
+
+test('mobile card layout reserves side safe area', () => {
+  const source = fs.readFileSync(cardPosStylePath, 'utf8')
+
+  expect(source).toContain('mobileSafeSideRatio')
+  expect(source).toContain('layoutWidth')
+  expect(source).toContain('layoutOffsetX')
 })
