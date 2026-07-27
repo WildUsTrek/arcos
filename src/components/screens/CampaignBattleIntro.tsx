@@ -5,9 +5,8 @@ import { useAppDispatch, useAppSelector } from '@/utils/hooks/useAppDispatch'
 import styles from './CampaignBattleIntro.module.scss'
 
 const tavernPhaseMs = 1900
-const rulesDismissDelayMs = 3600
 
-type IntroPhase = 'tavern' | 'rules' | 'dismissible'
+type IntroPhase = 'tavern' | 'rules'
 
 type CampaignBattleIntroContentProps = {
   levelId: number
@@ -27,13 +26,9 @@ const CampaignBattleIntroContent = ({
     const rulesTimer: ReturnType<typeof setTimeout> = setTimeout(() => {
       setPhase('rules')
     }, tavernPhaseMs)
-    const dismissTimer: ReturnType<typeof setTimeout> = setTimeout(() => {
-      setPhase('dismissible')
-    }, tavernPhaseMs + rulesDismissDelayMs)
 
     return () => {
       clearTimeout(rulesTimer)
-      clearTimeout(dismissTimer)
     }
   }, [])
 
@@ -68,10 +63,7 @@ const CampaignBattleIntroContent = ({
           <div className={styles.rules}>
             <div className={styles.stepper}>
               <span></span>
-              <span></span>
-              <span
-                className={phase === 'dismissible' ? styles.ready : ''}
-              ></span>
+              <span className={styles.ready}></span>
             </div>
             <div className={styles.ruleheader}>
               <div className={styles.challenger}>
@@ -85,15 +77,13 @@ const CampaignBattleIntroContent = ({
                 <li key={condition}>{condition}</li>
               ))}
             </ul>
-            {phase === 'dismissible' && (
-              <button
-                className={styles['continue-button']}
-                onClick={startBattle}
-                type="button"
-              >
-                Inizia battaglia
-              </button>
-            )}
+            <button
+              className={styles['continue-button']}
+              onClick={startBattle}
+              type="button"
+            >
+              Inizia battaglia
+            </button>
           </div>
         )}
       </div>

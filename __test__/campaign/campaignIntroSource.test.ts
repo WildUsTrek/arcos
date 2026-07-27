@@ -32,9 +32,8 @@ test('campaign intro cannot be globally skipped before rules are readable', () =
   expect(source).not.toContain('role="presentation"')
   expect(overlayOpening).not.toContain('setHidden(true)')
   expect(source).toContain('Inizia battaglia')
-  expect(source).toContain(
-    "type IntroPhase = 'tavern' | 'rules' | 'dismissible'",
-  )
+  expect(source).toContain("type IntroPhase = 'tavern' | 'rules'")
+  expect(source).not.toContain('dismissible')
   expect(source).not.toContain('styles.location')
 })
 
