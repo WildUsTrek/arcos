@@ -59,6 +59,7 @@ test('campaign battle starts only after the intro confirmation', () => {
   const prefSource = fs.readFileSync(prefPath, 'utf8')
 
   expect(prefSource).not.toContain('UPDATE_SETTINGS_INIT')
+  expect(prefSource).toContain('styles.campaignstart')
   expect(introSource).toContain('UPDATE_SETTINGS_INIT')
   expect(introSource).toContain('onClick={startBattle}')
 })
@@ -71,4 +72,5 @@ test('campaign menu uses a landscape grid instead of a narrow vertical panel', (
   expect(source).toContain("'map reward'")
   expect(source).not.toContain('@media (width <= 900px), (height <= 560px)')
   expect(source).toContain('(height <= 560px) and (orientation: landscape)')
+  expect(source).toContain('.campaignstart')
 })

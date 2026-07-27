@@ -261,7 +261,7 @@
     }
 
     .campaignheader {
-      @apply flex items-start justify-between gap-4 border-b border-yellow-300 border-opacity-50 pb-3;
+      @apply flex items-start justify-between gap-3 border-b border-yellow-300 border-opacity-50 pb-3;
     }
 
     .campaigneyebrow {
@@ -270,6 +270,12 @@
 
     .campaignprogress {
       @apply shrink-0 rounded border border-yellow-300 border-opacity-60 bg-black bg-opacity-40 px-3 py-1 font-bold text-yellow-200;
+    }
+
+    .campaignstart {
+      flex-shrink: 0;
+      min-width: 140px;
+      margin-bottom: 0;
     }
 
     .campaignbody {
@@ -462,6 +468,10 @@
         padding-bottom: 6px;
       }
 
+      .campaignheader > div {
+        min-width: 0;
+      }
+
       .campaignheader h3 {
         font-size: 1rem;
         line-height: 1.1;
@@ -470,6 +480,17 @@
       .campaigneyebrow,
       .campaignprogress {
         font-size: 0.72rem;
+      }
+
+      .campaignprogress {
+        padding: 3px 7px;
+      }
+
+      .campaignstart {
+        min-width: 112px;
+        padding: 6px 8px;
+        font-size: 0.74rem;
+        line-height: 1.05;
       }
 
       .campaignbody {

@@ -67,6 +67,15 @@ const Pref = () => {
           <span className={styles.campaignprogress}>
             {completedCount}/{campaignLevelCount}
           </span>
+          <button
+            accessKey="a"
+            className={cl(styles.warning, styles.campaignstart)}
+            onClick={startBattle}
+          >
+            {campaignCompleted
+              ? _.i18n('Replay final battle')
+              : _.i18n('Start battle')}
+          </button>
         </div>
 
         <section className={styles.campaignbody}>
@@ -164,18 +173,6 @@ const Pref = () => {
             {_.i18n('Campaign completed')}
           </p>
         )}
-
-        <div className={cl(styles.buttonwrapper)}>
-          <button
-            accessKey="a"
-            className={styles.warning}
-            onClick={startBattle}
-          >
-            {campaignCompleted
-              ? _.i18n('Replay final battle')
-              : _.i18n('Start battle')}
-          </button>
-        </div>
       </div>
     </Window>
   )
