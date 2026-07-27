@@ -35,6 +35,14 @@ const cardPosStylePath = path.join(
   import.meta.dir,
   '../../src/components/zoneCards/CardPosStyle.tsx',
 )
+const cardStylePath = path.join(
+  import.meta.dir,
+  '../../src/components/zoneCards/Card.module.scss',
+)
+const cardPath = path.join(
+  import.meta.dir,
+  '../../src/components/zoneCards/Card.tsx',
+)
 const statusPath = path.join(
   import.meta.dir,
   '../../src/components/zoneStatus/Status.tsx',
@@ -132,10 +140,17 @@ test('mobile layout uses visual viewport and requires fullscreen when supported'
 
 test('mobile card layout reserves side safe area', () => {
   const source = fs.readFileSync(cardPosStylePath, 'utf8')
+  const cardSource = fs.readFileSync(cardPath, 'utf8')
+  const cardStyles = fs.readFileSync(cardStylePath, 'utf8')
 
   expect(source).toContain('mobileSafeSideRatio')
   expect(source).toContain('layoutWidth')
   expect(source).toContain('layoutOffsetX')
+  expect(cardSource).not.toContain('hover:scale-105')
+  expect(cardSource).toContain('styles.playable')
+  expect(cardStyles).toContain('(hover: hover) and (pointer: fine)')
+  expect(cardStyles).toContain('(hover: none), (pointer: coarse)')
+  expect(cardStyles).toContain('touch-action: manipulation')
 })
 
 test('mobile status columns use the same compact height as the status zone', () => {

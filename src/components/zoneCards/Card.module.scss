@@ -23,10 +23,28 @@ $cardGradient: linear-gradient(
   transition-property: opacity, transform, left, top;
   transition-timing-function: ease-in-out;
   transition-duration: #{$cardTransitionDuration}ms;
+  touch-action: manipulation;
 
   // &.red {}
   // &.blue {}
   // &.green {}
+}
+
+.playable {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      z-index: 30;
+      transform: scale(1.05);
+    }
+  }
+
+  @media (hover: none), (pointer: coarse) {
+    &:hover,
+    &:focus,
+    &:active {
+      transform: none;
+    }
+  }
 }
 
 .cardname {

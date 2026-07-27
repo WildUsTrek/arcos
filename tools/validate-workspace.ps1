@@ -82,6 +82,8 @@ $pwaNoticeFile = Join-Path $resolvedRoot "src\components\PwaUpdateNotice.tsx"
 $balanceToolFile = Join-Path $resolvedRoot "tools\campaign-balance-report.ts"
 $balanceTestFile = Join-Path $resolvedRoot "__test__\campaign\campaignBalance.test.ts"
 $cardPosStyleFile = Join-Path $resolvedRoot "src\components\zoneCards\CardPosStyle.tsx"
+$cardFile = Join-Path $resolvedRoot "src\components\zoneCards\Card.tsx"
+$cardStyleFile = Join-Path $resolvedRoot "src\components\zoneCards\Card.module.scss"
 $statusFile = Join-Path $resolvedRoot "src\components\zoneStatus\Status.tsx"
 $statusStylesFile = Join-Path $resolvedRoot "src\components\zoneStatus\Status.module.scss"
 $windowFile = Join-Path $resolvedRoot "src\components\screens\Window.tsx"
@@ -103,6 +105,8 @@ $pwaNoticeText = if (Test-Path $pwaNoticeFile) { Get-Content -LiteralPath $pwaNo
 $balanceToolText = if (Test-Path $balanceToolFile) { Get-Content -LiteralPath $balanceToolFile -Raw } else { "" }
 $balanceTestText = if (Test-Path $balanceTestFile) { Get-Content -LiteralPath $balanceTestFile -Raw } else { "" }
 $cardPosStyleText = if (Test-Path $cardPosStyleFile) { Get-Content -LiteralPath $cardPosStyleFile -Raw } else { "" }
+$cardText = if (Test-Path $cardFile) { Get-Content -LiteralPath $cardFile -Raw } else { "" }
+$cardStyleText = if (Test-Path $cardStyleFile) { Get-Content -LiteralPath $cardStyleFile -Raw } else { "" }
 $statusText = if (Test-Path $statusFile) { Get-Content -LiteralPath $statusFile -Raw } else { "" }
 $statusStylesText = if (Test-Path $statusStylesFile) { Get-Content -LiteralPath $statusStylesFile -Raw } else { "" }
 $windowText = if (Test-Path $windowFile) { Get-Content -LiteralPath $windowFile -Raw } else { "" }
@@ -128,6 +132,7 @@ Add-Check "mobile-fullscreen-gate" ((Test-Path $fullscreenGateFile) -and $fullsc
 Add-Check "pwa-mobile-meta" ($indexHtmlText -match "mobile-web-app-capable" -and $indexHtmlText -match "apple-mobile-web-app-capable" -and $indexHtmlText -match "apple-mobile-web-app-title" -and $indexHtmlText -match "apple-mobile-web-app-status-bar-style") "PWA must declare mobile standalone/fullscreen meta tags"
 Add-Check "campaign-popup-readable-height" ($windowStylesText -match "min-height: calc\(100dvh - 56px\)" -and $windowStylesText -match "min-height: calc\(100dvh - 42px\)" -and $windowStylesText -match "font-size: 0\.9rem") "Campaign and details popups must use more mobile vertical space with readable text"
 Add-Check "mobile-card-safe-area" ($cardPosStyleText -match "mobileSafeSideRatio" -and $cardPosStyleText -match "layoutWidth" -and $cardPosStyleText -match "layoutOffsetX") "Mobile battle card layout must reserve side safe area"
+Add-Check "mobile-card-touch-hover-safe" ($cardText -notmatch "hover:scale-105" -and $cardText -match "styles\.playable" -and $cardStyleText -match "\(hover: hover\) and \(pointer: fine\)" -and $cardStyleText -match "\(hover: none\), \(pointer: coarse\)" -and $cardStyleText -match "touch-action: manipulation") "Mobile cards must not keep sticky hover scaling on touch devices"
 Add-Check "mobile-status-safe-area" ($statusText -match "size\.height \* \(size\.narrowMobile \? 1 / 2 : 2 / 3\)" -and $statusStylesText -match "\(height <= 560px\) and \(orientation: landscape\)") "Mobile battle status columns must use compact status-zone sizing"
 Add-Check "campaign-opponent-name-in-battle" ($zoneStatusText -match "resolveCampaignLevel" -and $zoneStatusText -match "campaignOpponentName") "Battle status must show the resolved campaign opponent name"
 Add-Check "campaign-durable-cache" ($localstorageText -match "campaignCacheSet" -and $readLsEpicText -match "campaignCacheGet" -and $campaignProgressEpicText -match "campaignCacheSet") "Campaign progress must be stored in a dedicated durable cache"

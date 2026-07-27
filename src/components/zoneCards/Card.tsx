@@ -229,7 +229,8 @@ const Card = ({
           (!playersTurn && owner === 'player')) &&
           'opacity-0 pointer-events-none',
         position !== -1 && 'shadow-lg',
-        position >= 0 && 'cursor-pointer hover:scale-105',
+        position >= 0 && 'cursor-pointer',
+        position >= 0 && styles.playable,
         'card',
         `card-pos-${position}`,
         `card-pos-${isM0 ? 'm0' : 'm1'}`,
