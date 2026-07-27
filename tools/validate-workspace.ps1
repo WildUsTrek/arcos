@@ -39,6 +39,8 @@ $multiplayerReducerFile = Join-Path $resolvedRoot "src\reducers\multiplayer.ts"
 $multiplayerUtilsFiles = if (Test-Path $multiplayerUtilsDir) { @(Get-ChildItem -LiteralPath $multiplayerUtilsDir -File -Recurse) } else { @() }
 $packageJson = Join-Path $resolvedRoot "package.json"
 $packageText = if (Test-Path $packageJson) { Get-Content -LiteralPath $packageJson -Raw } else { "" }
+$indexHtmlFile = Join-Path $resolvedRoot "index.html"
+$indexHtmlText = if (Test-Path $indexHtmlFile) { Get-Content -LiteralPath $indexHtmlFile -Raw } else { "" }
 Add-Check "no-webrtc-source" (-not (Test-Path $webRtcDir)) "WebRTC source directory must be removed"
 Add-Check "no-online-multiplayer-epics-dir" (-not (Test-Path $onlineMultiplayerEpicDir)) "Online multiplayer epic directory must be removed"
 Add-Check "no-multiplayer-utils-files" ($multiplayerUtilsFiles.Count -eq 0) "Multiplayer utility source files must be removed"
@@ -123,6 +125,7 @@ Add-Check "campaign-menu-mobile-landscape" ($windowStylesText -notmatch "@media 
 Add-Check "campaign-menu-no-close-x" ($prefCampaignText -match "cancellable=\{false\}" -and $windowText -match "cancellable = true") "Campaign menu must not expose a generic close button in the required start flow"
 Add-Check "mobile-visual-viewport" ($gameSizeProviderText -match "window\.visualViewport" -and $gameSizeProviderText -match "visualViewport\?\.addEventListener\('resize'" -and $gameSizeProviderText -match "visualViewport\?\.addEventListener\('scroll'") "Mobile sizing must use the visual viewport, not only layout viewport"
 Add-Check "mobile-fullscreen-gate" ((Test-Path $fullscreenGateFile) -and $fullscreenGateText -match "Schermo intero richiesto" -and $fullscreenGateText -match "requestFs\(\)" -and $fullscreenGateText -match "pointer: coarse" -and $windowListText -match "MobileFullscreenGate") "Mobile play must require fullscreen where the browser supports it"
+Add-Check "pwa-mobile-meta" ($indexHtmlText -match "mobile-web-app-capable" -and $indexHtmlText -match "apple-mobile-web-app-capable" -and $indexHtmlText -match "apple-mobile-web-app-title" -and $indexHtmlText -match "apple-mobile-web-app-status-bar-style") "PWA must declare mobile standalone/fullscreen meta tags"
 Add-Check "campaign-popup-readable-height" ($windowStylesText -match "min-height: calc\(100dvh - 56px\)" -and $windowStylesText -match "min-height: calc\(100dvh - 42px\)" -and $windowStylesText -match "font-size: 0\.9rem") "Campaign and details popups must use more mobile vertical space with readable text"
 Add-Check "mobile-card-safe-area" ($cardPosStyleText -match "mobileSafeSideRatio" -and $cardPosStyleText -match "layoutWidth" -and $cardPosStyleText -match "layoutOffsetX") "Mobile battle card layout must reserve side safe area"
 Add-Check "mobile-status-safe-area" ($statusText -match "size\.height \* \(size\.narrowMobile \? 1 / 2 : 2 / 3\)" -and $statusStylesText -match "\(height <= 560px\) and \(orientation: landscape\)") "Mobile battle status columns must use compact status-zone sizing"
