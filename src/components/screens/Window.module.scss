@@ -46,6 +46,11 @@
       @apply px-2 pointer-events-auto text-white;
     }
 
+    &.screenpref {
+      width: min(1180px, calc(100vw - 48px));
+      max-width: none;
+    }
+
     &.screenpref .windowinner,
     &.screenlangpref .windowinner,
     &.screenvolumepref .windowinner,
@@ -251,7 +256,7 @@
 
   .screenpref {
     .campaignpanel {
-      @apply space-y-4;
+      @apply grid gap-3;
     }
 
     .campaignheader {
@@ -267,11 +272,21 @@
     }
 
     .campaignbody {
-      @apply space-y-3;
+      display: grid;
+      grid-template-columns: minmax(420px, 1.08fr) minmax(320px, 0.92fr);
+      grid-template-areas:
+        'map reward'
+        'map meta'
+        'map mode'
+        'map victory'
+        'risk victory';
+      gap: 12px;
     }
 
     .campaignmap {
-      @apply grid grid-cols-2 gap-2 md:grid-cols-3;
+      grid-area: map;
+
+      @apply grid grid-cols-3 gap-2;
     }
 
     .campaignnode {
@@ -311,6 +326,8 @@
     }
 
     .campaignreward {
+      grid-area: reward;
+
       @apply rounded border border-yellow-300 border-opacity-50 bg-yellow-950 bg-opacity-30 px-3 py-2 text-center;
 
       span {
@@ -323,7 +340,9 @@
     }
 
     .campaignmetagrid {
-      @apply grid grid-cols-1 gap-2 md:grid-cols-2;
+      grid-area: meta;
+
+      @apply grid grid-cols-2 gap-2;
 
       p {
         @apply rounded bg-black bg-opacity-30 px-3 py-2;
@@ -349,6 +368,8 @@
     }
 
     .campaignrisk {
+      grid-area: risk;
+
       @apply border-red-300 border-opacity-40 bg-red-950 bg-opacity-20;
 
       p {
@@ -357,6 +378,8 @@
     }
 
     .campaignvictory {
+      grid-area: victory;
+
       ul {
         @apply mt-2 space-y-1;
       }
@@ -364,6 +387,10 @@
       li {
         @apply rounded bg-green-900 bg-opacity-30 px-3 py-2 text-sm;
       }
+    }
+
+    .campaignmode {
+      grid-area: mode;
     }
 
     label {
@@ -389,6 +416,24 @@
 
     #againsthumanorai {
       @apply font-normal text-gray-400 ltr:pl-1 rtl:pl-4 ltr:pr-4 rtl:pr-1 text-sm;
+    }
+
+    @media (width <= 900px), (height <= 560px) {
+      .campaignbody {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          'map'
+          'reward'
+          'meta'
+          'mode'
+          'victory'
+          'risk';
+      }
+
+      .campaignmap,
+      .campaignmetagrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
 
     .multiplayer {

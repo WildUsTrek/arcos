@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { resolveCampaignLevel } from '@/campaign/levels'
-import { useAppSelector } from '@/utils/hooks/useAppDispatch'
+import { UPDATE_SETTINGS_INIT } from '@/constants/ActionTypes'
+import { useAppDispatch, useAppSelector } from '@/utils/hooks/useAppDispatch'
 import styles from './CampaignBattleIntro.module.scss'
 
 const tavernPhaseMs = 1900
@@ -19,6 +20,8 @@ const CampaignBattleIntroContent = ({
 }: CampaignBattleIntroContentProps) => {
   const [phase, setPhase] = useState<IntroPhase>('tavern')
   const [hidden, setHidden] = useState(false)
+  const dispatch = useAppDispatch()
+  const playerName = useAppSelector((state) => state.settings.playerName)
 
   useEffect(() => {
     const rulesTimer: ReturnType<typeof setTimeout> = setTimeout(() => {
@@ -35,6 +38,18 @@ const CampaignBattleIntroContent = ({
   }, [])
 
   const level = resolveCampaignLevel(levelId, challengeSeed)
+
+  const startBattle = () => {
+    dispatch({
+      type: UPDATE_SETTINGS_INIT,
+      payload: {
+        playerName,
+        opponentName: level.opponentName,
+        ...level.settings,
+      },
+    })
+    setHidden(true)
+  }
 
   if (hidden) {
     return null
@@ -77,9 +92,7 @@ const CampaignBattleIntroContent = ({
             {phase === 'dismissible' && (
               <button
                 className={styles['continue-button']}
-                onClick={() => {
-                  setHidden(true)
-                }}
+                onClick={startBattle}
                 type="button"
               >
                 Inizia battaglia

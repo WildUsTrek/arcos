@@ -6,10 +6,10 @@ import {
   resolveCampaignLevel,
 } from '@/campaign/levels'
 import {
+  ABORT_ALL,
   CAMPAIGN_START_LEVEL_MAIN,
   SCREEN_PREF,
   UPDATE_AILEVEL,
-  UPDATE_SETTINGS_INIT,
 } from '@/constants/ActionTypes'
 import { I18nContext } from '@/i18n/I18nContext'
 import { useAppSelector, useAppDispatch } from '@/utils/hooks/useAppDispatch'
@@ -20,7 +20,6 @@ const Pref = () => {
   const _ = useContext(I18nContext)
   const dispatch = useAppDispatch()
 
-  const playerName = useAppSelector((state) => state.settings.playerName)
   const unlockedLevel = useAppSelector((state) => state.campaign.unlockedLevel)
   const completedLevels = useAppSelector(
     (state) => state.campaign.completedLevels,
@@ -51,12 +50,7 @@ const Pref = () => {
       aiLevel: level.aiLevel,
     })
     dispatch({
-      type: UPDATE_SETTINGS_INIT,
-      payload: {
-        playerName,
-        opponentName: level.opponentName,
-        ...level.settings,
-      },
+      type: ABORT_ALL,
     })
   }
 
