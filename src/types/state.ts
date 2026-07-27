@@ -86,12 +86,16 @@ export type EndScreenStateType = {
   type: 'win' | 'tie' | 'lose' | null // null = close screen
   surrender?: boolean
   reasons?: GameEndReasonsType
+  campaignOutcome?: 'level-complete' | 'campaign-complete' | 'campaign-lost'
+  campaignLevelId?: number
 }
 
 export type EndScreenNoCloseStateType = {
   type: 'win' | 'tie' | 'lose'
   surrender?: boolean
   reasons?: GameEndReasonsType
+  campaignOutcome?: 'level-complete' | 'campaign-complete' | 'campaign-lost'
+  campaignLevelId?: number
 }
 
 export const isEndScreenNoCloseState = (

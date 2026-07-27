@@ -2,6 +2,7 @@ import { expect, test } from 'bun:test'
 import {
   CAMPAIGN_COMPLETE_LEVEL_MAIN,
   INIT,
+  SCREEN_END_MAIN,
   UPDATE_CAMPAIGN_PROGRESS_MAIN,
 } from '../../src/constants/ActionTypes'
 import reducers from '../../src/reducers'
@@ -48,4 +49,19 @@ test('cached campaign progress restores the next playable level', () => {
   expect(state.campaign.lastCompletedLevel).toBe(2)
   expect(state.campaign.unlockedLevel).toBe(3)
   expect(state.campaign.challengeSeed).toBe(777)
+})
+
+test('end screen stores campaign outcome details', () => {
+  const state = reducers(undefined, {
+    type: SCREEN_END_MAIN,
+    payload: {
+      type: 'lose',
+      campaignOutcome: 'campaign-lost',
+      campaignLevelId: 4,
+    },
+  })
+
+  expect(state.screen.end.type).toBe('lose')
+  expect(state.screen.end.campaignOutcome).toBe('campaign-lost')
+  expect(state.screen.end.campaignLevelId).toBe(4)
 })

@@ -74,6 +74,12 @@ $localstorageFile = Join-Path $resolvedRoot "src\utils\localstorage.ts"
 $campaignProgressEpicFile = Join-Path $resolvedRoot "src\epics\campaign\progressEpic.ts"
 $screenEndEpicFile = Join-Path $resolvedRoot "src\epics\screen\screenEndEpic.ts"
 $closeEndEpicFile = Join-Path $resolvedRoot "src\epics\screen\closeScreenEndInitEpic.ts"
+$pwaNoticeFile = Join-Path $resolvedRoot "src\components\PwaUpdateNotice.tsx"
+$balanceToolFile = Join-Path $resolvedRoot "tools\campaign-balance-report.ts"
+$balanceTestFile = Join-Path $resolvedRoot "__test__\campaign\campaignBalance.test.ts"
+$windowStylesFile = Join-Path $resolvedRoot "src\components\screens\Window.module.scss"
+$endScreenFile = Join-Path $resolvedRoot "src\components\screens\EndScreen.tsx"
+$endScreenStylesFile = Join-Path $resolvedRoot "src\components\screens\EndScreen.module.scss"
 $campaignLevelsText = if (Test-Path $campaignLevelsFile) { Get-Content -LiteralPath $campaignLevelsFile -Raw } else { "" }
 $prefCampaignText = if (Test-Path $pref) { Get-Content -LiteralPath $pref -Raw } else { "" }
 $campaignIntroText = if (Test-Path $campaignIntroFile) { Get-Content -LiteralPath $campaignIntroFile -Raw } else { "" }
@@ -83,6 +89,12 @@ $localstorageText = if (Test-Path $localstorageFile) { Get-Content -LiteralPath 
 $campaignProgressEpicText = if (Test-Path $campaignProgressEpicFile) { Get-Content -LiteralPath $campaignProgressEpicFile -Raw } else { "" }
 $screenEndEpicText = if (Test-Path $screenEndEpicFile) { Get-Content -LiteralPath $screenEndEpicFile -Raw } else { "" }
 $closeEndEpicText = if (Test-Path $closeEndEpicFile) { Get-Content -LiteralPath $closeEndEpicFile -Raw } else { "" }
+$pwaNoticeText = if (Test-Path $pwaNoticeFile) { Get-Content -LiteralPath $pwaNoticeFile -Raw } else { "" }
+$balanceToolText = if (Test-Path $balanceToolFile) { Get-Content -LiteralPath $balanceToolFile -Raw } else { "" }
+$balanceTestText = if (Test-Path $balanceTestFile) { Get-Content -LiteralPath $balanceTestFile -Raw } else { "" }
+$windowStylesText = if (Test-Path $windowStylesFile) { Get-Content -LiteralPath $windowStylesFile -Raw } else { "" }
+$endScreenText = if (Test-Path $endScreenFile) { Get-Content -LiteralPath $endScreenFile -Raw } else { "" }
+$endScreenStylesText = if (Test-Path $endScreenStylesFile) { Get-Content -LiteralPath $endScreenStylesFile -Raw } else { "" }
 Add-Check "campaign-levels-present" (Test-Path $campaignLevelsFile) "Campaign level registry must exist"
 Add-Check "campaign-reducer-present" (Test-Path $campaignReducerFile) "Campaign reducer must exist"
 Add-Check "campaign-explicit-victory-conditions" ($campaignLevelsText -match "getVictoryConditions" -and $prefCampaignText -match "victoryConditions") "Campaign must expose exact victory conditions per level"
@@ -93,16 +105,15 @@ Add-Check "campaign-opponent-name-in-battle" ($zoneStatusText -match "resolveCam
 Add-Check "campaign-durable-cache" ($localstorageText -match "campaignCacheSet" -and $readLsEpicText -match "campaignCacheGet" -and $campaignProgressEpicText -match "campaignCacheSet") "Campaign progress must be stored in a dedicated durable cache"
 Add-Check "campaign-cache-reset-on-finish-or-loss" ($campaignProgressEpicText -match "campaignCompleted" -and $campaignProgressEpicText -match "campaignCacheClear" -and $screenEndEpicText -match "shouldResetCampaign" -and $screenEndEpicText -match "campaignCacheClear") "Campaign cache must clear only on campaign completion or campaign loss"
 Add-Check "end-screen-returns-to-campaign-menu" ($closeEndEpicText -match "SCREEN_PREF" -and $closeEndEpicText -notmatch "type: INIT") "Closing the end screen must return to campaign menu instead of starting a generic battle"
+Add-Check "campaign-map-present" ($prefCampaignText -match "campaignmap" -and $prefCampaignText -match "campaignnode" -and $windowStylesText -match "campaignmap") "Campaign menu must show a persistent level map"
+Add-Check "campaign-loss-explained" ($screenEndEpicText -match "campaign-lost" -and $endScreenText -match "Campagna perduta" -and $endScreenStylesText -match "campaignlost") "Campaign loss must be explicitly explained to the player"
+Add-Check "pwa-update-notice" ((Test-Path $pwaNoticeFile) -and $pwaNoticeText -match "registerSW" -and $pwaNoticeText -match "Nuova versione disponibile") "PWA must expose a visible update notice"
+Add-Check "campaign-balance-tool" ((Test-Path $balanceToolFile) -and $balanceToolText -match "evaluateCampaignBalance" -and $balanceToolText -match "difficultyScore") "Campaign balance tool must evaluate every level"
+Add-Check "campaign-balance-tests" ((Test-Path $balanceTestFile) -and $balanceTestText -match "difficulty trends upward" -and $balanceTestText -match "structural warnings") "Campaign balance must be covered by tests"
 foreach ($mode in @("training", "stone-race", "thin-wall", "rich-start", "short-hand", "tower-rush", "resource-race", "siege")) {
   Add-Check "campaign-mode:$mode" ($campaignLevelsText -match "'$mode'") "Campaign mode $mode must be represented"
 }
 
-$windowStylesFile = Join-Path $resolvedRoot "src\components\screens\Window.module.scss"
-$endScreenFile = Join-Path $resolvedRoot "src\components\screens\EndScreen.tsx"
-$endScreenStylesFile = Join-Path $resolvedRoot "src\components\screens\EndScreen.module.scss"
-$windowStylesText = if (Test-Path $windowStylesFile) { Get-Content -LiteralPath $windowStylesFile -Raw } else { "" }
-$endScreenText = if (Test-Path $endScreenFile) { Get-Content -LiteralPath $endScreenFile -Raw } else { "" }
-$endScreenStylesText = if (Test-Path $endScreenStylesFile) { Get-Content -LiteralPath $endScreenStylesFile -Raw } else { "" }
 Add-Check "campaign-premium-panel" ($windowStylesText -match "campaignreward" -and $windowStylesText -match "campaignvictory") "Campaign screen must have reward and victory-condition presentation styles"
 Add-Check "campaign-win-advance-panel" ($endScreenText -match "Next level unlocked" -and $endScreenStylesText -match "campaignadvance") "Win screen must present campaign reward/unlock progress"
 

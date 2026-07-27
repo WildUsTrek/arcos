@@ -270,6 +270,46 @@
       @apply space-y-3;
     }
 
+    .campaignmap {
+      @apply grid grid-cols-2 gap-2 md:grid-cols-3;
+    }
+
+    .campaignnode {
+      @apply min-h-16 rounded border border-white border-opacity-20 bg-black bg-opacity-30 px-2 py-2;
+
+      span {
+        @apply float-right rounded bg-gray-700 px-2 py-0.5 text-xs font-bold text-white;
+      }
+
+      strong {
+        @apply block pr-8 text-sm leading-tight text-white;
+      }
+
+      small {
+        @apply block pt-1 text-xs font-bold uppercase text-gray-300;
+      }
+
+      &.completed {
+        @apply border-green-300 bg-green-950 bg-opacity-40;
+
+        small {
+          @apply text-green-200;
+        }
+      }
+
+      &.current {
+        @apply border-yellow-300 bg-yellow-950 bg-opacity-40;
+
+        small {
+          @apply text-yellow-200;
+        }
+      }
+
+      &.locked {
+        @apply opacity-50;
+      }
+    }
+
     .campaignreward {
       @apply rounded border border-yellow-300 border-opacity-50 bg-yellow-950 bg-opacity-30 px-3 py-2 text-center;
 
@@ -299,11 +339,20 @@
     }
 
     .campaignmode,
-    .campaignvictory {
+    .campaignvictory,
+    .campaignrisk {
       @apply rounded border border-white border-opacity-20 bg-black bg-opacity-30 px-3 py-2;
 
       strong {
         @apply block text-sm uppercase text-yellow-200;
+      }
+    }
+
+    .campaignrisk {
+      @apply border-red-300 border-opacity-40 bg-red-950 bg-opacity-20;
+
+      p {
+        @apply text-sm font-bold text-red-100;
       }
     }
 

@@ -44,12 +44,20 @@ const CampaignBattleIntroContent = ({
     <div className={styles.overlay} role="dialog" aria-modal={true}>
       <div className={styles.inner}>
         {phase === 'tavern' ? (
-          <>
+          <div className={styles.taverncard}>
             <span className={styles.eyebrow}>Livello {level.id}</span>
             <h1 className={styles.tavern}>{level.tavernName}</h1>
-          </>
+            <p className={styles.subtitle}>La sfida sta per cominciare</p>
+          </div>
         ) : (
           <div className={styles.rules}>
+            <div className={styles.stepper}>
+              <span></span>
+              <span></span>
+              <span
+                className={phase === 'dismissible' ? styles.ready : ''}
+              ></span>
+            </div>
             <div className={styles.challenger}>
               <span className={styles.eyebrow}>Sfidante</span>
               <strong>{level.opponentName}</strong>

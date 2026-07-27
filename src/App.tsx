@@ -2,6 +2,7 @@ import React, { useCallback, useContext, useEffect } from 'react'
 import SvgFilters from '@/components/effects/SvgFilters'
 import Game from '@/components/Game'
 import HtmlHead from '@/components/HtmlHead'
+import PwaUpdateNotice from '@/components/PwaUpdateNotice'
 import {
   READLS_UPDATESTORE_INIT,
   SCREEN_LANDSCAPE,
@@ -95,6 +96,7 @@ const App = () => {
     <>
       <HtmlHead />
       <Game />
+      <PwaUpdateNotice />
       <SvgFilters />
     </>
   )

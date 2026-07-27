@@ -45,6 +45,8 @@ export default produce((draft: ScreenStateType, action: RootActionType) => {
       draft.end.type = action.payload.type
       draft.end.surrender = action.payload.surrender
       draft.end.reasons = action.payload.reasons
+      draft.end.campaignOutcome = action.payload.campaignOutcome
+      draft.end.campaignLevelId = action.payload.campaignLevelId
       break
     }
   }

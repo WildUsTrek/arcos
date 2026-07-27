@@ -25,13 +25,15 @@ const EndScreen = (endScreenState: EndScreenNoCloseStateType) => {
   const challengeSeed = useAppSelector((state) => state.campaign.challengeSeed)
 
   const { type, surrender, reasons } = endScreenState
+  const { campaignOutcome, campaignLevelId } = endScreenState
 
   const size = useContext(GameSizeContext)
 
   const text = _.i18n(textMap[type])
 
   const erathianTextArr = erathianTextMap[type].split(' ')
-  const completedLevelId = type === 'win' ? lastCompletedLevel : null
+  const completedLevelId =
+    type === 'win' ? (campaignLevelId ?? lastCompletedLevel) : null
   const completedCampaignLevel =
     completedLevelId !== null
       ? resolveCampaignLevel(completedLevelId, challengeSeed)
@@ -120,6 +122,12 @@ const EndScreen = (endScreenState: EndScreenNoCloseStateType) => {
   const clickObj = exitable
     ? { onClick: onActionFunc, onContextMenu: onActionFunc }
     : {}
+  const campaignLost = campaignOutcome === 'campaign-lost'
+  const campaignComplete = campaignOutcome === 'campaign-complete'
+  const nextLevelText =
+    nextLevelUnlocked !== null
+      ? `Prossima taverna pronta: livello ${nextLevelUnlocked}.`
+      : 'Campagna completata.'
 
   return (
     <div
@@ -147,9 +155,25 @@ const EndScreen = (endScreenState: EndScreenNoCloseStateType) => {
             </span>
             <strong>{completedCampaignLevel.reward}</strong>
             <small>
-              {nextLevelUnlocked !== null
-                ? `${_.i18n('Next level unlocked')}: ${nextLevelUnlocked}`
-                : _.i18n('Campaign completed')}
+              {campaignComplete
+                ? _.i18n('Campaign completed')
+                : nextLevelUnlocked !== null
+                  ? `${_.i18n('Next level unlocked')}: ${nextLevelUnlocked}`
+                  : _.i18n('Campaign completed')}
+            </small>
+            <p>
+              {campaignComplete
+                ? 'Hai conquistato tutte le taverne della campagna.'
+                : nextLevelText}
+            </p>
+          </div>
+        )}
+        {campaignLost && (
+          <div className={styles.campaignlost}>
+            <span>Campagna perduta</span>
+            <strong>La scalata riparte dalla prima taverna</strong>
+            <small>
+              Le condizioni erano vincolanti: una sconfitta azzera la run.
             </small>
           </div>
         )}

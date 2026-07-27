@@ -1,0 +1,46 @@
+.notice {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 140;
+  display: grid;
+  gap: 8px;
+  width: min(340px, calc(100vw - 32px));
+  padding: 14px;
+  border: 2px solid #f2c15f;
+  background: rgb(10 10 10 / 92%);
+  color: #f8eac9;
+  font-family: Roboto, sans-serif;
+  box-shadow: 0 14px 40px rgb(0 0 0 / 45%);
+}
+
+.notice strong {
+  color: #ffd76c;
+  font-size: 0.98rem;
+  text-transform: uppercase;
+}
+
+.notice p {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.actions button {
+  padding: 8px 12px;
+  border: 1px solid #f2c15f;
+  background: #101010;
+  color: #ffd76c;
+  font-weight: 700;
+}
+
+.actions button:hover,
+.actions button:focus-visible {
+  background: #2a1c0b;
+}

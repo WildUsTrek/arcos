@@ -34,6 +34,7 @@ const Pref = () => {
   const level = resolveCampaignLevel(levelId, challengeSeed)
   const completedCount = completedLevels.length
   const campaignCompleted = completedCount >= campaignLevelCount
+  const completedLevelSet = new Set(completedLevels)
 
   const startBattle = () => {
     dispatch({
@@ -75,6 +76,40 @@ const Pref = () => {
         </div>
 
         <section className={styles.campaignbody}>
+          <div className={styles.campaignmap}>
+            {Array.from({ length: campaignLevelCount }, (_, index) => {
+              const mapLevelId = index + 1
+              const mapLevel = resolveCampaignLevel(mapLevelId, challengeSeed)
+              const completed = completedLevelSet.has(mapLevelId)
+              const current = mapLevelId === level.id && !campaignCompleted
+              const locked = mapLevelId > unlockedLevel
+
+              return (
+                <div
+                  className={cl(
+                    styles.campaignnode,
+                    completed && styles.completed,
+                    current && styles.current,
+                    locked && styles.locked,
+                  )}
+                  key={mapLevel.id}
+                >
+                  <span>{mapLevel.id}</span>
+                  <strong>{mapLevel.tavernName}</strong>
+                  <small>
+                    {completed
+                      ? 'Completata'
+                      : current
+                        ? 'Prossima sfida'
+                        : locked
+                          ? 'Bloccata'
+                          : 'Disponibile'}
+                  </small>
+                </div>
+              )
+            })}
+          </div>
+
           <div className={styles.campaignreward}>
             <span>{_.i18n('Reward')}</span>
             <strong>{level.reward}</strong>
@@ -111,6 +146,14 @@ const Pref = () => {
                 <li key={condition}>{condition}</li>
               ))}
             </ul>
+          </div>
+
+          <div className={styles.campaignrisk}>
+            <strong>Regola campagna</strong>
+            <p>
+              Vincere sblocca la prossima taverna. Perdere una sfida campagna
+              azzera la scalata e fa ripartire dal livello 1.
+            </p>
           </div>
         </section>
 

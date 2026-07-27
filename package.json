@@ -38,6 +38,7 @@
     "tool:i18ncheck:main": "bun ./tools/i18ncheck/main",
     "tool:i18ncheck:specific": "bun ./tools/i18ncheck/specific",
     "tool:calcscore": "bun ./tools/ai-related/calcscore",
+    "tool:campaignbalance": "bun ./tools/campaign-balance-report",
     "tool:cardbalance": "bun ./tools/card-balance",
     "tool:i18nextract": "bun ./tools/i18n-extraction",
     "tool:i18njs2text": "bun ./tools/i18n-js2text/js2text",

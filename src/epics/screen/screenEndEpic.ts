@@ -1,6 +1,7 @@
 import { ofType, StateObservable } from 'redux-observable'
 import { concat, EMPTY, Observable, of } from 'rxjs'
 import { withLatestFrom, mergeMap } from 'rxjs/operators'
+import { campaignLevelCount } from '@/campaign/levels'
 import {
   ABORT_ALL,
   CAMPAIGN_COMPLETE_LEVEL,
@@ -32,6 +33,15 @@ export default (
         payload.type === 'win' && state.campaign.activeLevel !== null
       const shouldResetCampaign =
         payload.type === 'lose' && state.campaign.activeLevel !== null
+      const campaignLevelId = state.campaign.activeLevel
+      const isFinalCampaignLevel = campaignLevelId === campaignLevelCount
+      const campaignOutcome = shouldCompleteCampaignLevel
+        ? isFinalCampaignLevel
+          ? 'campaign-complete'
+          : 'level-complete'
+        : shouldResetCampaign
+          ? 'campaign-lost'
+          : undefined
       if (shouldResetCampaign) {
         campaignCacheClear()
         lsSet((draft) => {
@@ -56,7 +66,11 @@ export default (
           : EMPTY,
         of<RootActionType>({
           type: SCREEN_END_MAIN,
-          payload,
+          payload: {
+            ...payload,
+            campaignOutcome,
+            campaignLevelId: campaignLevelId ?? undefined,
+          },
         }),
       )
     }),

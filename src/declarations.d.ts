@@ -56,3 +56,14 @@ declare module '*.mp3' {
   const value: string
   export = value
 }
+
+declare module 'virtual:pwa-register' {
+  export type RegisterSWOptions = {
+    onNeedRefresh?: () => void
+    onOfflineReady?: () => void
+  }
+
+  export const registerSW: (
+    options?: RegisterSWOptions,
+  ) => (reloadPage?: boolean) => Promise<void>
+}
