@@ -78,7 +78,7 @@ const Card = ({
         className={cl(
           styles.main,
           styles.cardbackhard,
-          isNotPlayersTurn && 'opacity-0 pointer-events-none',
+          isNotPlayersTurn && styles.inactivehandcard,
           n === -1 && styles.unusableopacity,
           'card',
           `card-pos-${position}`,
@@ -230,9 +230,7 @@ const Card = ({
         styles.cardeffect,
         styles[['red', 'blue', 'green'][type]],
         isFlipped && styles.isflipped,
-        ((playersTurn && owner === 'opponent') ||
-          (!playersTurn && owner === 'player')) &&
-          'opacity-0 pointer-events-none',
+        isNotPlayersTurn && styles.inactivehandcard,
         position !== -1 && 'shadow-lg',
         position >= 0 && 'cursor-pointer',
         position >= 0 && styles.playable,

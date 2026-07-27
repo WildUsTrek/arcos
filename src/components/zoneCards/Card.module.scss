@@ -30,6 +30,13 @@ $cardGradient: linear-gradient(
   // &.green {}
 }
 
+.inactivehandcard {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition-property: transform, left, top;
+}
+
 .playable {
   @media (hover: hover) and (pointer: fine) {
     &:hover {
