@@ -82,6 +82,7 @@ $pwaNoticeFile = Join-Path $resolvedRoot "src\components\PwaUpdateNotice.tsx"
 $balanceToolFile = Join-Path $resolvedRoot "tools\campaign-balance-report.ts"
 $balanceTestFile = Join-Path $resolvedRoot "__test__\campaign\campaignBalance.test.ts"
 $mobileCardLayoutTestFile = Join-Path $resolvedRoot "__test__\campaign\mobileCardLayout.test.ts"
+$aiMultiturnHandTestFile = Join-Path $resolvedRoot "__test__\ai\multiturnHandSize.test.ts"
 $cardLayoutMetricsFile = Join-Path $resolvedRoot "src\components\zoneCards\CardLayoutMetrics.ts"
 $cardPosStyleFile = Join-Path $resolvedRoot "src\components\zoneCards\CardPosStyle.tsx"
 $cardFile = Join-Path $resolvedRoot "src\components\zoneCards\Card.tsx"
@@ -107,6 +108,7 @@ $pwaNoticeText = if (Test-Path $pwaNoticeFile) { Get-Content -LiteralPath $pwaNo
 $balanceToolText = if (Test-Path $balanceToolFile) { Get-Content -LiteralPath $balanceToolFile -Raw } else { "" }
 $balanceTestText = if (Test-Path $balanceTestFile) { Get-Content -LiteralPath $balanceTestFile -Raw } else { "" }
 $mobileCardLayoutTestText = if (Test-Path $mobileCardLayoutTestFile) { Get-Content -LiteralPath $mobileCardLayoutTestFile -Raw } else { "" }
+$aiMultiturnHandTestText = if (Test-Path $aiMultiturnHandTestFile) { Get-Content -LiteralPath $aiMultiturnHandTestFile -Raw } else { "" }
 $cardLayoutMetricsText = if (Test-Path $cardLayoutMetricsFile) { Get-Content -LiteralPath $cardLayoutMetricsFile -Raw } else { "" }
 $cardPosStyleText = if (Test-Path $cardPosStyleFile) { Get-Content -LiteralPath $cardPosStyleFile -Raw } else { "" }
 $cardText = if (Test-Path $cardFile) { Get-Content -LiteralPath $cardFile -Raw } else { "" }
@@ -166,6 +168,7 @@ Add-Check "ai-threat-coefficients" ($aiCoefsText -match "playerImmediateWinPenal
 Add-Check "ai-reply-penalty" ($aiMainText -match "estimateBestPlayerReplyScore" -and $aiCoefsText -match "playerReplyPenalty") "AI must penalize strong player replies"
 Add-Check "ai-discard-quality" ($aiMainText -match "discardScore" -and $aiCoefsText -match "deadCardDiscardBonus") "AI must score discard quality"
 Add-Check "ai-campaign-profile" ($aiMainText -match "profileScore" -and $aiIndexText -match "aiProfile") "AI must use campaign opponent profiles"
+Add-Check "ai-multiturn-hand-size-tests" ((Test-Path $aiMultiturnHandTestFile) -and $aiMultiturnHandTestText -match "maxCardsInHand" -and $aiMultiturnHandTestText -match "aiDecision" -and $aiMultiturnHandTestText -match "for \(let turn = 0; turn < 24") "AI must have multi-turn coverage for campaign and historical max hand sizes"
 
 $failed = @($checks | Where-Object { -not $_.passed })
 $report = [PSCustomObject]@{
