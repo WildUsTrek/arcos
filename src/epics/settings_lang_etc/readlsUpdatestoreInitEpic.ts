@@ -5,7 +5,7 @@ import {
   READLS_UPDATESTORE_INIT,
   UPDATE_SETTINGS_MAIN,
   ABORT_ALL,
-  INIT,
+  SCREEN_PREF,
   UPDATE_BOLDFONT_MAIN,
   UPDATE_ERATHIAN_MAIN,
   UPDATE_LANG_MAIN,
@@ -117,7 +117,8 @@ export default (
             })
           : EMPTY,
         of<RootActionType>({
-          type: INIT,
+          type: SCREEN_PREF,
+          show: true,
         }),
       ).pipe(takeUntil(action$.pipe(ofType(ABORT_ALL))))
     }),

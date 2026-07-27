@@ -3,8 +3,8 @@ import { concat, Observable, of } from 'rxjs'
 import { mergeMap } from 'rxjs/operators'
 import {
   CLOSE_SCREEN_END_INIT,
-  INIT,
   SCREEN_END,
+  SCREEN_PREF,
 } from '@/constants/ActionTypes'
 import { RootActionType } from '@/types/actionObj'
 import { RootStateType } from '@/types/state'
@@ -22,8 +22,8 @@ export default (
           payload: { type: null },
         }),
         of<RootActionType>({
-          type: INIT,
-          fromScreenEnd: true,
+          type: SCREEN_PREF,
+          show: true,
         }),
       ),
     ),
