@@ -180,8 +180,14 @@ test('AI cannot play while modal screens are active', () => {
   const drawCardCoreSource = fs.readFileSync(drawCardCoreEpicPath, 'utf8')
 
   expect(aiPlayCardSource).toContain('isScreenState(state)')
-  expect(aiPlayCardSource).toContain('return EMPTY')
-  expect(drawCardCoreSource).toContain('!isScreenState(state)')
+  expect(aiPlayCardSource).toContain(
+    'filter((state0) => !isScreenState(state0))',
+  )
+  expect(aiPlayCardSource).toContain(
+    'takeUntil(action$.pipe(ofType(ABORT_ALL)))',
+  )
+  expect(drawCardCoreSource).toContain('type: AI_PLAY_CARD')
+  expect(drawCardCoreSource).not.toContain('!isScreenState(state)')
 })
 
 test('mobile campaign overlays use available landscape space with readable text', () => {

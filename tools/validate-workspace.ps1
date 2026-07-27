@@ -88,6 +88,7 @@ $balanceToolFile = Join-Path $resolvedRoot "tools\campaign-balance-report.ts"
 $balanceTestFile = Join-Path $resolvedRoot "__test__\campaign\campaignBalance.test.ts"
 $mobileCardLayoutTestFile = Join-Path $resolvedRoot "__test__\campaign\mobileCardLayout.test.ts"
 $aiMultiturnHandTestFile = Join-Path $resolvedRoot "__test__\ai\multiturnHandSize.test.ts"
+$aiOverlayPauseTestFile = Join-Path $resolvedRoot "__test__\epics\aiOverlayPause.test.ts"
 $cardLayoutMetricsFile = Join-Path $resolvedRoot "src\components\zoneCards\CardLayoutMetrics.ts"
 $cardPosStyleFile = Join-Path $resolvedRoot "src\components\zoneCards\CardPosStyle.tsx"
 $cardFile = Join-Path $resolvedRoot "src\components\zoneCards\Card.tsx"
@@ -116,6 +117,7 @@ $balanceToolText = if (Test-Path $balanceToolFile) { Get-Content -LiteralPath $b
 $balanceTestText = if (Test-Path $balanceTestFile) { Get-Content -LiteralPath $balanceTestFile -Raw } else { "" }
 $mobileCardLayoutTestText = if (Test-Path $mobileCardLayoutTestFile) { Get-Content -LiteralPath $mobileCardLayoutTestFile -Raw } else { "" }
 $aiMultiturnHandTestText = if (Test-Path $aiMultiturnHandTestFile) { Get-Content -LiteralPath $aiMultiturnHandTestFile -Raw } else { "" }
+$aiOverlayPauseTestText = if (Test-Path $aiOverlayPauseTestFile) { Get-Content -LiteralPath $aiOverlayPauseTestFile -Raw } else { "" }
 $cardLayoutMetricsText = if (Test-Path $cardLayoutMetricsFile) { Get-Content -LiteralPath $cardLayoutMetricsFile -Raw } else { "" }
 $cardPosStyleText = if (Test-Path $cardPosStyleFile) { Get-Content -LiteralPath $cardPosStyleFile -Raw } else { "" }
 $cardText = if (Test-Path $cardFile) { Get-Content -LiteralPath $cardFile -Raw } else { "" }
@@ -150,7 +152,8 @@ Add-Check "mobile-card-safe-area" ($cardLayoutMetricsText -match "mobileSafeSide
 Add-Check "mobile-card-overflow-tests" ($cardLayoutMetricsText -match "getCardLayoutMetrics" -and $mobileCardLayoutTestText -match "maxCardsInHand" -and $mobileCardLayoutTestText -match "cardsInHand of \[5, 6, 7, 8, maxCardsInHand\]" -and $mobileCardLayoutTestText -match "toBeLessThanOrEqual\(\s*viewport\.width" -and $mobileCardLayoutTestText -match "toBeGreaterThanOrEqual\(rects\[i - 1\]\.right") "Mobile card layout must be tested for normal, transient, and historical max rendered slots"
 Add-Check "mobile-card-touch-hover-safe" ($cardText -notmatch "hover:scale-105" -and $cardText -match "styles\.playable" -and $cardStyleText -match "\(hover: hover\) and \(pointer: fine\)" -and $cardStyleText -match "\(hover: none\), \(pointer: coarse\)" -and $cardStyleText -match "touch-action: manipulation") "Mobile cards must not keep sticky hover scaling on touch devices"
 Add-Check "opponent-cardback-stable-layout" ($cardText -match "usesReservedOpponentBackLayout" -and $cardText -match "posMode" -and $cardText -match "card-pos-\$\{posMode\}") "Opponent hidden card backs must keep the reserved hand layout during enemy turns"
-Add-Check "ai-blocked-by-active-screen" ($aiPlayCardEpicText -match "isScreenState\(state\)" -and $aiPlayCardEpicText -match "return EMPTY" -and $drawCardCoreEpicText -match "!isScreenState\(state\)") "AI timers must not play cards while modal screens are active"
+Add-Check "ai-pauses-during-active-screen" ($aiPlayCardEpicText -match "isScreenState\(state\)" -and $aiPlayCardEpicText -match "filter\(\(state0\) => !isScreenState\(state0\)\)" -and $aiPlayCardEpicText -match "type: AI_PLAY_CARD" -and $aiPlayCardEpicText -match "takeUntil\(action\$\.pipe\(ofType\(ABORT_ALL\)\)\)" -and $drawCardCoreEpicText -notmatch "!isScreenState\(state\)") "AI timers must pause during modal screens, resume after close, and cancel on abort"
+Add-Check "ai-overlay-pause-behavior-test" ((Test-Path $aiOverlayPauseTestFile) -and $aiOverlayPauseTestText -match "pauses behind an overlay and resumes" -and $aiOverlayPauseTestText -match "cancelled when the battle is aborted" -and $aiOverlayPauseTestText -match "StateObservable") "AI overlay pause/resume behavior must be covered by an executable epic test"
 Add-Check "mobile-status-safe-area" ($statusText -match "size\.height \* \(size\.narrowMobile \? 1 / 2 : 2 / 3\)" -and $statusStylesText -match "\(height <= 560px\) and \(orientation: landscape\)") "Mobile battle status columns must use compact status-zone sizing"
 Add-Check "campaign-opponent-name-in-battle" ($zoneStatusText -match "resolveCampaignLevel" -and $zoneStatusText -match "campaignOpponentName") "Battle status must show the resolved campaign opponent name"
 Add-Check "campaign-durable-cache" ($localstorageText -match "campaignCacheSet" -and $readLsEpicText -match "campaignCacheGet" -and $campaignProgressEpicText -match "campaignCacheSet") "Campaign progress must be stored in a dedicated durable cache"

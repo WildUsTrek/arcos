@@ -1,6 +1,13 @@
 import { ofType, StateObservable } from 'redux-observable'
 import { EMPTY, Observable, of } from 'rxjs'
-import { withLatestFrom, mergeMap, takeUntil } from 'rxjs/operators'
+import {
+  withLatestFrom,
+  mergeMap,
+  takeUntil,
+  filter,
+  take,
+  map,
+} from 'rxjs/operators'
 import { ai } from '@/ai'
 import {
   AI_PLAY_CARD,
@@ -23,7 +30,14 @@ export default (
     withLatestFrom(state$),
     mergeMap(([_action, state]) => {
       if (isScreenState(state)) {
-        return EMPTY
+        return state$.pipe(
+          filter((state0) => !isScreenState(state0)),
+          take(1),
+          map(() => ({
+            type: AI_PLAY_CARD,
+          })),
+          takeUntil(action$.pipe(ofType(ABORT_ALL))),
+        )
       }
 
       const aiInstruction: AiInstructionType | null = ai(state)

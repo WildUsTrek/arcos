@@ -24,7 +24,6 @@ import {
 import { RootActionType } from '@/types/actionObj'
 import { RootStateType } from '@/types/state'
 import devLog from '@/utils/devLog'
-import isScreenState from '@/utils/isScreenState'
 import getPan from '@/utils/sound/getPan'
 import { play } from '@/utils/sound/Sound'
 
@@ -66,7 +65,7 @@ export default (
           on: false,
           locknumber: 1,
         }).pipe(delay(0)),
-        owner === 'opponent' && shouldUseAi && !isScreenState(state)
+        owner === 'opponent' && shouldUseAi
           ? of<RootActionType>({
               type: AI_PLAY_CARD,
             }).pipe(
