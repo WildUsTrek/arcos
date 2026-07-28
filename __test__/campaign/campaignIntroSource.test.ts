@@ -201,6 +201,7 @@ test('mobile card layout reserves side safe area', () => {
   expect(cardSource).toContain('styles.inactivehandcard')
   expect(cardStyles).toContain('.inactivehandcard')
   expect(cardStyles).toContain('visibility: hidden')
+  expect(cardStyles).toContain('transition-property: opacity, transform')
   expect(cardStyles).toContain('(hover: hover) and (pointer: fine)')
   expect(cardStyles).toContain('(hover: none), (pointer: coarse)')
   expect(cardStyles).toContain('touch-action: manipulation')
