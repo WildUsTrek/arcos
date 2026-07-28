@@ -1,4 +1,4 @@
-import { expect, test } from 'bun:test'
+import { expect, spyOn, test } from 'bun:test'
 import { StateObservable } from 'redux-observable'
 import { Subject } from 'rxjs'
 import {
@@ -14,6 +14,9 @@ import { RootActionType } from '../../src/types/actionObj'
 import { RootStateType } from '../../src/types/state'
 
 const flush = () => new Promise((resolve) => setTimeout(resolve, 0))
+
+const suppressExpectedLockWarning = () =>
+  spyOn(console, 'log').mockImplementation(() => {})
 
 const guardedUseCardAction: RootActionType = {
   type: PLAY_CARD_CORE_GUARDED,
@@ -45,16 +48,21 @@ test('guarded card action waits for the gameplay lock to clear', async () => {
       emitted.push(action)
     },
   )
+  const consoleLog = suppressExpectedLockWarning()
 
-  actionSubject.next(guardedUseCardAction)
-  await flush()
+  try {
+    actionSubject.next(guardedUseCardAction)
+    await flush()
 
-  expect(emitted).toEqual([])
+    expect(emitted).toEqual([])
 
-  stateSubject.next(unlockedState)
-  await flush()
+    stateSubject.next(unlockedState)
+    await flush()
 
-  expect(emitted).toEqual([guardedUseCardAction.payload])
+    expect(emitted).toEqual([guardedUseCardAction.payload])
+  } finally {
+    consoleLog.mockRestore()
+  }
 
   subscription.unsubscribe()
 })
@@ -78,13 +86,18 @@ test('guarded card action is cancelled by a full game abort', async () => {
       emitted.push(action)
     },
   )
+  const consoleLog = suppressExpectedLockWarning()
 
-  actionSubject.next(guardedUseCardAction)
-  actionSubject.next({ type: ABORT_ALL })
-  stateSubject.next(unlockedState)
-  await flush()
+  try {
+    actionSubject.next(guardedUseCardAction)
+    actionSubject.next({ type: ABORT_ALL })
+    stateSubject.next(unlockedState)
+    await flush()
 
-  expect(emitted).toEqual([])
+    expect(emitted).toEqual([])
+  } finally {
+    consoleLog.mockRestore()
+  }
 
   subscription.unsubscribe()
 })
