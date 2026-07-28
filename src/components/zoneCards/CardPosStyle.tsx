@@ -1,4 +1,5 @@
 import React, { useMemo, useContext } from 'react'
+import { maxCardsInHand } from '@/constants/ranges'
 import { GameSizeContext } from '@/utils/contexts/GameSizeContext'
 import { getCardLayoutMetrics } from './CardLayoutMetrics'
 
@@ -36,12 +37,13 @@ const CardPosStyle = ({ cardsInHand, winHeight, winWidth }: PropType) => {
   const { narrowMobile } = size
 
   const css = useMemo(() => {
-    const { width, height, top, topM1, left, leftM1 } = getCardLayoutMetrics({
+    const defaultMetrics = getCardLayoutMetrics({
       cardsInHand,
       winHeight,
       winWidth,
       narrowMobile,
     })
+    const { width, height, top, left } = defaultMetrics
 
     let _css = `
 .endscreen-review-cards-btn {
@@ -52,37 +54,44 @@ const CardPosStyle = ({ cardsInHand, winHeight, winWidth }: PropType) => {
   left: ${left[4]}px;
 }
 .card {
-  --cardwidth: ${width}px;
-  width: ${width}px;
-  height: ${height}px;
-  font-size: ${width * 0.094}px;
   z-index: 10;
 }`
 
-    const posCsses = [-5, -4, -3, -2, -1].map(
-      (pos) => `
-.card-pos-${pos} {
-  top: ${top[pos + 5]}px;
-  left: ${left[pos + 5]}px;
-}`,
-    )
+    const posCsses: string[] = []
 
-    for (let i = 5, len = top.length; i < len; i++) {
+    for (let handCount = 1; handCount <= maxCardsInHand + 1; handCount += 1) {
+      const metrics = getCardLayoutMetrics({
+        cardsInHand: handCount - 1,
+        winHeight,
+        winWidth,
+        narrowMobile,
+      })
+      const mode = `h${handCount}`
+
       posCsses.push(`
-.card-pos-m0.card-pos-${i - 5} {
-  top: ${top[i]}px;
-  left: ${left[i]}px;
+.card-pos-${mode} {
+  --cardwidth: ${metrics.width}px;
+  width: ${metrics.width}px;
+  height: ${metrics.height}px;
+  font-size: ${metrics.width * 0.094}px;
+}`)
+
+      for (const pos of [-5, -4, -3, -2, -1]) {
+        posCsses.push(`
+.card-pos-${mode}.card-pos-${pos} {
+  top: ${metrics.top[pos + 5]}px;
+  left: ${metrics.left[pos + 5]}px;
+}`)
+      }
+
+      for (let i = 5, len = metrics.top.length; i < len; i += 1) {
+        posCsses.push(`
+.card-pos-${mode}.card-pos-${i - 5} {
+  top: ${metrics.top[i]}px;
+  left: ${metrics.left[i]}px;
   z-index: 20;
 }`)
-    }
-
-    for (let i = 5, len = topM1.length; i < len; i++) {
-      posCsses.push(`
-.card-pos-m1.card-pos-${i - 5} {
-  top: ${topM1[i]}px;
-  left: ${leftM1[i]}px;
-  z-index: 20;
-}`)
+      }
     }
 
     _css += posCsses.join('')

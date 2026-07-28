@@ -6,6 +6,7 @@ import {
   hideOpponentCard,
   shouldUseAi,
 } from '@/constants/devSettings'
+import { maxCardsInHand } from '@/constants/ranges'
 import { touchDelay } from '@/constants/visuals'
 import dataCards from '@/data/cards'
 import { I18nContext } from '@/i18n/I18nContext'
@@ -50,17 +51,13 @@ const Card = ({
     (state) => state.cards.total,
   ) // player: 4 | 5 | 6 | 7 | 8, opponent:...
   const isScreen = useAppSelector(isScreenState)
-  const cardsInHand = useAppSelector((state) => state.settings.cardsInHand) + 1
-
   const total =
     owner === 'common'
       ? totalObj[playersTurn ? 'player' : 'opponent']
       : totalObj[owner]
-  const isM0 = total === cardsInHand
   const isCardback = n === -1 || (hideOpponentCard && owner === 'opponent')
-  const usesReservedOpponentBackLayout =
-    hideOpponentCard && owner === 'opponent' && position >= 0
-  const posMode = usesReservedOpponentBackLayout || isM0 ? 'm0' : 'm1'
+  const visibleHandCount = Math.min(Math.max(total, 1), maxCardsInHand + 1)
+  const posMode = `h${visibleHandCount}`
   const type = isCardback ? undefined : dataCards[n].type
   const isNotPlayersTurn =
     (playersTurn && owner === 'opponent') ||

@@ -40,12 +40,18 @@ const getHandRects = ({
   })
 }
 
-test('mobile hand layout fits normal, transient, and historical max card counts', () => {
+test('mobile hand layout fits every visible hand count including transient and max counts', () => {
+  const visibleHandCounts = Array.from(
+    { length: maxCardsInHand + 1 },
+    (_, i) => i + 1,
+  )
+
   for (const viewport of viewports) {
-    for (const cardsInHand of [5, 6, 7, 8, maxCardsInHand]) {
+    for (const visibleHandCount of visibleHandCounts) {
+      const cardsInHand = visibleHandCount - 1
       const rects = getHandRects({ cardsInHand, viewport })
 
-      expect(rects.length).toBe(cardsInHand + 1)
+      expect(rects.length).toBe(visibleHandCount)
       expect(rects[0].left).toBeGreaterThanOrEqual(0)
       expect(rects[rects.length - 1].right).toBeLessThanOrEqual(viewport.width)
 
