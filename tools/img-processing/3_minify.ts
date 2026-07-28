@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 import fs from 'fs'
 import { cpus } from 'os'
 import path from 'path'

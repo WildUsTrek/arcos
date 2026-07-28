@@ -14,8 +14,7 @@ export type DataVisualvaluesFilterType = {
 }
 
 export const dataVisualvalues: (
-  | DataVisualvaluesMainType
-  | DataVisualvaluesFilterType
+  DataVisualvaluesMainType | DataVisualvaluesFilterType
 )[] = [
   { term: 'brightness', css: 'brightness', en: 'Brightness', type: 'main' },
   { term: 'contrast', css: 'contrast', en: 'Contrast', type: 'main' },

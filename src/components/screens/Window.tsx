@@ -48,17 +48,24 @@ const Window = ({
 
   const containerRef = useRef<HTMLDivElement>(null)
 
-  const [exitable, setExitable] = useState(false)
+  const exitableKey = `${screenActionType}:${exitableDelay}`
+  const [exitableState, setExitableState] = useState({
+    key: exitableKey,
+    value: false,
+  })
+  const exitable =
+    exitableState.key === exitableKey ? exitableState.value : false
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setExitable(false)
     const timer: ReturnType<typeof setTimeout> = setTimeout(() => {
-      setExitable(true)
+      setExitableState({
+        key: exitableKey,
+        value: true,
+      })
     }, exitableDelay)
     return () => {
       clearTimeout(timer)
     }
-  }, [exitableDelay])
+  }, [exitableDelay, exitableKey])
 
   // to prevent cancelFunc from using stale exitable value
   const exitableRef = useRef<boolean>(false)

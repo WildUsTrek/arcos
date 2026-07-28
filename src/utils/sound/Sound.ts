@@ -16,9 +16,10 @@ import victoryUrl from '@assets/sfx/victory.mp3'
 import wallUpUrl from '@assets/sfx/wall_up.mp3'
 import devLog from '../devLog'
 
-const audioContext = new (window.AudioContext ||
-  (window as typeof window & { webkitAudioContext: unknown })
-    .webkitAudioContext)()
+const audioContext = new (
+  window.AudioContext ||
+  (window as typeof window & { webkitAudioContext: unknown }).webkitAudioContext
+)()
 
 const userGestures = [
   'click',

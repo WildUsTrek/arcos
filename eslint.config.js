@@ -91,6 +91,12 @@ const conf = tseslint.config(
     },
   },
   {
+    files: ['tools/img-processing/3_minify.ts'],
+    rules: {
+      'import/no-unresolved': 'off',
+    },
+  },
+  {
     ignores: [
       '.github/',
       '.vscode/',

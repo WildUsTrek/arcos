@@ -77,18 +77,30 @@ const EndScreen = (endScreenState: EndScreenNoCloseStateType) => {
     }
   }
 
-  const [exitable, setExitable] = useState(false)
+  const exitableKey = [
+    type,
+    campaignOutcome ?? '',
+    campaignLevelId ?? '',
+    surrender ? 'surrender' : '',
+  ].join(':')
+  const [exitableState, setExitableState] = useState({
+    key: exitableKey,
+    value: false,
+  })
+  const exitable =
+    exitableState.key === exitableKey ? exitableState.value : false
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setExitable(false)
     const timer: ReturnType<typeof setTimeout> = setTimeout(() => {
-      setExitable(true)
+      setExitableState({
+        key: exitableKey,
+        value: true,
+      })
     }, endScreenExitableDelay)
 
     return () => {
       clearTimeout(timer)
     }
-  }, [endScreenState])
+  }, [exitableKey])
 
   const onActionFunc = useCallback(
     (
