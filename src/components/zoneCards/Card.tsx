@@ -26,6 +26,7 @@ type PropType = {
   owner?: ownerType
   index?: number // in-store index
   ownerHandCount?: number
+  layoutPosition?: number
   isFlipped?: boolean
   zeroOpacity?: boolean
 }
@@ -37,6 +38,7 @@ const Card = ({
   owner = 'common',
   index = -1,
   ownerHandCount = 0,
+  layoutPosition = position,
   isFlipped = false,
   zeroOpacity = false,
 }: PropType) => {
@@ -80,7 +82,7 @@ const Card = ({
           isNotPlayersTurn && styles.inactivehandcard,
           n === -1 && styles.unusableopacity,
           'card',
-          `card-pos-${position}`,
+          `card-pos-${layoutPosition}`,
           `card-pos-${posMode}`,
         )}
       >
@@ -234,7 +236,7 @@ const Card = ({
         position >= 0 && 'cursor-pointer',
         position >= 0 && styles.playable,
         'card',
-        `card-pos-${position}`,
+        `card-pos-${layoutPosition}`,
         `card-pos-${posMode}`,
       )}
       accessKey={accessKey}

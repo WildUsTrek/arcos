@@ -1,6 +1,7 @@
 import { produce } from 'immer'
 import { campaignLevelCount, defaultCampaignSeed } from '@/campaign/levels'
 import {
+  CAMPAIGN_ACK_BATTLE_INTRO,
   CAMPAIGN_COMPLETE_LEVEL_MAIN,
   CAMPAIGN_START_LEVEL_MAIN,
   UPDATE_CAMPAIGN_PROGRESS_MAIN,
@@ -12,6 +13,7 @@ export const defaultCampaignState: CampaignStateType = {
   unlockedLevel: 1,
   activeLevel: null,
   activeChallengeMode: null,
+  battleIntroAcknowledged: false,
   challengeSeed: defaultCampaignSeed,
   completedLevels: [],
   lastCompletedLevel: null,
@@ -47,15 +49,26 @@ export default produce((draft: CampaignStateType, action: RootActionType) => {
       draft.challengeSeed = action.payload.challengeSeed ?? draft.challengeSeed
       if (payloadHasActiveLevel) {
         draft.activeLevel = action.payload.activeLevel ?? null
+        if (draft.activeLevel === null) {
+          draft.battleIntroAcknowledged = false
+        }
       }
       if (payloadHasActiveChallengeMode) {
         draft.activeChallengeMode = action.payload.activeChallengeMode ?? null
+      }
+      if (action.payload.battleIntroAcknowledged !== undefined) {
+        draft.battleIntroAcknowledged = action.payload.battleIntroAcknowledged
       }
       break
     }
     case CAMPAIGN_START_LEVEL_MAIN: {
       draft.activeLevel = action.levelId
       draft.activeChallengeMode = action.challengeMode
+      draft.battleIntroAcknowledged = false
+      break
+    }
+    case CAMPAIGN_ACK_BATTLE_INTRO: {
+      draft.battleIntroAcknowledged = true
       break
     }
     case CAMPAIGN_COMPLETE_LEVEL_MAIN: {
@@ -70,6 +83,7 @@ export default produce((draft: CampaignStateType, action: RootActionType) => {
       draft.lastCompletedLevel = action.levelId
       draft.activeLevel = null
       draft.activeChallengeMode = null
+      draft.battleIntroAcknowledged = false
       draft.challengeSeed = action.challengeSeed
       break
     }

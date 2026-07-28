@@ -16,11 +16,17 @@ const GameWindowList = () => {
   const end = useAppSelector((state) => state.screen.end)
   const help = useAppSelector((state) => state.screen.help)
   const landscape = useAppSelector((state) => state.screen.landscape)
+  const battleIntroAcknowledged = useAppSelector(
+    (state) => state.campaign.battleIntroAcknowledged,
+  )
   const disconnectNotice = useAppSelector(
     (state) => state.screen.disconnectNotice,
   )
   const campaignIntroVisible =
-    !pref && !landscape && !isEndScreenNoCloseState(end)
+    !pref &&
+    !landscape &&
+    !battleIntroAcknowledged &&
+    !isEndScreenNoCloseState(end)
 
   // lazy loading is a bit slow for those frequently used settings only to save a few KBs, so we don't use it
   return (

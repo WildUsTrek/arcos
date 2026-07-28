@@ -1,6 +1,8 @@
 import { expect, test } from 'bun:test'
 import {
+  getOwnerHandLayout,
   getOwnerHandLayoutCounts,
+  getOwnerHandLayoutPosition,
   getVisibleHandCount,
 } from '@/components/zoneCards/CardHandLayout'
 import { getCardLayoutMetrics } from '@/components/zoneCards/CardLayoutMetrics'
@@ -90,5 +92,39 @@ test('rendered owner hand count protects the seventh card when totals are stale'
   expect(counts.player).toBe(7)
   expect(getVisibleHandCount({ total: 6, ownerHandCount: counts.player })).toBe(
     7,
+  )
+})
+
+test('rendered hand layout gives the seventh right-side card a unique slot', () => {
+  const cards: CardListItemAllType[] = [0, 1, 2, 3, 4, 5, 5].map(
+    (position) => ({
+      position,
+      n: 0,
+      owner: 'player',
+      unusable: false,
+      discarded: false,
+      isFlipped: false,
+      zeroOpacity: false,
+    }),
+  )
+  const handLayout = getOwnerHandLayout(cards)
+  const layoutPositions = cards.map((card, index) =>
+    card === null
+      ? -1
+      : getOwnerHandLayoutPosition({
+          index,
+          position: card.position,
+          positionsByIndex: handLayout.positionsByIndex,
+        }),
+  )
+  const rects = getHandRects({
+    cardsInHand: handLayout.counts.player - 1,
+    viewport: viewports[0],
+  })
+
+  expect(handLayout.counts.player).toBe(7)
+  expect(layoutPositions).toEqual([0, 1, 2, 3, 4, 5, 6])
+  expect(rects[layoutPositions[6]].left).toBeGreaterThanOrEqual(
+    rects[layoutPositions[5]].right,
   )
 })

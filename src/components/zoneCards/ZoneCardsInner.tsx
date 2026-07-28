@@ -7,7 +7,10 @@ import { GameSizeContext } from '@/utils/contexts/GameSizeContext'
 import { useAppSelector } from '@/utils/hooks/useAppDispatch'
 import { tooltipAttrs } from '@/utils/tooltip'
 import Card from './Card'
-import { getOwnerHandLayoutCounts } from './CardHandLayout'
+import {
+  getOwnerHandLayout,
+  getOwnerHandLayoutPosition,
+} from './CardHandLayout'
 import styles from './ZoneCardsInner.module.scss'
 
 const ZoneCardsInner = () => {
@@ -36,7 +39,7 @@ const ZoneCardsInner = () => {
       ? _.i18n('allUnusableTip')
       : ''
 
-  const handLayoutCounts = getOwnerHandLayoutCounts(cards)
+  const handLayout = getOwnerHandLayout(cards)
 
   return (
     <div
@@ -51,9 +54,14 @@ const ZoneCardsInner = () => {
             index={i}
             ownerHandCount={
               card.owner === 'player' || card.owner === 'opponent'
-                ? handLayoutCounts[card.owner]
+                ? handLayout.counts[card.owner]
                 : 0
             }
+            layoutPosition={getOwnerHandLayoutPosition({
+              index: i,
+              position: card.position,
+              positionsByIndex: handLayout.positionsByIndex,
+            })}
             {...card}
           />
         ),

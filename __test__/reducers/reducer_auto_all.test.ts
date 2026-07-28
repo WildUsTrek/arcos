@@ -1,6 +1,7 @@
 import { expect, test } from 'bun:test'
 import {
   CAMPAIGN_START_LEVEL_MAIN,
+  CAMPAIGN_ACK_BATTLE_INTRO,
   CAMPAIGN_COMPLETE_LEVEL_MAIN,
   INIT,
   SCREEN_END_MAIN,
@@ -15,6 +16,7 @@ test('initial store matches the offline campaign contract', () => {
   expect(state.campaign).toEqual({
     activeChallengeMode: null,
     activeLevel: null,
+    battleIntroAcknowledged: false,
     challengeSeed: 20260722,
     completedLevels: [],
     lastCompletedLevel: null,
@@ -43,6 +45,21 @@ test('campaign progress reset clears the active battle after campaign loss', () 
 
   expect(resetState.campaign.activeLevel).toBeNull()
   expect(resetState.campaign.activeChallengeMode).toBeNull()
+})
+
+test('campaign intro acknowledgement survives landscape notice remounts', () => {
+  const activeState = reducers(undefined, {
+    type: CAMPAIGN_START_LEVEL_MAIN,
+    levelId: 4,
+    challengeMode: 'siege',
+  })
+  const acknowledgedState = reducers(activeState, {
+    type: CAMPAIGN_ACK_BATTLE_INTRO,
+  })
+
+  expect(activeState.campaign.battleIntroAcknowledged).toBe(false)
+  expect(acknowledgedState.campaign.activeLevel).toBe(4)
+  expect(acknowledgedState.campaign.battleIntroAcknowledged).toBe(true)
 })
 
 test('campaign completion unlocks the next challenger instead of replaying level one', () => {

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { resolveCampaignLevel } from '@/campaign/levels'
-import { UPDATE_SETTINGS_INIT } from '@/constants/ActionTypes'
+import {
+  CAMPAIGN_ACK_BATTLE_INTRO,
+  UPDATE_SETTINGS_INIT,
+} from '@/constants/ActionTypes'
 import { useAppDispatch, useAppSelector } from '@/utils/hooks/useAppDispatch'
 import styles from './CampaignBattleIntro.module.scss'
 
@@ -36,6 +39,9 @@ const CampaignBattleIntroContent = ({
 
   const startBattle = () => {
     setHidden(true)
+    dispatch({
+      type: CAMPAIGN_ACK_BATTLE_INTRO,
+    })
     dispatch({
       type: UPDATE_SETTINGS_INIT,
       payload: {

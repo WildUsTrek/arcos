@@ -44,6 +44,7 @@ export default (
         challengeSeed,
         activeChallengeMode: null,
         activeLevel: null,
+        battleIntroAcknowledged: false,
         lastCompletedLevel: action.levelId,
       }
       const campaignCompleted = completedLevels.length >= campaignLevelCount

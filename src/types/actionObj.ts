@@ -18,6 +18,7 @@ import {
   UPDATE_VISUALVALUES_MAIN,
   UPDATE_AILEVEL,
   UPDATE_AILEVEL_MAIN,
+  CAMPAIGN_ACK_BATTLE_INTRO,
   CAMPAIGN_START_LEVEL_MAIN,
   CAMPAIGN_COMPLETE_LEVEL,
   CAMPAIGN_COMPLETE_LEVEL_MAIN,
@@ -211,6 +212,10 @@ export type CampaignStartLevelMainActionType = {
   type: typeof CAMPAIGN_START_LEVEL_MAIN
   levelId: number
   challengeMode: CampaignChallengeMode
+}
+
+export type CampaignAckBattleIntroActionType = {
+  type: typeof CAMPAIGN_ACK_BATTLE_INTRO
 }
 
 export type CampaignCompleteLevelActionType = {
@@ -668,6 +673,7 @@ export type RootActionType =
   | UpdateAiLevelActionType
   | UpdateAiLevelMainActionType
   | CampaignStartLevelMainActionType
+  | CampaignAckBattleIntroActionType
   | CampaignCompleteLevelActionType
   | CampaignCompleteLevelMainActionType
   | UpdateCampaignProgressMainActionType

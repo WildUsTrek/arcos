@@ -154,6 +154,7 @@ export type CampaignStateType = {
   unlockedLevel: number
   activeLevel: number | null
   activeChallengeMode: CampaignChallengeMode | null
+  battleIntroAcknowledged: boolean
   challengeSeed: number
   completedLevels: number[]
   lastCompletedLevel: number | null

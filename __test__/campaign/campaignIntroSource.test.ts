@@ -124,6 +124,7 @@ test('campaign intro is suppressed while the landscape notice is active', () => 
   const source = fs.readFileSync(windowListPath, 'utf8')
 
   expect(source).toContain('!pref && !landscape')
+  expect(source).toContain('!battleIntroAcknowledged')
   expect(source).toContain('{campaignIntroVisible && <CampaignBattleIntro />}')
 })
 
@@ -138,7 +139,11 @@ test('campaign battle starts only after the intro confirmation', () => {
     prefSource.indexOf('type: CAMPAIGN_START_LEVEL_MAIN'),
   )
   expect(introSource).toContain('UPDATE_SETTINGS_INIT')
+  expect(introSource).toContain('CAMPAIGN_ACK_BATTLE_INTRO')
   expect(introSource).toContain('onClick={startBattle}')
+  expect(introSource.indexOf('type: CAMPAIGN_ACK_BATTLE_INTRO')).toBeLessThan(
+    introSource.indexOf('type: UPDATE_SETTINGS_INIT'),
+  )
   expect(introSource.indexOf('setHidden(true)')).toBeLessThan(
     introSource.indexOf('type: UPDATE_SETTINGS_INIT'),
   )
@@ -206,12 +211,16 @@ test('mobile card layout reserves side safe area', () => {
   expect(cardSource).toContain('styles.playable')
   expect(cardSource).toContain('visibleHandCount')
   expect(cardSource).toContain('ownerHandCount')
+  expect(cardSource).toContain('layoutPosition')
   expect(cardSource).toContain('getVisibleHandCount')
   expect(cardHandLayoutSource).toContain('maxCardsInHand + 1')
-  expect(cardHandLayoutSource).toContain('card.position + 1')
+  expect(cardHandLayoutSource).toContain('positionsByIndex')
+  expect(cardHandLayoutSource).toContain('layoutPosition')
+  expect(cardHandLayoutSource).toContain('a.position - b.position')
   expect(cardSource).toContain('`h${visibleHandCount}`')
   expect(cardSource).toContain('`card-pos-${posMode}`')
-  expect(zoneCardsInnerSource).toContain('handLayoutCounts')
+  expect(zoneCardsInnerSource).toContain('handLayout')
+  expect(zoneCardsInnerSource).toContain('getOwnerHandLayoutPosition')
   expect(zoneCardsInnerSource).toContain('ownerHandCount')
   expect(cardSource).toContain('styles.inactivehandcard')
   expect(cardStyles).toContain('.inactivehandcard')
