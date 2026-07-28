@@ -1,6 +1,11 @@
 import { expect, test } from 'bun:test'
+import {
+  getOwnerHandLayoutCounts,
+  getVisibleHandCount,
+} from '@/components/zoneCards/CardHandLayout'
 import { getCardLayoutMetrics } from '@/components/zoneCards/CardLayoutMetrics'
 import { maxCardsInHand } from '@/constants/ranges'
+import type { CardListItemAllType } from '@/types/state'
 
 type Viewport = {
   width: number
@@ -67,4 +72,23 @@ test('mobile hand layout fits every visible hand count including transient and m
       }
     }
   }
+})
+
+test('rendered owner hand count protects the seventh card when totals are stale', () => {
+  const cards: CardListItemAllType[] = Array.from({ length: 7 }, (_, i) => ({
+    position: i,
+    n: 0,
+    owner: 'player',
+    unusable: false,
+    discarded: false,
+    isFlipped: false,
+    zeroOpacity: false,
+  }))
+
+  const counts = getOwnerHandLayoutCounts(cards)
+
+  expect(counts.player).toBe(7)
+  expect(getVisibleHandCount({ total: 6, ownerHandCount: counts.player })).toBe(
+    7,
+  )
 })

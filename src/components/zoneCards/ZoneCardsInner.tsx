@@ -7,6 +7,7 @@ import { GameSizeContext } from '@/utils/contexts/GameSizeContext'
 import { useAppSelector } from '@/utils/hooks/useAppDispatch'
 import { tooltipAttrs } from '@/utils/tooltip'
 import Card from './Card'
+import { getOwnerHandLayoutCounts } from './CardHandLayout'
 import styles from './ZoneCardsInner.module.scss'
 
 const ZoneCardsInner = () => {
@@ -35,6 +36,8 @@ const ZoneCardsInner = () => {
       ? _.i18n('allUnusableTip')
       : ''
 
+  const handLayoutCounts = getOwnerHandLayoutCounts(cards)
+
   return (
     <div
       className={cl(styles.main, size.narrowMobile ? 'h-1/2' : 'h-1/3')}
@@ -42,7 +45,18 @@ const ZoneCardsInner = () => {
     >
       <Card n={-1} position={-1} unusable />
       {cards.map((card, i) =>
-        card === null ? null : <Card key={i} index={i} {...card} />,
+        card === null ? null : (
+          <Card
+            key={i}
+            index={i}
+            ownerHandCount={
+              card.owner === 'player' || card.owner === 'opponent'
+                ? handLayoutCounts[card.owner]
+                : 0
+            }
+            {...card}
+          />
+        ),
       )}
       <DiscardModeNotice shown={discardMode} />
     </div>

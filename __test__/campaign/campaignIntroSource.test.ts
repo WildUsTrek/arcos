@@ -47,6 +47,14 @@ const cardPath = path.join(
   import.meta.dir,
   '../../src/components/zoneCards/Card.tsx',
 )
+const cardHandLayoutPath = path.join(
+  import.meta.dir,
+  '../../src/components/zoneCards/CardHandLayout.ts',
+)
+const zoneCardsInnerPath = path.join(
+  import.meta.dir,
+  '../../src/components/zoneCards/ZoneCardsInner.tsx',
+)
 const playCardCoreGuardedEpicPath = path.join(
   import.meta.dir,
   '../../src/epics/cards/playCardCoreGuardedEpic.ts',
@@ -181,6 +189,8 @@ test('mobile card layout reserves side safe area', () => {
   const metricsSource = fs.readFileSync(cardLayoutMetricsPath, 'utf8')
   const cardSource = fs.readFileSync(cardPath, 'utf8')
   const cardStyles = fs.readFileSync(cardStylePath, 'utf8')
+  const cardHandLayoutSource = fs.readFileSync(cardHandLayoutPath, 'utf8')
+  const zoneCardsInnerSource = fs.readFileSync(zoneCardsInnerPath, 'utf8')
 
   expect(metricsSource).toContain('mobileSafeSideRatio')
   expect(metricsSource).toContain('mobileHandVerticalShare')
@@ -195,9 +205,15 @@ test('mobile card layout reserves side safe area', () => {
   expect(cardSource).not.toContain('hover:scale-105')
   expect(cardSource).toContain('styles.playable')
   expect(cardSource).toContain('visibleHandCount')
-  expect(cardSource).toContain('maxCardsInHand + 1')
+  expect(cardSource).toContain('ownerHandCount')
+  expect(cardSource).toContain('getVisibleHandCount')
+  expect(cardHandLayoutSource).toContain('maxCardsInHand + 1')
+  expect(cardHandLayoutSource).toContain('card.position + 1')
   expect(cardSource).toContain('`h${visibleHandCount}`')
   expect(cardSource).toContain('`card-pos-${posMode}`')
+  expect(zoneCardsInnerSource).toContain('handLayoutCounts')
+  expect(zoneCardsInnerSource).toContain('card.position + 1')
+  expect(zoneCardsInnerSource).toContain('ownerHandCount')
   expect(cardSource).toContain('styles.inactivehandcard')
   expect(cardStyles).toContain('.inactivehandcard')
   expect(cardStyles).toContain('visibility: hidden')

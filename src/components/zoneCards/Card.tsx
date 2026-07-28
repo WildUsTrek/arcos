@@ -6,7 +6,6 @@ import {
   hideOpponentCard,
   shouldUseAi,
 } from '@/constants/devSettings'
-import { maxCardsInHand } from '@/constants/ranges'
 import { touchDelay } from '@/constants/visuals'
 import dataCards from '@/data/cards'
 import { I18nContext } from '@/i18n/I18nContext'
@@ -17,6 +16,7 @@ import isTouch from '@/utils/isTouch'
 import styles from './Card.module.scss'
 import CardBack from './CardBack'
 import CardFront from './CardFront'
+import { getVisibleHandCount } from './CardHandLayout'
 
 type PropType = {
   n: number // 0 | 1 | 2 | ... | -1: cardback. index of the card in `cards` array, see src/data/cards.ts
@@ -25,6 +25,7 @@ type PropType = {
   position: number // 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | ... | -1 | -2 | -3 | -4 | -5. See ROOTFOLDER/tools/devnotes/card-state-position-numbers.png
   owner?: ownerType
   index?: number // in-store index
+  ownerHandCount?: number
   isFlipped?: boolean
   zeroOpacity?: boolean
 }
@@ -35,6 +36,7 @@ const Card = ({
   position,
   owner = 'common',
   index = -1,
+  ownerHandCount = 0,
   isFlipped = false,
   zeroOpacity = false,
 }: PropType) => {
@@ -56,7 +58,7 @@ const Card = ({
       ? totalObj[playersTurn ? 'player' : 'opponent']
       : totalObj[owner]
   const isCardback = n === -1 || (hideOpponentCard && owner === 'opponent')
-  const visibleHandCount = Math.min(Math.max(total, 1), maxCardsInHand + 1)
+  const visibleHandCount = getVisibleHandCount({ total, ownerHandCount })
   const posMode = `h${visibleHandCount}`
   const type = isCardback ? undefined : dataCards[n].type
   const isNotPlayersTurn =
