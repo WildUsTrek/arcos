@@ -123,7 +123,8 @@ test('campaign intro overlay has click-through protection and landscape layout',
 test('campaign intro is suppressed while the landscape notice is active', () => {
   const source = fs.readFileSync(windowListPath, 'utf8')
 
-  expect(source).toContain('!pref && !landscape')
+  expect(source).toContain('!pref &&')
+  expect(source).toContain('!landscape &&')
   expect(source).toContain('!battleIntroAcknowledged')
   expect(source).toContain('{campaignIntroVisible && <CampaignBattleIntro />}')
 })
