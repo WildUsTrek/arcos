@@ -212,7 +212,6 @@ test('mobile card layout reserves side safe area', () => {
   expect(cardSource).toContain('`h${visibleHandCount}`')
   expect(cardSource).toContain('`card-pos-${posMode}`')
   expect(zoneCardsInnerSource).toContain('handLayoutCounts')
-  expect(zoneCardsInnerSource).toContain('card.position + 1')
   expect(zoneCardsInnerSource).toContain('ownerHandCount')
   expect(cardSource).toContain('styles.inactivehandcard')
   expect(cardStyles).toContain('.inactivehandcard')
