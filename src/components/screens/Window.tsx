@@ -34,6 +34,7 @@ type PropType = {
   darkerBg?: boolean
   exitableDelay?: number
   cancellable?: boolean
+  critical?: boolean
 }
 const Window = ({
   screenActionType,
@@ -42,6 +43,7 @@ const Window = ({
   darkerBg = false,
   exitableDelay = 0,
   cancellable = true,
+  critical = false,
 }: PropType) => {
   const dispatch = useAppDispatch()
   const _ = useContext(I18nContext)
@@ -95,7 +97,12 @@ const Window = ({
 
   return (
     <div
-      className={cl(styles.windowbg, 'windowbg', darkerBg && styles.darkerbg)}
+      className={cl(
+        styles.windowbg,
+        'windowbg',
+        darkerBg && styles.darkerbg,
+        critical && styles.critical,
+      )}
       role="dialog"
       aria-label={_.i18n(screenTitleMap[screenActionType])}
       aria-modal={true}

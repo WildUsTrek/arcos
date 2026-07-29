@@ -3,6 +3,7 @@ import {
   defaultCampaignSeed,
   resolveCampaignLevel,
 } from '../src/campaign/levels'
+import { maxCampaignCardsInHand } from '../src/constants/ranges'
 
 type CampaignBalanceRow = {
   level: number
@@ -55,7 +56,10 @@ export const evaluateCampaignBalance = (
     if (index > 0 && difficultyScore < previousScore - 18) {
       warnings.push('calo difficolta rispetto al livello precedente')
     }
-    if (settings.cardsInHand < 3 || settings.cardsInHand > 6) {
+    if (
+      settings.cardsInHand < 3 ||
+      settings.cardsInHand > maxCampaignCardsInHand
+    ) {
       warnings.push('mano fuori range campagna')
     }
     if (settings.winTower < settings.tower + 15) {

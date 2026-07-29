@@ -79,9 +79,12 @@ Add-Check "startup-opens-campaign-menu" ($readLsEpicText -match "SCREEN_PREF" -a
 Add-Check "game-ui-selection-disabled" ($generalStylesText -match "user-select: none" -and $generalStylesText -match "-webkit-touch-callout: none" -and $generalStylesText -match "-webkit-user-drag: none" -and $generalStylesText -match "touch-action: manipulation" -and $generalStylesText -match "input,[\s\S]*textarea[\s\S]*user-select: text") "Game UI must prevent accidental selection, callout, and drag while preserving text inputs"
 
 $campaignLevelsFile = Join-Path $resolvedRoot "src\campaign\levels.ts"
+$appFile = Join-Path $resolvedRoot "src\App.tsx"
+$rangesFile = Join-Path $resolvedRoot "src\constants\ranges.ts"
 $campaignReducerFile = Join-Path $resolvedRoot "src\reducers\campaign.ts"
 $campaignIntroFile = Join-Path $resolvedRoot "src\components\screens\CampaignBattleIntro.tsx"
 $campaignIntroStylesFile = Join-Path $resolvedRoot "src\components\screens\CampaignBattleIntro.module.scss"
+$landscapeNoticeFile = Join-Path $resolvedRoot "src\components\screens\LandscapeNotice.tsx"
 $fullscreenGateFile = Join-Path $resolvedRoot "src\components\screens\MobileFullscreenGate.tsx"
 $gameSizeProviderFile = Join-Path $resolvedRoot "src\utils\contexts\GameSizeProvider.tsx"
 $zoneStatusFile = Join-Path $resolvedRoot "src\components\zoneStatus\ZoneStatus.tsx"
@@ -93,6 +96,9 @@ $pwaNoticeFile = Join-Path $resolvedRoot "src\components\PwaUpdateNotice.tsx"
 $balanceToolFile = Join-Path $resolvedRoot "tools\campaign-balance-report.ts"
 $balanceTestFile = Join-Path $resolvedRoot "__test__\campaign\campaignBalance.test.ts"
 $mobileCardLayoutTestFile = Join-Path $resolvedRoot "__test__\campaign\mobileCardLayout.test.ts"
+$mobilePlayabilityTestFile = Join-Path $resolvedRoot "__test__\mobile\mobilePlayability.test.ts"
+$campaignHandLimitTestFile = Join-Path $resolvedRoot "__test__\campaign\campaignHandLimit.test.ts"
+$campaignDrawHandLimitTestFile = Join-Path $resolvedRoot "__test__\epics\campaignDrawHandLimit.test.ts"
 $aiMultiturnHandTestFile = Join-Path $resolvedRoot "__test__\ai\multiturnHandSize.test.ts"
 $aiOverlayPauseTestFile = Join-Path $resolvedRoot "__test__\epics\aiOverlayPause.test.ts"
 $playCardCoreGuardedTestFile = Join-Path $resolvedRoot "__test__\epics\playCardCoreGuarded.test.ts"
@@ -102,6 +108,7 @@ $cardFile = Join-Path $resolvedRoot "src\components\zoneCards\Card.tsx"
 $cardHandLayoutFile = Join-Path $resolvedRoot "src\components\zoneCards\CardHandLayout.ts"
 $cardStyleFile = Join-Path $resolvedRoot "src\components\zoneCards\Card.module.scss"
 $zoneCardsInnerFile = Join-Path $resolvedRoot "src\components\zoneCards\ZoneCardsInner.tsx"
+$mobilePlayabilityFile = Join-Path $resolvedRoot "src\utils\mobilePlayability.ts"
 $aiPlayCardEpicFile = Join-Path $resolvedRoot "src\epics\cards\aiPlayCardEpic.ts"
 $drawCardCoreEpicFile = Join-Path $resolvedRoot "src\epics\cards\drawCardCoreEpic.ts"
 $playCardCoreGuardedEpicFile = Join-Path $resolvedRoot "src\epics\cards\playCardCoreGuardedEpic.ts"
@@ -112,9 +119,12 @@ $windowStylesFile = Join-Path $resolvedRoot "src\components\screens\Window.modul
 $endScreenFile = Join-Path $resolvedRoot "src\components\screens\EndScreen.tsx"
 $endScreenStylesFile = Join-Path $resolvedRoot "src\components\screens\EndScreen.module.scss"
 $campaignLevelsText = if (Test-Path $campaignLevelsFile) { Get-Content -LiteralPath $campaignLevelsFile -Raw } else { "" }
+$appText = if (Test-Path $appFile) { Get-Content -LiteralPath $appFile -Raw } else { "" }
+$rangesText = if (Test-Path $rangesFile) { Get-Content -LiteralPath $rangesFile -Raw } else { "" }
 $prefCampaignText = if (Test-Path $pref) { Get-Content -LiteralPath $pref -Raw } else { "" }
 $campaignIntroText = if (Test-Path $campaignIntroFile) { Get-Content -LiteralPath $campaignIntroFile -Raw } else { "" }
 $campaignIntroStylesText = if (Test-Path $campaignIntroStylesFile) { Get-Content -LiteralPath $campaignIntroStylesFile -Raw } else { "" }
+$landscapeNoticeText = if (Test-Path $landscapeNoticeFile) { Get-Content -LiteralPath $landscapeNoticeFile -Raw } else { "" }
 $fullscreenGateText = if (Test-Path $fullscreenGateFile) { Get-Content -LiteralPath $fullscreenGateFile -Raw } else { "" }
 $gameSizeProviderText = if (Test-Path $gameSizeProviderFile) { Get-Content -LiteralPath $gameSizeProviderFile -Raw } else { "" }
 $zoneStatusText = if (Test-Path $zoneStatusFile) { Get-Content -LiteralPath $zoneStatusFile -Raw } else { "" }
@@ -126,6 +136,9 @@ $pwaNoticeText = if (Test-Path $pwaNoticeFile) { Get-Content -LiteralPath $pwaNo
 $balanceToolText = if (Test-Path $balanceToolFile) { Get-Content -LiteralPath $balanceToolFile -Raw } else { "" }
 $balanceTestText = if (Test-Path $balanceTestFile) { Get-Content -LiteralPath $balanceTestFile -Raw } else { "" }
 $mobileCardLayoutTestText = if (Test-Path $mobileCardLayoutTestFile) { Get-Content -LiteralPath $mobileCardLayoutTestFile -Raw } else { "" }
+$mobilePlayabilityTestText = if (Test-Path $mobilePlayabilityTestFile) { Get-Content -LiteralPath $mobilePlayabilityTestFile -Raw } else { "" }
+$campaignHandLimitTestText = if (Test-Path $campaignHandLimitTestFile) { Get-Content -LiteralPath $campaignHandLimitTestFile -Raw } else { "" }
+$campaignDrawHandLimitTestText = if (Test-Path $campaignDrawHandLimitTestFile) { Get-Content -LiteralPath $campaignDrawHandLimitTestFile -Raw } else { "" }
 $aiMultiturnHandTestText = if (Test-Path $aiMultiturnHandTestFile) { Get-Content -LiteralPath $aiMultiturnHandTestFile -Raw } else { "" }
 $aiOverlayPauseTestText = if (Test-Path $aiOverlayPauseTestFile) { Get-Content -LiteralPath $aiOverlayPauseTestFile -Raw } else { "" }
 $playCardCoreGuardedTestText = if (Test-Path $playCardCoreGuardedTestFile) { Get-Content -LiteralPath $playCardCoreGuardedTestFile -Raw } else { "" }
@@ -135,6 +148,7 @@ $cardText = if (Test-Path $cardFile) { Get-Content -LiteralPath $cardFile -Raw }
 $cardHandLayoutText = if (Test-Path $cardHandLayoutFile) { Get-Content -LiteralPath $cardHandLayoutFile -Raw } else { "" }
 $cardStyleText = if (Test-Path $cardStyleFile) { Get-Content -LiteralPath $cardStyleFile -Raw } else { "" }
 $zoneCardsInnerText = if (Test-Path $zoneCardsInnerFile) { Get-Content -LiteralPath $zoneCardsInnerFile -Raw } else { "" }
+$mobilePlayabilityText = if (Test-Path $mobilePlayabilityFile) { Get-Content -LiteralPath $mobilePlayabilityFile -Raw } else { "" }
 $aiPlayCardEpicText = if (Test-Path $aiPlayCardEpicFile) { Get-Content -LiteralPath $aiPlayCardEpicFile -Raw } else { "" }
 $drawCardCoreEpicText = if (Test-Path $drawCardCoreEpicFile) { Get-Content -LiteralPath $drawCardCoreEpicFile -Raw } else { "" }
 $playCardCoreGuardedEpicText = if (Test-Path $playCardCoreGuardedEpicFile) { Get-Content -LiteralPath $playCardCoreGuardedEpicFile -Raw } else { "" }
@@ -159,7 +173,9 @@ Add-Check "campaign-menu-landscape-grid" ($windowStylesText -match "100dvw" -and
 Add-Check "campaign-menu-mobile-landscape" ($windowStylesText -notmatch "@media \(width <= 900px\), \(height <= 560px\)" -and $windowStylesText -match "\(height <= 560px\) and \(orientation: landscape\)" -and $prefCampaignText -match "campaignstart" -and $windowListText -match "!pref &&\s*!landscape" -and $windowListText -match "!battleIntroAcknowledged") "Campaign menu must keep a compact landscape layout on short mobile screens"
 Add-Check "campaign-menu-no-close-x" ($prefCampaignText -match "cancellable=\{false\}" -and $windowText -match "cancellable = true") "Campaign menu must not expose a generic close button in the required start flow"
 Add-Check "mobile-visual-viewport" ($gameSizeProviderText -match "window\.visualViewport" -and $gameSizeProviderText -match "visualViewport\?\.addEventListener\('resize'" -and $gameSizeProviderText -match "visualViewport\?\.addEventListener\('scroll'") "Mobile sizing must use the visual viewport, not only layout viewport"
-Add-Check "mobile-fullscreen-gate" ((Test-Path $fullscreenGateFile) -and $fullscreenGateText -match "Schermo intero richiesto" -and $fullscreenGateText -match "requestFs\(\)" -and $fullscreenGateText -match "pointer: coarse" -and $windowListText -match "MobileFullscreenGate") "Mobile play must require fullscreen where the browser supports it"
+Add-Check "mobile-fullscreen-gate" ((Test-Path $fullscreenGateFile) -and $fullscreenGateText -match "Schermo intero richiesto" -and $fullscreenGateText -match "requestFs\(\)" -and $mobilePlayabilityText -match "pointer: coarse" -and $windowListText -match "MobileFullscreenGate") "Mobile play must require fullscreen where the browser supports it"
+Add-Check "mobile-playability-derived-state" ((Test-Path $mobilePlayabilityFile) -and $mobilePlayabilityText -match "getMobilePlayability" -and $mobilePlayabilityText -match "readMobilePointerState" -and $appText -match "getMobilePlayability" -and $appText -notmatch "orientation:portrait" -and $fullscreenGateText -match "needsFullscreenGate" -and $mobilePlayabilityTestText -match "mobile portrait always requires the rotate notice" -and $mobilePlayabilityTestText -match "cramped mobile landscape") "Mobile rotate/fullscreen gating must be derived from visual viewport dimensions and pointer state instead of a dismissible orientation flag"
+Add-Check "landscape-notice-non-dismissible" ($landscapeNoticeText -match "cancellable=\{false\}" -and $landscapeNoticeText -match "critical" -and $windowText -match "critical = false" -and $windowStylesText -match "&\.critical" -and $windowStylesText -match "z-index: 220") "Landscape notice must not be closable while the viewport is still unsafe and must stay above campaign/fullscreen overlays"
 Add-Check "pwa-mobile-meta" ($indexHtmlText -match "mobile-web-app-capable" -and $indexHtmlText -match "apple-mobile-web-app-capable" -and $indexHtmlText -match "apple-mobile-web-app-title" -and $indexHtmlText -match "apple-mobile-web-app-status-bar-style") "PWA must declare mobile standalone/fullscreen meta tags"
 Add-Check "campaign-popup-readable-height" ($windowStylesText -match "min-height: calc\(100dvh - 22px\)" -and $windowStylesText -match "width: min\(980px, calc\(100dvw - 16px\)\)" -and $windowStylesText -match "font-size: clamp\(15px, 3\.3dvh, 18px\)" -and $windowStylesText -match "font-size: clamp\(12px, 2\.9dvh, 15px\)" -and $windowStylesText -notmatch "font-size: clamp\(0\.98rem" -and $campaignIntroStylesText -match "min-height: calc\(100dvh - 28px\)" -and $campaignIntroStylesText -match "font-size: clamp\(15px, 3\.4dvh, 18px\)") "Campaign and details popups must use more mobile vertical space with readable text"
 Add-Check "mobile-card-safe-area" ($cardLayoutMetricsText -match "mobileSafeSideRatio" -and $cardLayoutMetricsText -match "mobileHandVerticalShare" -and $cardLayoutMetricsText -match "mobileHandTopShare" -and $cardLayoutMetricsText -match "mobileMinHandGapPx" -and $cardLayoutMetricsText -match "layoutWidth" -and $cardLayoutMetricsText -match "layoutOffsetX" -and $cardPosStyleText -match "z-index: 20") "Mobile battle card layout must reserve side safe area and keep playable hand cards above transition cards"
@@ -167,6 +183,8 @@ Add-Check "mobile-card-overflow-tests" ($cardLayoutMetricsText -match "getCardLa
 Add-Check "mobile-card-touch-hover-safe" ($cardText -notmatch "hover:scale-105" -and $cardText -match "styles\.playable" -and $cardStyleText -match "\(hover: hover\) and \(pointer: fine\)" -and $cardStyleText -match "\(hover: none\), \(pointer: coarse\)" -and $cardStyleText -match "touch-action: manipulation") "Mobile cards must not keep sticky hover scaling on touch devices"
 Add-Check "playable-hand-no-layout-transition" ($cardStyleText -match "\.playable" -and $cardStyleText -match "transition-property: opacity, transform" -and $cardStyleText -match "\.inactivehandcard[\s\S]*transition-property: transform, left, top") "Playable hand cards must not animate left/top during hand-count relayout frames"
 Add-Check "dynamic-hand-count-layout" ($cardText -match "visibleHandCount" -and $cardText -match "ownerHandCount" -and $cardText -match "layoutPosition" -and $cardText -match "getVisibleHandCount" -and $cardText -match "h\$\{visibleHandCount\}" -and $cardText -match "card-pos-\$\{posMode\}" -and $cardHandLayoutText -match "maxCardsInHand \+ 1" -and $cardHandLayoutText -match "positionsByIndex" -and $cardHandLayoutText -match "layoutPosition" -and $cardHandLayoutText -match "a\.position - b\.position" -and $zoneCardsInnerText -match "handLayout" -and $zoneCardsInnerText -match "getOwnerHandLayoutPosition" -and $zoneCardsInnerText -match "ownerHandCount" -and $cardPosStyleText -match "handCount <= maxCardsInHand \+ 1" -and $cardPosStyleText -match "card-pos-\$\{mode\}" -and $cardPosStyleText -match "--cardwidth") "Card layout must generate compact visual slots from the real rendered owner hand, including duplicate-position transition frames"
+Add-Check "campaign-mobile-hand-limit" ($rangesText -match "maxCampaignCardsInHand = 5" -and $rangesText -match "maxCampaignVisibleCardsInHand" -and $campaignLevelsText -match "maxCampaignCardsInHand" -and $campaignLevelsText -notmatch "cardsInHand: 6" -and $balanceToolText -match "maxCampaignCardsInHand" -and $drawCardCoreEpicText -match "maxCampaignVisibleCardsInHand" -and $drawCardCoreEpicText -match "visibleHandCount >= visibleHandLimit" -and $drawCardCoreEpicText -match "draw skipped at hand limit") "Campaign mobile hand size must be capped before rendering while preserving the historical dynamic card layout"
+Add-Check "campaign-mobile-hand-limit-tests" ((Test-Path $campaignHandLimitTestFile) -and (Test-Path $campaignDrawHandLimitTestFile) -and $campaignHandLimitTestText -match "campaign levels stay inside the mobile hand limit" -and $campaignDrawHandLimitTestText -match "already at the mobile cap" -and $aiMultiturnHandTestText -match "maxCampaignVisibleCardsInHand") "Campaign hand cap must have campaign, draw-flow, and AI stability coverage"
 Add-Check "inactive-hand-hidden-not-faded" ($cardText -match "styles\.inactivehandcard" -and $cardStyleText -match "\.inactivehandcard" -and $cardStyleText -match "visibility: hidden" -and $cardStyleText -match "transition-property: transform, left, top") "Inactive hands must be hidden instantly instead of fading over the active hand"
 Add-Check "ai-pauses-during-active-screen" ($aiPlayCardEpicText -match "isScreenState\(state\)" -and $aiPlayCardEpicText -match "filter\(\(state0\) => !isScreenState\(state0\)\)" -and $aiPlayCardEpicText -match "type: AI_PLAY_CARD" -and $aiPlayCardEpicText -match "takeUntil\(action\$\.pipe\(ofType\(ABORT_ALL\)\)\)" -and $drawCardCoreEpicText -notmatch "!isScreenState\(state\)") "AI timers must pause during modal screens, resume after close, and cancel on abort"
 Add-Check "ai-overlay-pause-behavior-test" ((Test-Path $aiOverlayPauseTestFile) -and $aiOverlayPauseTestText -match "pauses behind an overlay and resumes" -and $aiOverlayPauseTestText -match "cancelled when the battle is aborted" -and $aiOverlayPauseTestText -match "StateObservable") "AI overlay pause/resume behavior must be covered by an executable epic test"

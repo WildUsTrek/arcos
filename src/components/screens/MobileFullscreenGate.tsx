@@ -1,19 +1,23 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { GameSizeContext } from '@/utils/contexts/GameSizeContext'
 import { isEnabled, isFullscreen, requestFs } from '@/utils/fullscreen'
+import {
+  getMobilePlayability,
+  readMobilePointerState,
+} from '@/utils/mobilePlayability'
 import styles from './MobileFullscreenGate.module.scss'
-
-const getIsCoarsePointer = (): boolean =>
-  window.matchMedia('(pointer: coarse)').matches ||
-  window.matchMedia('(hover: none)').matches
 
 const MobileFullscreenGate = () => {
   const size = useContext(GameSizeContext)
   const [fullscreen, setFullscreen] = useState(isFullscreen)
 
   const shouldRequireFullscreen = useMemo(() => {
-    const mobileSizedViewport = Math.min(size.width, size.height) <= 560
-    return isEnabled && getIsCoarsePointer() && mobileSizedViewport
+    return getMobilePlayability({
+      width: size.width,
+      height: size.height,
+      fullscreenEnabled: isEnabled,
+      ...readMobilePointerState(),
+    }).needsFullscreenGate
   }, [size.height, size.width])
 
   useEffect(() => {

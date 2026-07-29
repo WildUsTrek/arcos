@@ -20,6 +20,10 @@ import useNewTabIndex from '@/utils/hooks/gamecontrols/useNewTabIndex'
 import { useAppDispatch } from '@/utils/hooks/useAppDispatch'
 import { useBeforeWindowUnloadWarning } from '@/utils/hooks/useBeforeWindowUnloadWarning'
 import useWindowLoad from '@/utils/hooks/useWindowLoad'
+import {
+  getMobilePlayability,
+  readMobilePointerState,
+} from '@/utils/mobilePlayability'
 
 const App = () => {
   const dispatch = useAppDispatch()
@@ -66,10 +70,14 @@ const App = () => {
 
   useEffect(() => {
     const checkAndShowLandscapeNotice = () => {
-      const isPortrait = window.matchMedia('(orientation:portrait)').matches
+      const mobilePlayability = getMobilePlayability({
+        width,
+        height,
+        ...readMobilePointerState(),
+      })
       dispatch({
         type: SCREEN_LANDSCAPE,
-        show: isPortrait,
+        show: mobilePlayability.needsLandscapeNotice,
       })
     }
 

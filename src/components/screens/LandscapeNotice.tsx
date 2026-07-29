@@ -15,6 +15,8 @@ const LandscapeNotice = () => {
       screenActionType={SCREEN_LANDSCAPE}
       darkerBg
       exitableDelay={LandscapeNoticeExitableDelay}
+      cancellable={false}
+      critical
     >
       <div
         role="alert"

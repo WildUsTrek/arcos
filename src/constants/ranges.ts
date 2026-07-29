@@ -5,6 +5,9 @@ export const minGeneratorIsOne = true
 export const maxCardsInHand = 15
 // see also defaultSettings.cardsInHand
 
+export const maxCampaignCardsInHand = 5
+export const maxCampaignVisibleCardsInHand = maxCampaignCardsInHand + 1
+
 export const minVolume = 0
 export const maxVolume = 10
 export const stepVolume = 0.1

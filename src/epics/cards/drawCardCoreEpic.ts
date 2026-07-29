@@ -17,15 +17,29 @@ import {
   shouldUseAi,
 } from '@/constants/devSettings'
 import {
+  maxCampaignVisibleCardsInHand,
+  maxCardsInHand,
+} from '@/constants/ranges'
+import {
   drawCardPre,
   cardTransitionDuration,
   aiDelay,
 } from '@/constants/visuals'
 import { RootActionType } from '@/types/actionObj'
-import { RootStateType } from '@/types/state'
+import { ownerType2, RootStateType } from '@/types/state'
 import devLog from '@/utils/devLog'
 import getPan from '@/utils/sound/getPan'
 import { play } from '@/utils/sound/Sound'
+
+const getVisibleHandCount = (state: RootStateType, owner: ownerType2) =>
+  state.cards.list.filter(
+    (card) => card !== null && card.owner === owner && card.position >= 0,
+  ).length
+
+const getVisibleHandLimit = (state: RootStateType) =>
+  state.campaign.activeLevel !== null
+    ? maxCampaignVisibleCardsInHand
+    : maxCardsInHand + 1
 
 export default (
   action$: Observable<RootActionType>,
@@ -37,6 +51,37 @@ export default (
     mergeMap(([action, state]) => {
       const { n } = action
       const owner = state.game.playersTurn ? 'player' : 'opponent'
+      const visibleHandLimit = getVisibleHandLimit(state)
+      const visibleHandCount = Math.max(
+        state.cards.total[owner],
+        getVisibleHandCount(state, owner),
+      )
+
+      if (visibleHandCount >= visibleHandLimit) {
+        devLog(
+          `${owner} draw skipped at hand limit ${visibleHandLimit}`,
+          'info',
+        )
+
+        return concat(
+          of<RootActionType>({
+            type: SWITCH_LOCK,
+            on: false,
+            locknumber: 1,
+          }).pipe(delay(0)),
+          owner === 'opponent' && shouldUseAi
+            ? of<RootActionType>({
+                type: AI_PLAY_CARD,
+              }).pipe(delay(aiDelay + (noAiExtraDelay ? 0 : aiExtraDelay)))
+            : EMPTY,
+          owner === 'player'
+            ? of<RootActionType>({
+                type: CHECK_SURRENDER,
+              }).pipe(delay(0))
+            : EMPTY,
+        ).pipe(takeUntil(action$.pipe(ofType(ABORT_ALL))))
+      }
+
       play(
         'deal',
         null,

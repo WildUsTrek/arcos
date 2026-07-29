@@ -1,22 +1,22 @@
 ﻿# Project Map
 
-Generated: 2026-07-22T22:31:18
-Snapshot: 20260722-223117-after-ci-prettier-fix-final
+Generated: 2026-07-29T14:49:32
+Snapshot: 20260729-144931-snapshot
 
 ## Totals
 
-- Source files: 239
+- Source files: 249
 - Asset files: 151
-- Test files: 28
-- Static imports: 767
+- Test files: 36
+- Static imports: 791
 
 ## Source Areas
 
 - ai: 5 files (5 ts, 0 tsx, 0 scss)
 - App.tsx: 1 files (0 ts, 1 tsx, 0 scss)
 - campaign: 1 files (1 ts, 0 tsx, 0 scss)
-- components: 69 files (1 ts, 45 tsx, 23 scss)
-- constants: 8 files (8 ts, 0 tsx, 0 scss)
+- components: 77 files (3 ts, 48 tsx, 26 scss)
+- constants: 9 files (8 ts, 0 tsx, 1 scss)
 - data: 4 files (4 ts, 0 tsx, 0 scss)
 - declarations.d.ts: 1 files (1 ts, 0 tsx, 0 scss)
 - epics: 35 files (35 ts, 0 tsx, 0 scss)
@@ -26,7 +26,7 @@ Snapshot: 20260722-223117-after-ci-prettier-fix-final
 - store.tsx: 1 files (0 ts, 1 tsx, 0 scss)
 - styles: 7 files (0 ts, 0 tsx, 7 scss)
 - types: 6 files (6 ts, 0 tsx, 0 scss)
-- utils: 37 files (35 ts, 2 tsx, 0 scss)
+- utils: 38 files (36 ts, 2 tsx, 0 scss)
 
 ## Assets
 
@@ -41,16 +41,16 @@ Snapshot: 20260722-223117-after-ci-prettier-fix-final
 
 ## Import Kinds
 
-- @/: 367
+- @/: 381
 - @assets/: 14
-- package: 211
-- relative: 175
+- package: 214
+- relative: 182
 
 ## Dependency Health
 
-- Imported external packages: 11
+- Imported external packages: 12
 - Declared packages: 61
-- Imported but not declared: 0
+- Imported but not declared: 1
 - Declared but not statically imported: 50
 
 ## Tool Availability
@@ -59,7 +59,7 @@ Snapshot: 20260722-223117-after-ci-prettier-fix-final
 - npm: missing
 - pnpm: available via PATH
 - bun: missing
-- git: available via codex-runtime
+- git: available via PATH
 
 ## Hotspots
 

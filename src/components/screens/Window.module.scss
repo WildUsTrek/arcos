@@ -34,6 +34,10 @@
     @apply bg-black bg-opacity-80;
   }
 
+  &.critical {
+    z-index: 220;
+  }
+
   .windowmain {
     @apply max-h-full max-w-screen-md bg-black bg-opacity-70 rounded-lg px-2 py-4 relative;
 

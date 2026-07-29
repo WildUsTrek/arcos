@@ -1,12 +1,12 @@
 ﻿{
-    "generatedAt":  "2026-07-22T22:31:18",
-    "snapshotName":  "20260722-223117-after-ci-prettier-fix-final",
+    "generatedAt":  "2026-07-29T14:49:32",
+    "snapshotName":  "20260729-144931-snapshot",
     "root":  "C:\\Users\\ASUS\\Documents\\testing mobile github\\arcomage-hd-main",
     "totals":  {
-                   "sourceFiles":  239,
+                   "sourceFiles":  249,
                    "assetFiles":  151,
-                   "testFiles":  28,
-                   "imports":  767
+                   "testFiles":  36,
+                   "imports":  791
                },
     "sourceByArea":  [
                          {
@@ -32,17 +32,17 @@
                          },
                          {
                              "area":  "components",
-                             "files":  69,
-                             "ts":  1,
-                             "tsx":  45,
-                             "scss":  23
+                             "files":  77,
+                             "ts":  3,
+                             "tsx":  48,
+                             "scss":  26
                          },
                          {
                              "area":  "constants",
-                             "files":  8,
+                             "files":  9,
                              "ts":  8,
                              "tsx":  0,
-                             "scss":  0
+                             "scss":  1
                          },
                          {
                              "area":  "data",
@@ -109,8 +109,8 @@
                          },
                          {
                              "area":  "utils",
-                             "files":  37,
-                             "ts":  35,
+                             "files":  38,
+                             "ts":  36,
                              "tsx":  2,
                              "scss":  0
                          }
@@ -160,7 +160,7 @@
     "importsByKind":  [
                           {
                               "kind":  "@/",
-                              "count":  367,
+                              "count":  381,
                               "values":  [
                                              "@/ai",
                                              "@/ai/checkCardUseDiscard",
@@ -171,6 +171,7 @@
                                              "@/components/effects/SvgFilters",
                                              "@/components/Game",
                                              "@/components/HtmlHead",
+                                             "@/components/PwaUpdateNotice",
                                              "@/components/special/CheckBox",
                                              "@/components/special/DiscardModeNotice",
                                              "@/components/special/MultilineText",
@@ -189,6 +190,7 @@
                                              "@/i18n/langs",
                                              "@/i18n/taverns/en",
                                              "@/i18n/types",
+                                             "@/reducers/campaign",
                                              "@/store",
                                              "@/types/actionObj",
                                              "@/types/ai",
@@ -249,7 +251,7 @@
                           },
                           {
                               "kind":  "package",
-                              "count":  211,
+                              "count":  214,
                               "values":  [
                                              "@reduxjs/toolkit",
                                              "clarr",
@@ -262,12 +264,13 @@
                                              "redux-observable",
                                              "rxjs",
                                              "rxjs/operators",
-                                             "semver-ts"
+                                             "semver-ts",
+                                             "virtual:pwa-register"
                                          ]
                           },
                           {
                               "kind":  "relative",
-                              "count":  175,
+                              "count":  182,
                               "values":  [
                                              "../devLog",
                                              "../effects/Birds",
@@ -291,12 +294,15 @@
                                              "./ButtonSgPref.module.scss",
                                              "./campaign",
                                              "./campaign/progressEpic",
+                                             "./CampaignBattleIntro.module.scss",
                                              "./Card",
                                              "./Card.module.scss",
                                              "./CardBack",
                                              "./CardDesc",
                                              "./CardFront",
+                                             "./CardHandLayout",
                                              "./CardImage",
+                                             "./CardLayoutMetrics",
                                              "./cardMethods",
                                              "./CardName",
                                              "./CardPosStyle",
@@ -341,10 +347,12 @@
                                              "./langs",
                                              "./main",
                                              "./main/en",
+                                             "./MobileFullscreenGate.module.scss",
                                              "./Name",
                                              "./Name.module.scss",
                                              "./NumberChangeVisual.module.scss",
                                              "./NumberDiff.module.scss",
+                                             "./PwaUpdateNotice.module.scss",
                                              "./reducers",
                                              "./Resource",
                                              "./Resource.module.scss",
@@ -354,10 +362,12 @@
                                              "./screen/closeScreenEndInitEpic",
                                              "./screen/screenEndEpic",
                                              "./screenMaps",
+                                             "./screens/CampaignBattleIntro",
                                              "./screens/DisconnectNotice",
                                              "./screens/EndScreen",
                                              "./screens/Help",
                                              "./screens/LandscapeNotice",
+                                             "./screens/MobileFullscreenGate",
                                              "./screens/Pref",
                                              "./screens/SgPref",
                                              "./settings",
@@ -375,7 +385,7 @@
                                              "./settings_lang_etc/updateVolumeEpic",
                                              "./sound",
                                              "./state",
-                                             "./Status",
+                                             "./status",
                                              "./Status.module.scss",
                                              "./status/resourceProdEpic",
                                              "./status/updateStatusEpic",
@@ -409,7 +419,8 @@
                                                     "redux",
                                                     "redux-observable",
                                                     "rxjs",
-                                                    "semver-ts"
+                                                    "semver-ts",
+                                                    "virtual:pwa-register"
                                                 ],
                              "declaredPackages":  [
                                                       {
@@ -719,7 +730,7 @@
                                                       }
                                                   ],
                              "missingDeclaredImports":  [
-
+                                                            "virtual:pwa-register"
                                                         ],
                              "unusedDeclaredPackages":  [
                                                             "@emotion/react",
@@ -802,7 +813,7 @@
                              {
                                  "name":  "git",
                                  "available":  true,
-                                 "source":  "codex-runtime",
+                                 "source":  "PATH",
                                  "path":  "C:\\Users\\ASUS\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\git\\cmd\\git.exe"
                              }
                          ],
@@ -935,6 +946,10 @@
                     },
                     {
                         "file":  "src\\App.tsx",
+                        "import":  "@/components/PwaUpdateNotice"
+                    },
+                    {
+                        "file":  "src\\App.tsx",
                         "import":  "@/constants/defaultSettings"
                     },
                     {
@@ -984,6 +999,10 @@
                     {
                         "file":  "src\\App.tsx",
                         "import":  "react"
+                    },
+                    {
+                        "file":  "src\\campaign\\levels.ts",
+                        "import":  "@/constants/ranges"
                     },
                     {
                         "file":  "src\\campaign\\levels.ts",
@@ -1283,6 +1302,10 @@
                     },
                     {
                         "file":  "src\\components\\GameWindowList.tsx",
+                        "import":  "./screens/CampaignBattleIntro"
+                    },
+                    {
+                        "file":  "src\\components\\GameWindowList.tsx",
                         "import":  "./screens/DisconnectNotice"
                     },
                     {
@@ -1296,6 +1319,10 @@
                     {
                         "file":  "src\\components\\GameWindowList.tsx",
                         "import":  "./screens/LandscapeNotice"
+                    },
+                    {
+                        "file":  "src\\components\\GameWindowList.tsx",
+                        "import":  "./screens/MobileFullscreenGate"
                     },
                     {
                         "file":  "src\\components\\GameWindowList.tsx",
@@ -1344,6 +1371,34 @@
                     {
                         "file":  "src\\components\\HtmlHead.tsx",
                         "import":  "react-helmet-async"
+                    },
+                    {
+                        "file":  "src\\components\\PwaUpdateNotice.tsx",
+                        "import":  "./PwaUpdateNotice.module.scss"
+                    },
+                    {
+                        "file":  "src\\components\\PwaUpdateNotice.tsx",
+                        "import":  "react"
+                    },
+                    {
+                        "file":  "src\\components\\PwaUpdateNotice.tsx",
+                        "import":  "virtual:pwa-register"
+                    },
+                    {
+                        "file":  "src\\components\\screens\\CampaignBattleIntro.tsx",
+                        "import":  "./CampaignBattleIntro.module.scss"
+                    },
+                    {
+                        "file":  "src\\components\\screens\\CampaignBattleIntro.tsx",
+                        "import":  "@/campaign/levels"
+                    },
+                    {
+                        "file":  "src\\components\\screens\\CampaignBattleIntro.tsx",
+                        "import":  "@/utils/hooks/useAppDispatch"
+                    },
+                    {
+                        "file":  "src\\components\\screens\\CampaignBattleIntro.tsx",
+                        "import":  "react"
                     },
                     {
                         "file":  "src\\components\\screens\\DisconnectNotice.tsx",
@@ -1491,6 +1546,22 @@
                     },
                     {
                         "file":  "src\\components\\screens\\LandscapeNotice.tsx",
+                        "import":  "react"
+                    },
+                    {
+                        "file":  "src\\components\\screens\\MobileFullscreenGate.tsx",
+                        "import":  "./MobileFullscreenGate.module.scss"
+                    },
+                    {
+                        "file":  "src\\components\\screens\\MobileFullscreenGate.tsx",
+                        "import":  "@/utils/contexts/GameSizeContext"
+                    },
+                    {
+                        "file":  "src\\components\\screens\\MobileFullscreenGate.tsx",
+                        "import":  "@/utils/fullscreen"
+                    },
+                    {
+                        "file":  "src\\components\\screens\\MobileFullscreenGate.tsx",
                         "import":  "react"
                     },
                     {
@@ -1735,6 +1806,10 @@
                     },
                     {
                         "file":  "src\\components\\zoneCards\\Card.tsx",
+                        "import":  "./CardHandLayout"
+                    },
+                    {
+                        "file":  "src\\components\\zoneCards\\Card.tsx",
                         "import":  "@/constants/ActionTypes"
                     },
                     {
@@ -1830,6 +1905,14 @@
                         "import":  "react"
                     },
                     {
+                        "file":  "src\\components\\zoneCards\\CardHandLayout.ts",
+                        "import":  "@/constants/ranges"
+                    },
+                    {
+                        "file":  "src\\components\\zoneCards\\CardHandLayout.ts",
+                        "import":  "@/types/state"
+                    },
+                    {
                         "file":  "src\\components\\zoneCards\\CardImage.tsx",
                         "import":  "./Card.module.scss"
                     },
@@ -1864,6 +1947,14 @@
                     {
                         "file":  "src\\components\\zoneCards\\CardName.tsx",
                         "import":  "react"
+                    },
+                    {
+                        "file":  "src\\components\\zoneCards\\CardPosStyle.tsx",
+                        "import":  "./CardLayoutMetrics"
+                    },
+                    {
+                        "file":  "src\\components\\zoneCards\\CardPosStyle.tsx",
+                        "import":  "@/constants/ranges"
                     },
                     {
                         "file":  "src\\components\\zoneCards\\CardPosStyle.tsx",
@@ -2111,6 +2202,10 @@
                     },
                     {
                         "file":  "src\\components\\zoneStatus\\ZoneStatus.tsx",
+                        "import":  "@/campaign/levels"
+                    },
+                    {
+                        "file":  "src\\components\\zoneStatus\\ZoneStatus.tsx",
                         "import":  "@/utils/contexts/GameSizeContext"
                     },
                     {
@@ -2171,10 +2266,6 @@
                     },
                     {
                         "file":  "src\\epics\\campaign\\progressEpic.ts",
-                        "import":  "@/utils/localstorage"
-                    },
-                    {
-                        "file":  "src\\epics\\campaign\\progressEpic.ts",
                         "import":  "redux-observable"
                     },
                     {
@@ -2203,15 +2294,15 @@
                     },
                     {
                         "file":  "src\\epics\\cards\\aiPlayCardEpic.ts",
+                        "import":  "@/utils/isScreenState"
+                    },
+                    {
+                        "file":  "src\\epics\\cards\\aiPlayCardEpic.ts",
                         "import":  "redux-observable"
                     },
                     {
                         "file":  "src\\epics\\cards\\aiPlayCardEpic.ts",
                         "import":  "rxjs"
-                    },
-                    {
-                        "file":  "src\\epics\\cards\\aiPlayCardEpic.ts",
-                        "import":  "rxjs/operators"
                     },
                     {
                         "file":  "src\\epics\\cards\\checkUnusableEpic.ts",
@@ -2428,6 +2519,10 @@
                     {
                         "file":  "src\\epics\\cards\\moveCardToTopEpic.ts",
                         "import":  "rxjs/operators"
+                    },
+                    {
+                        "file":  "src\\epics\\cards\\playCardCoreGuardedEpic.ts",
+                        "import":  "@/constants/ActionTypes"
                     },
                     {
                         "file":  "src\\epics\\cards\\playCardCoreGuardedEpic.ts",
@@ -2811,11 +2906,23 @@
                     },
                     {
                         "file":  "src\\epics\\screen\\screenEndEpic.ts",
+                        "import":  "@/campaign/levels"
+                    },
+                    {
+                        "file":  "src\\epics\\screen\\screenEndEpic.ts",
+                        "import":  "@/reducers/campaign"
+                    },
+                    {
+                        "file":  "src\\epics\\screen\\screenEndEpic.ts",
                         "import":  "@/types/actionObj"
                     },
                     {
                         "file":  "src\\epics\\screen\\screenEndEpic.ts",
                         "import":  "@/types/state"
+                    },
+                    {
+                        "file":  "src\\epics\\screen\\screenEndEpic.ts",
+                        "import":  "@/utils/localstorage"
                     },
                     {
                         "file":  "src\\epics\\screen\\screenEndEpic.ts",

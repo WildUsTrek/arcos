@@ -1,6 +1,9 @@
 import { expect, test } from 'bun:test'
 import { aiDecision } from '@/ai/main'
-import { maxCardsInHand } from '@/constants/ranges'
+import {
+  maxCampaignVisibleCardsInHand,
+  maxCardsInHand,
+} from '@/constants/ranges'
 import { resNames } from '@/constants/resourceNames'
 import cards from '@/data/cards'
 import { AiCardListItemType } from '@/types/ai'
@@ -76,7 +79,11 @@ const assertFiniteStatus = (status: StatusType) => {
 }
 
 test('AI multi-turn decisions remain stable with campaign and historical max hand sizes', () => {
-  for (const cardsInHand of [5, 6, maxCardsInHand]) {
+  for (const cardsInHand of [
+    5,
+    maxCampaignVisibleCardsInHand,
+    maxCardsInHand,
+  ]) {
     for (const aiLevel of [0, 2, 4]) {
       const status = makeStatus()
       const opponentHand = makeHand(cardsInHand, aiLevel * 11)

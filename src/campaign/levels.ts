@@ -1,3 +1,4 @@
+import { maxCampaignCardsInHand } from '@/constants/ranges'
 import type { SettingsType } from '@/types/state'
 
 export type CampaignChallengeMode =
@@ -11,12 +12,7 @@ export type CampaignChallengeMode =
   | 'siege'
 
 export type CampaignAiProfile =
-  | 'balanced'
-  | 'builder'
-  | 'raider'
-  | 'economist'
-  | 'defender'
-  | 'tempo'
+  'balanced' | 'builder' | 'raider' | 'economist' | 'defender' | 'tempo'
 
 export type CampaignLevel = {
   id: number
@@ -110,7 +106,7 @@ export const challengeModeMeta: Record<
     description: 'Meno carte in mano: scartare male costa molto di piu.',
     apply: (settings) =>
       tune(settings, {
-        cardsInHand: clamp(settings.cardsInHand - 1, 3, 6),
+        cardsInHand: clamp(settings.cardsInHand - 1, 3, maxCampaignCardsInHand),
       }),
   },
   'tower-rush': {
@@ -455,7 +451,7 @@ export const campaignLevels: CampaignLevel[] = [
       recruits: 18,
       winTower: 210,
       winResource: 520,
-      cardsInHand: 6,
+      cardsInHand: maxCampaignCardsInHand,
     },
   },
   {
@@ -480,7 +476,7 @@ export const campaignLevels: CampaignLevel[] = [
       recruits: 30,
       winTower: 250,
       winResource: 650,
-      cardsInHand: 6,
+      cardsInHand: maxCampaignCardsInHand,
     },
   },
 ]
