@@ -37,6 +37,7 @@ const Game = () => {
 
   useEffect(() => {
     let touchStartY = 0
+    const revealListenerOptions = { capture: true, passive: true } as const
 
     const handlePointerMove = (event: PointerEvent) => {
       if (event.clientY <= 118) {
@@ -65,14 +66,34 @@ const Game = () => {
       }
     }
 
-    window.addEventListener('pointermove', handlePointerMove, { passive: true })
-    window.addEventListener('touchstart', handleTouchStart, { passive: true })
-    window.addEventListener('touchmove', handleTouchMove, { passive: true })
+    window.addEventListener(
+      'pointermove',
+      handlePointerMove,
+      revealListenerOptions,
+    )
+    window.addEventListener(
+      'touchstart',
+      handleTouchStart,
+      revealListenerOptions,
+    )
+    window.addEventListener('touchmove', handleTouchMove, revealListenerOptions)
 
     return () => {
-      window.removeEventListener('pointermove', handlePointerMove)
-      window.removeEventListener('touchstart', handleTouchStart)
-      window.removeEventListener('touchmove', handleTouchMove)
+      window.removeEventListener(
+        'pointermove',
+        handlePointerMove,
+        revealListenerOptions,
+      )
+      window.removeEventListener(
+        'touchstart',
+        handleTouchStart,
+        revealListenerOptions,
+      )
+      window.removeEventListener(
+        'touchmove',
+        handleTouchMove,
+        revealListenerOptions,
+      )
     }
   }, [])
 
