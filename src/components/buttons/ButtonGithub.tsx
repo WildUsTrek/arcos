@@ -9,7 +9,10 @@ declare global {
   }
 }
 
-const requestWilduClose = () => {
+const requestWilduClose = (e?: React.MouseEvent<HTMLButtonElement>) => {
+  e?.preventDefault()
+  e?.stopPropagation()
+
   try {
     if (window.parent && window.parent !== window) {
       if (typeof window.parent.closeWilduGameFrame === 'function') {
@@ -36,6 +39,7 @@ const ButtonGithub = () => (
     className={cl('topbutton', styles.githubbutton)}
     onClick={requestWilduClose}
     onAuxClick={requestWilduClose}
+    onContextMenu={requestWilduClose}
     {...tooltipAttrs('Esci', 'bottom')}
     aria-label="Esci"
     type="button"
