@@ -32,7 +32,7 @@ test('valid mobile landscape can request fullscreen without rotate notice', () =
   expect(state.needsFullscreenGate).toBe(true)
 })
 
-test('cramped mobile landscape remains blocked instead of rendering broken game UI', () => {
+test('cramped mobile landscape does not deadlock behind the rotate notice', () => {
   const state = getMobilePlayability({
     width: 610,
     height: 330,
@@ -43,8 +43,8 @@ test('cramped mobile landscape remains blocked instead of rendering broken game 
 
   expect(state.mobileSizedViewport).toBe(true)
   expect(state.crampedLandscapeViewport).toBe(true)
-  expect(state.needsLandscapeNotice).toBe(true)
-  expect(state.needsFullscreenGate).toBe(false)
+  expect(state.needsLandscapeNotice).toBe(false)
+  expect(state.needsFullscreenGate).toBe(true)
 })
 
 test('desktop portrait keeps the historical rotate notice behavior', () => {

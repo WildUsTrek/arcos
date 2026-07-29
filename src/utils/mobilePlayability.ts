@@ -34,7 +34,7 @@ export const getMobilePlayability = ({
     mobileSizedViewport &&
     !portraitViewport &&
     (width < mobileLandscapeMinWidth || height < mobileLandscapeMinHeight)
-  const needsLandscapeNotice = portraitViewport || crampedLandscapeViewport
+  const needsLandscapeNotice = portraitViewport
 
   return {
     touchLike,

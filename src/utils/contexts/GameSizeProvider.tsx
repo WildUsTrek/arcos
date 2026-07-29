@@ -26,6 +26,7 @@ const getViewportSize = (): Pick<vType, 'width' | 'height'> => {
 const GameSizeProvider = ({ children }: PropType) => {
   const [gameSize, setGameSize] = useState<vType>(defaultGameSize)
   useEffect(() => {
+    const delayedResizeHandles: number[] = []
     const handleResize = () => {
       const viewportSize = getViewportSize()
       setGameSize({
@@ -33,16 +34,22 @@ const GameSizeProvider = ({ children }: PropType) => {
         narrowMobile: viewportSize.height <= narrowMobileWinHeightMax,
       })
     }
+    const handleOrientationChange = () => {
+      handleResize()
+      delayedResizeHandles.push(window.setTimeout(handleResize, 80))
+      delayedResizeHandles.push(window.setTimeout(handleResize, 240))
+    }
 
     window.addEventListener('resize', handleResize)
-    window.addEventListener('orientationchange', handleResize)
+    window.addEventListener('orientationchange', handleOrientationChange)
     window.visualViewport?.addEventListener('resize', handleResize)
     window.visualViewport?.addEventListener('scroll', handleResize)
     handleResize()
 
     return () => {
+      delayedResizeHandles.forEach((handle) => window.clearTimeout(handle))
       window.removeEventListener('resize', handleResize)
-      window.removeEventListener('orientationchange', handleResize)
+      window.removeEventListener('orientationchange', handleOrientationChange)
       window.visualViewport?.removeEventListener('resize', handleResize)
       window.visualViewport?.removeEventListener('scroll', handleResize)
     }
