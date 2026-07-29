@@ -10,8 +10,10 @@ declare global {
 }
 
 const requestWilduClose = (e?: React.MouseEvent<HTMLButtonElement>) => {
-  e?.preventDefault()
-  e?.stopPropagation()
+  if (e) {
+    e.preventDefault()
+    e.stopPropagation()
+  }
 
   try {
     if (window.parent && window.parent !== window) {
