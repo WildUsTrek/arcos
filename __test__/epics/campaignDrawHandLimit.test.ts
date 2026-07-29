@@ -17,7 +17,7 @@ import {
   ownerType2,
 } from '../../src/types/state'
 
-const flush = () => new Promise((resolve) => setTimeout(resolve, 0))
+const flushEpicQueue = () => new Promise((resolve) => setTimeout(resolve, 20))
 
 const makeHand = (owner: ownerType2): CardListItemAllType[] =>
   Array.from({ length: maxCampaignVisibleCardsInHand }, (_, position) => ({
@@ -65,7 +65,7 @@ test('campaign draw skips new cards when the player hand is already at the mobil
   )
 
   actionSubject.next({ type: DRAW_CARD_CORE, n: 0 })
-  await flush()
+  await flushEpicQueue()
 
   expect(emitted).toEqual([
     {
