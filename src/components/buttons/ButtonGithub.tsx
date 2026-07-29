@@ -1,5 +1,7 @@
 import cl from 'clarr'
 import React from 'react'
+import { useAppSelector } from '@/utils/hooks/useAppDispatch'
+import isScreenState from '@/utils/isScreenState'
 import { tooltipAttrs } from '@/utils/tooltip'
 import styles from './ButtonGithub.module.scss'
 
@@ -35,22 +37,26 @@ const requestWilduClose = (e?: React.MouseEvent<HTMLButtonElement>) => {
   }
 }
 
-const ButtonGithub = () => (
-  <button
-    accessKey="x"
-    className={cl('topbutton', styles.githubbutton)}
-    onClick={requestWilduClose}
-    onAuxClick={requestWilduClose}
-    onContextMenu={requestWilduClose}
-    {...tooltipAttrs('Esci', 'bottom')}
-    aria-label="Esci"
-    type="button"
-  >
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 3.5h8.8c.6 0 1 .4 1 1v2.2h-2V5.5H6v13h5.8v-1.2h2v2.2c0 .6-.4 1-1 1H4c-.6 0-1-.4-1-1v-15c0-.6.4-1 1-1z" />
-      <path d="M15.4 7.2l4.6 4.6-4.6 4.6-1.4-1.4 2.2-2.2H9.2v-2h7l-2.2-2.2 1.4-1.4z" />
-    </svg>
-  </button>
-)
+const ButtonGithub = () => {
+  const isScreen = useAppSelector(isScreenState)
+
+  return (
+    <button
+      accessKey={isScreen ? undefined : 'g'}
+      className={cl('topbutton', styles.githubbutton)}
+      onClick={requestWilduClose}
+      onAuxClick={requestWilduClose}
+      onContextMenu={requestWilduClose}
+      {...tooltipAttrs('Esci', 'bottom')}
+      aria-label="Esci"
+      type="button"
+    >
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4 3.5h8.8c.6 0 1 .4 1 1v2.2h-2V5.5H6v13h5.8v-1.2h2v2.2c0 .6-.4 1-1 1H4c-.6 0-1-.4-1-1v-15c0-.6.4-1 1-1z" />
+        <path d="M15.4 7.2l4.6 4.6-4.6 4.6-1.4-1.4 2.2-2.2H9.2v-2h7l-2.2-2.2 1.4-1.4z" />
+      </svg>
+    </button>
+  )
+}
 
 export default ButtonGithub
