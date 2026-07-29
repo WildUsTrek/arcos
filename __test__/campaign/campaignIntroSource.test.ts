@@ -26,6 +26,10 @@ const fullscreenGatePath = path.join(
   import.meta.dir,
   '../../src/components/screens/MobileFullscreenGate.tsx',
 )
+const mobilePlayabilityPath = path.join(
+  import.meta.dir,
+  '../../src/utils/mobilePlayability.ts',
+)
 const indexHtmlPath = path.join(import.meta.dir, '../../index.html')
 const gameSizeProviderPath = path.join(
   import.meta.dir,
@@ -173,6 +177,7 @@ test('campaign menu uses a landscape grid instead of a narrow vertical panel', (
 test('mobile layout uses visual viewport and requires fullscreen when supported', () => {
   const providerSource = fs.readFileSync(gameSizeProviderPath, 'utf8')
   const fullscreenGateSource = fs.readFileSync(fullscreenGatePath, 'utf8')
+  const mobilePlayabilitySource = fs.readFileSync(mobilePlayabilityPath, 'utf8')
   const indexHtmlSource = fs.readFileSync(indexHtmlPath, 'utf8')
   const windowListSource = fs.readFileSync(windowListPath, 'utf8')
   const windowStylesSource = fs.readFileSync(windowStylesPath, 'utf8')
@@ -182,7 +187,8 @@ test('mobile layout uses visual viewport and requires fullscreen when supported'
   expect(providerSource).toContain("visualViewport?.addEventListener('scroll'")
   expect(fullscreenGateSource).toContain('Schermo intero richiesto')
   expect(fullscreenGateSource).toContain('requestFs()')
-  expect(fullscreenGateSource).toContain('pointer: coarse')
+  expect(fullscreenGateSource).toContain('needsFullscreenGate')
+  expect(mobilePlayabilitySource).toContain('pointer: coarse')
   expect(indexHtmlSource).toContain('mobile-web-app-capable')
   expect(indexHtmlSource).toContain('apple-mobile-web-app-capable')
   expect(indexHtmlSource).toContain('apple-mobile-web-app-status-bar-style')
