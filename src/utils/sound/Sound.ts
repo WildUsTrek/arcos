@@ -16,9 +16,24 @@ import victoryUrl from '@assets/sfx/victory.mp3'
 import wallUpUrl from '@assets/sfx/wall_up.mp3'
 import devLog from '../devLog'
 
-const audioContext = new (window.AudioContext ||
-  (window as typeof window & { webkitAudioContext: unknown })
-    .webkitAudioContext)()
+type WindowWithWebkitAudio = Window & {
+  webkitAudioContext?: typeof AudioContext
+}
+
+const getAudioContextCtor = () => {
+  if (typeof window === 'undefined') {
+    return null
+  }
+
+  return (
+    window.AudioContext ||
+    (window as WindowWithWebkitAudio).webkitAudioContext ||
+    null
+  )
+}
+
+const AudioContextCtor = getAudioContextCtor()
+const audioContext = AudioContextCtor ? new AudioContextCtor() : null
 
 const userGestures = [
   'click',
@@ -35,6 +50,10 @@ const removeAllListeners = () => {
   })
 }
 const resumeAudioContext = () => {
+  if (!audioContext) {
+    return
+  }
+
   if (audioContext.state === 'suspended') {
     audioContext.resume().then(() => {
       devLog('AudioContext resumed', 'info')
@@ -45,13 +64,19 @@ const resumeAudioContext = () => {
     removeAllListeners()
   }
 }
-userGestures.forEach((gesture) => {
-  document.body.addEventListener(gesture, resumeAudioContext)
-})
 
-const gainNode = audioContext.createGain()
-gainNode.gain.value = 0.5
-gainNode.connect(audioContext.destination)
+if (audioContext && typeof document !== 'undefined') {
+  userGestures.forEach((gesture) => {
+    document.body.addEventListener(gesture, resumeAudioContext)
+  })
+}
+
+const gainNode = audioContext?.createGain() ?? null
+
+if (gainNode && audioContext) {
+  gainNode.gain.value = 0.5
+  gainNode.connect(audioContext.destination)
+}
 
 type SoundAdditionalTypes = 'deal' | 'victory' | 'defeat' | 'start' | 'typing'
 
@@ -114,14 +139,18 @@ const audioMap = {
   typing: typing,
 }
 
-const loadAudio = async (url: string): Promise<AudioBuffer> => {
+const loadAudio = async (url: string): Promise<AudioBuffer | null> => {
+  if (!audioContext) {
+    return null
+  }
+
   const response = await fetch(url)
   const arrayBuffer = await response.arrayBuffer()
   const audioBuffer = await audioContext.decodeAudioData(arrayBuffer)
   return audioBuffer
 }
 
-const audioBufferPromises: Promise<AudioBuffer>[] = [
+const audioBufferPromises: Promise<AudioBuffer | null>[] = [
   loadAudio(towerUpUrl),
   loadAudio(wallUpUrl),
   loadAudio(brickUpUrl),
@@ -139,6 +168,10 @@ const audioBufferPromises: Promise<AudioBuffer>[] = [
 ]
 
 export const setVolume = (volume: number): void => {
+  if (!gainNode) {
+    return
+  }
+
   gainNode.gain.value = volume / 10
 }
 
@@ -155,6 +188,10 @@ export const play = (
   increase: boolean | null = null,
   pan: boolean | number = 0,
 ): void => {
+  if (!audioContext || !gainNode) {
+    return
+  }
+
   const audioName = (() => {
     const tempObj = audioMap[type]
     if (typeof tempObj === 'object' && 'up' in tempObj) {
@@ -175,6 +212,10 @@ export const play = (
   })()
 
   audioBufferPromise.then((audioBuffer) => {
+    if (!audioBuffer) {
+      return
+    }
+
     if (audioContext.state === 'suspended') {
       // intentionally not await, but resume while dropping the sound play
       // double resuming besides `resumeAudioContext()` to ensure it
