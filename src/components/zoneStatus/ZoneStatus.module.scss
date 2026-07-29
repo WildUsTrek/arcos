@@ -1,5 +1,7 @@
 .main {
   @apply z-0 flex-auto bg-green-100 relative;
+
+  --status-edge-safe: 0px;
 }
 
 .mainbg {
@@ -13,4 +15,14 @@
 
 .side {
   @apply absolute top-0 left-0 w-full h-full;
+
+  box-sizing: border-box;
+  padding-left: max(env(safe-area-inset-left, 0px), var(--status-edge-safe));
+  padding-right: max(env(safe-area-inset-right, 0px), var(--status-edge-safe));
+}
+
+@media (pointer: coarse) and (orientation: landscape) and (height <= 560px) {
+  .main {
+    --status-edge-safe: clamp(1rem, 3.2dvw, 3.5rem);
+  }
 }
